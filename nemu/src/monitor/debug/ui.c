@@ -40,6 +40,7 @@ static int cmd_help(char *args);
 
 //单步执行
 static int cmd_si(char *args) {
+  printf("args:%s\n",args);
   cpu_exec(1);
   return 0;
 }
