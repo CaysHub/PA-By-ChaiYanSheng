@@ -38,6 +38,12 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
+//单步执行
+static int cmd_si(char *args) {
+  cpu_exec(1);
+  return 0;
+}
+
 static struct {
   char *name;
   char *description;
@@ -48,6 +54,7 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
 
   /* TODO: Add more commands */
+  {"si","Single Step",cmd_si},
 
 };
 
