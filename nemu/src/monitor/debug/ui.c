@@ -76,7 +76,7 @@ static int cmd_x(char *args){
   printf("address:%x\n",address);
   printf("dump memory start address:0x%08x length:%d\n",address,length);
   for(i=0;i<length;i++){
-    if(!(i&0xf))printf("\n0x%08x:",address+i*16);
+    printf("\n0x%08x:",address+i*16);
    // printf("0x%02x ",*(unsigned char *)(address+i*16));
   }
   printf("\n");
