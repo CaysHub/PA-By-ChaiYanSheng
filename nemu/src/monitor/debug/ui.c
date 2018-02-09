@@ -40,7 +40,12 @@ static int cmd_help(char *args);
 
 //单步执行
 static int cmd_si(char *args) {
-  printf("args:%s\n",args);
+  //printf("args:%s\n",args);
+  int n=0,i;
+  for(i=0;i<strlen(args);i++){
+    n=10*n+args[i]-'0';
+  }
+  printf("n:%d\n",n);
   cpu_exec(1);
   return 0;
 }
