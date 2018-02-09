@@ -68,6 +68,20 @@ static int cmd_info(char *args){
     default:return 1;
   }
 }
+
+//扫描内存
+static int cmd_x(char *args){
+  unsigned int address,length,i;
+  sscanf(args,"%d 0x%08x",&length,&address);
+  printf("address:%x\n",address);
+  printf("dump memory start address:0x%08x length:%d\n",address,length);
+  for(i=0;i<length;i++){
+    if(!(i&0xf))printf("\n0x%08x:",address+i*16);
+    //printf("0x%02x ",(address+i));
+  }
+  printf("\n");
+  return 0;
+}
 static struct {
   char *name;
   char *description;
@@ -80,6 +94,7 @@ static struct {
   /* TODO: Add more commands */
   {"si","Single Step",cmd_si},
   {"info","Print message of registers",cmd_info},
+  {"x","dump memory:x length address",cmd_x},
 
 };
 
