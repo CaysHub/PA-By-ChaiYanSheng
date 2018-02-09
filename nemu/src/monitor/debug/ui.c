@@ -54,6 +54,20 @@ static int cmd_si(char *args) {
   return 0;
 }
 
+//info打印寄存器状态
+static void dump_registers(){
+  int i;
+  for(i = R_EAX; i <= R_EDI; i ++) {
+    printf("%s: 0x%08x\n", regsl[i], cpu.gpr[i]._32);
+  }
+  printf("eip: 0x%08x\n", cpu.eip);
+}
+static int cmd_info(char *args){
+  switch(*args){
+    case 'r':dump_registers(); return 0;
+    default:return 1;
+  }
+}
 static struct {
   char *name;
   char *description;
@@ -65,6 +79,7 @@ static struct {
 
   /* TODO: Add more commands */
   {"si","Single Step",cmd_si},
+  {"info","Print message of registers",cmd_info},
 
 };
 
