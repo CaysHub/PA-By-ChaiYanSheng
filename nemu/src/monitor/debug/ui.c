@@ -71,18 +71,18 @@ static int cmd_info(char *args){
 
 //扫描内存
 static int cmd_x(char *args){
-  char *str_num=strtok(NULL," ");
-  char *str_exp=strtok(NULL," ");
-  int num=atoi(str_num);
+  int address,length;
   bool flag=true;
-  int address=expr(str_exp,&flag);
-  printf("address:%x\n",address);
+  if(!sscanf(args,"%d 0x%x",&length,&address)){
+    flag=false;
+  }
   if(!flag){
     printf("You input an invalid expression\n");
     return 0;
   }
+  printf("length:%d address:0x%x\n",length,address);
   int i;
-  for(i=1;i<=num;i++){
+  for(i=1;i<=length;i++){
     uint32_t content=vaddr_read(address,4);
     printf("0x%08X\t",content);
     address+=4;
