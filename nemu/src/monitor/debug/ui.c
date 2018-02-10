@@ -71,17 +71,23 @@ static int cmd_info(char *args){
 
 //扫描内存
 static int cmd_x(char *args){
-  int address,length,i;
-  sscanf(args,"%d 0x%08x",&length,&address);
-  printf("address:0x%08x\n",address);
-  int *p;p=(int *)address;
-  int result=*p;
-  printf("dump memory start address:0x%08x length:%d\n",address,length);
-  for(i=0;i<length;i++){
-   if(!i) printf("\n0x%08x:",address+i*16);
-   printf("0x%02x ",result);
+  char *str_num=strtok(NULL," ");
+  char *str_exp=strtok(NULL," ");
+  int num=atoi(str_num);
+  bool flag=true;
+  int address=expr(str_exp,&flag);
+  if(!flag){
+    printf("You input an invalid expression\n");
+    return 0;
+  }
+  int i;
+  for(i=1;i<=num;i++){
+    uint32_t content=vaddr_read(address,4);
+    printf("0x%08X\t",content);
+    address+=4;
   }
   printf("\n");
+  //sscanf(args,"%d 0x%08x",&length,&address);
   return 0;
 }
 static struct {
