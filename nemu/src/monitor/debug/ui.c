@@ -73,11 +73,12 @@ static int cmd_info(char *args){
 static int cmd_x(char *args){
   unsigned int address,length,i;
   sscanf(args,"%d 0x%08x",&length,&address);
-  printf("address:%x\n",address);
+  printf("address:0x%08x\n",address);
+  int result=*(int *)address;
   printf("dump memory start address:0x%08x length:%d\n",address,length);
   for(i=0;i<length;i++){
-    printf("\n0x%08x:",address+i*16);
-   // printf("0x%02x ",*(unsigned char *)(address+i*16));
+   if(!i) printf("\n0x%08x:",address+i*16);
+   printf("0x%02x ",result);
   }
   printf("\n");
   return 0;
