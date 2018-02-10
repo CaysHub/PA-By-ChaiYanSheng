@@ -76,6 +76,7 @@ static int cmd_x(char *args){
   int num=atoi(str_num);
   bool flag=true;
   int address=expr(str_exp,&flag);
+  printf("address:%x\n",address);
   if(!flag){
     printf("You input an invalid expression\n");
     return 0;
