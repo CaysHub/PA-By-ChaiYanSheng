@@ -74,7 +74,7 @@ static int cmd_x(char *args){
   int address,length,i;
   sscanf(args,"%d 0x%08x",&length,&address);
   printf("address:0x%08x\n",address);
-  int *p=(int *)address;
+  int *p;p=(int *)address;
   int result=*p;
   printf("dump memory start address:0x%08x length:%d\n",address,length);
   for(i=0;i<length;i++){
