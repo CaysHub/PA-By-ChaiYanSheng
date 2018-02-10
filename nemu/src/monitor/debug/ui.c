@@ -87,7 +87,7 @@ static int cmd_x(char *args){
     printf("0x%08X\n",content);
     address+=4;
   }
-  //sscanf(args,"%d 0x%08x",&length,&address);
+  //sscanf(args,"%d 0x%08x",&length,&address)
   return 0;
 }
 static struct {
