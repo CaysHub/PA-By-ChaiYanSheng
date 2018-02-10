@@ -71,7 +71,7 @@ static int cmd_info(char *args){
 
 //扫描内存
 static int cmd_x(char *args){
-  unsigned int address,length,i;
+  int address,length,i;
   sscanf(args,"%d 0x%08x",&length,&address);
   printf("address:0x%08x\n",address);
   int result=*(int *)address;
