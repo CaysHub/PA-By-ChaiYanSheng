@@ -7,7 +7,8 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ
+  TK_NOTYPE = 256, TK_EQ,TK_NUM,TK_ADD,TK_SUB,
+  TK_MUL,TK_DIV,TK_L_BRACKET,TK_R_BRACKET
 
   /* TODO: Add more token types */
 
@@ -23,7 +24,13 @@ static struct rule {
    */
 
   {" +", TK_NOTYPE},    // spaces
-  {"\\+", '+'},         // plus
+  {"[0-9]+",TK_NUM},    // number
+  {"\\+", TK_ADD},      // plus
+  {"-",TK_SUB},         // subtract
+  {"\\*",TK_MUL},       // multiply
+  {"/",TK_DIV},         // divide
+  {"\\(",TK_L_BRACKET}, // left bracket
+  {"\\)",TK_R_BRACKET}, // rigth bracket
   {"==", TK_EQ}         // equal
 };
 
@@ -60,9 +67,7 @@ static bool make_token(char *e) {
   int position = 0;
   int i;
   regmatch_t pmatch;
-
   nr_token = 0;
-
   while (e[position] != '\0') {
     /* Try all rules one by one. */
     for (i = 0; i < NR_REGEX; i ++) {
@@ -79,9 +84,21 @@ static bool make_token(char *e) {
          * of tokens, some extra actions should be performed.
          */
 
-        switch (rules[i].token_type) {
+	if(rules[i].token_type==TK_NOTYPE)TODO();
+	else{
+          tokens[nr_token].type=rules[i].token_type;
+	  if(tokens[nr_token].type==TK_NUM){
+	    int j;
+	    for(j=0;j<substr_len;j++){
+	      tokens[nr_token].str[j]=substr_start[j];
+	    }
+	    tokens[nr_token].str[j]='\0';
+	  }
+	  nr_token++;
+	}
+        /*switch (rules[i].token_type) {
           default: TODO();
-        }
+        }*/
 
         break;
       }
