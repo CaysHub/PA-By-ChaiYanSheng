@@ -9,7 +9,9 @@
 
 enum {
   TK_NOTYPE = 256, TK_EQ,TK_NUM,TK_ADD,TK_SUB,
-  TK_MUL,TK_DIV,TK_L_BRACKET,TK_R_BRACKET
+  TK_MUL,TK_DIV,TK_L_BRACKET,TK_R_BRACKET,TK_REG,
+	TK_HEXNUM,TK_AND,TK_OR,TK_NOT,TK_OBJECT,TK_NEQ,
+	TK_POINTER,TK_MINUS
 
   /* TODO: Add more token types */
 
@@ -24,15 +26,25 @@ static struct rule {
    * Pay attention to the precedence level of different rules.
    */
 
-  {" +", TK_NOTYPE},    // spaces
-  {"[0-9]+",TK_NUM},    // number
-  {"\\+", TK_ADD},      // plus
-  {"-",TK_SUB},         // subtract
-  {"\\*",TK_MUL},       // multiply
-  {"/",TK_DIV},         // divide
-  {"\\(",TK_L_BRACKET}, // left bracket
-  {"\\)",TK_R_BRACKET}, // rigth bracket
-  {"==", TK_EQ}         // equal
+  {" +", TK_NOTYPE},       // spaces
+  {"[0-9]+",TK_NUM},       // number
+  {"\\+", TK_ADD},         // plus
+  {"-",TK_SUB},            // subtract
+  {"\\*",TK_MUL},          // multiply
+  {"/",TK_DIV},            // divide
+  {"\\(",TK_L_BRACKET},		 // left bracket
+  {"\\)",TK_R_BRACKET},    // rigth bracket
+	{"0[xX][0-9a-fA-F]+",TK_HEXNUM},  // HEXNUM
+	{"\\$e[abcd]x",TK_REG},  // register
+	{"\\$e[bs]p",TK_REG},    // register
+	{"\\$e[sd]i",TK_REG},    // register
+	{"\\$eip",TK_REG},       // register
+	{"&&",TK_AND},           // &&
+	{"\\|\\|",TK_OR},        // ||
+	{"!",TK_NOT},            // !
+	{"!=",TK_NEQ},           // !=
+
+  {"==", TK_EQ}            // equal
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -87,8 +99,9 @@ static bool make_token(char *e) {
 
 	if(rules[i].token_type==TK_NOTYPE);
 	else{
-          tokens[nr_token].type=rules[i].token_type;
-	  if(tokens[nr_token].type==TK_NUM){
+    tokens[nr_token].type=rules[i].token_type;
+	  if(tokens[nr_token].type==TK_NUM||tokens[nr_token].type==TK_HEXNUM||
+				tokens[nr_token].type==TK_REG||tokens[nr_token].type==TK_OBJECT){
 	    int j;
 	    for(j=0;j<substr_len;j++){
 	      tokens[nr_token].str[j]=substr_start[j];
@@ -119,6 +132,13 @@ int find_dominant(int p,int q);
 bool isoperator(int index);
 bool isinbracket(int index,int p,int q);
 int priority(int i);
+static int getnum(char ch){
+  if(ch>='0'&&ch<='9')return ch-'0';
+	else if(ch>='a'&&ch<='z')return ch-'a'+10;
+	else if(ch>='A'&&ch<='Z')return ch-'A'+10;
+	return 0;
+}
+bool judge_exp();
 uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
@@ -126,13 +146,32 @@ uint32_t expr(char *e, bool *success) {
   }
 
   /* TODO: Insert codes to evaluate the expression. */
-  TODO();
-
+  //TODO();
+	int i;
+	for(i=0;i<nr_token;i++){
+	  if(tokens[i].type==TK_MUL&&(i==0||isoperator(i-1)||
+				tokens[i-1].type==TK_L_BRACKET)){
+		  tokens[i].type==TK_POINTER;
+		}else if(tokens[i].type==TK_SUB&&(i==0||isoperator(i-1)||
+					   tokens[i-1].type==TK_L_BRACKET)){
+		  tokens[i].type==TK_MINUS;
+		}
+	}
+	if(!judge_exp()){
+	  *success=false;
+	}
+	if(*success==true){
+	  return eval(0,nr_token-1);
+	}
   return 0;
 }
 bool isoperator(int index){
   if(tokens[index].type==TK_ADD||tokens[index].type==TK_SUB||
-      tokens[index].type==TK_MUL||tokens[index].type==TK_DIV){
+      tokens[index].type==TK_MUL||tokens[index].type==TK_DIV||
+			tokens[index].type==TK_MINUS||tokens[index].type==TK_POINTER||
+			tokens[index].type==TK_EQ||tokens[index].type==TK_NEQ||
+			tokens[index].type==TK_AND||tokens[index].type==TK_OR||
+			tokens[index].type==TK_NOT){
     return true;
   }else{
     return false;
@@ -164,6 +203,7 @@ bool isinbracket(int index,int p,int q){
 int priority(int index){
   if(tokens[index].type==TK_MUL||tokens[index].type==TK_DIV)return 2;
 	else if(tokens[index].type==TK_ADD||tokens[index].type==TK_SUB)return 1;
+	else if(tokens[index].type==TK_MINUS||tokens[index].type==TK_POINTER)return 3;
 	else return 3;
 }
 int find_dominant(int p,int q){
@@ -233,24 +273,99 @@ int eval(int p,int q){
 						    num=10*num+tokens[p].str[i]-'0';
 						}
 						return num;
+				}else if(tokens[p].type==REG)	{
+						if(strcmp(tokens[p].str,"$eax")==0) return cpu.eax;
+						else if(strcmp(tokens[p].str,"$ebx")==0) return cpu.ebx;
+						else if(strcmp(tokens[p].str,"$ecx")==0) return cpu.ecx;
+						else if(strcmp(tokens[p].str,"$edx")==0) return cpu.edx;
+						else if(strcmp(tokens[p].str,"$ebp")==0) return cpu.ebp;
+						else if(strcmp(tokens[p].str,"$esp")==0) return cpu.esp;
+						else if(strcmp(tokens[p].str,"$esi")==0) return cpu.esi;
+						else if(strcmp(tokens[p].str,"$edi")==0) return cpu.edi;
+						else if(strcmp(tokens[p].str,"$eip")==0) return cpu.eip;
+						else;
+				}else if(tokens[p].type==TK_OBJECT){
+				   // return vaddr_read(tokens[p].str);
 				}else;
 		}else if(check_parentheses(p,q)){
 				return eval(p+1,q-1);
 		}else{
 				int dominant=find_dominant(p,q);
-				int val1=eval(p,dominant-1);
-				int val12=eval(dominant+1,q);
-				switch(tokens[dominant].type){
-				    case TK_ADD:return val1+val12;break;
-						case TK_SUB:return val1-val12;break;
-						case TK_MUL:return val1*val1;break;
-						case TK_DIV:return val1/val12;break;
-						default:return -1;
+				if(tokens[dominant].type==TK_POINTER){
+				  return vaddr_read(eval(dominant+1,q),4);
+				}else if(tokens[dominant].type==TK_NOT){
+				  return !eval(dominant+1,q);
+				}else{
+					int val1=eval(p,dominant-1);
+					int val12=eval(dominant+1,q);
+					switch(tokens[dominant].type){
+				   	  case TK_ADD:return val1+val12;break;
+							case TK_SUB:return val1-val12;break;
+							case TK_MUL:return val1*val1;break;
+							case TK_DIV:return val1/val12;break;
+							case TK_AND:return val1&&val12;break;
+							case TK_OR:return val1||val12;break;
+							case TK_EQ:return val1==val12;break;
+							case TK_NEQ:return val1!=val2;break;
+							default:return -1;
+					}
 				}
 		}
 		return 0;
 }
-
+bool judge_exp(){
+  int *bracket=(int*)malloc(nr_token*sizeof(int));
+	int i;
+	for(i=0;i<nr_token;i++)bracket[i]=-1;
+	int count=-1;
+	for(i=0;i<nr_token;i++){
+	  if(tokens[i].type==TK_L_BRACKET){
+		  count++;
+			bracket[count]=i;
+		}else if(tokens[i].type==TK_R_BRACKET){
+		  if(count==-1){
+			  free(bracket);
+				return false;
+			}else count--;
+		}
+	}
+	if(count!=-1){
+	  free(bracket);
+		return false;
+	}
+	free(bracket);
+	for(i=0;i<nr_token;i++){
+	  if(tokens[i].type==TK_ADD||tokens[i].type==TK_SUB||tokens[i].type==TK_MUL||
+				tokens[i].type==TK_DIV||tokens[i].type==TK_EQ||tokens[i].type==TK_NEQ||
+			  tokens[i].type==TK_AND||tokens[i].type==TK_OR){
+		  if(i==0||i==nr_token-1)return false;
+			else if((tokens[i-1].type!=TK_NUM&&tokens[i-1].type!=TK_HEXNUM&&
+						   tokens[i-1].type!=TK_REG&&tokens[i-1].type!=TK_R_BRACKET&&
+							 tokens[i-1].type!=TK_OBJECT)||(tokens[i+1].type!=TK_NUM&&
+							 tokens[i+1].type!=TK_HEXNUM&&tokens[i+1].type!=TK_REG&&
+							 tokens[i+1].type!=TK_L_BRACKET&&tokens[i+1].type!=TK_MINUS&&
+							 tokens[i+1].type!=TK_POINTER&&tokens[i+1].type!=TK_NOT&&
+							 tokens[i+1].type!=TK_OBJECT)){
+			  return false;
+			}
+		}else if(tokens[i].type==TK_MINUS||tokens[i].type==TK_POINTER||
+							tokens[i].type==TK_NOT){
+		  if(i==nr_token-1)return false;
+			else if(i==0&&(tokens[i+1].type!=TK_NUM&&tokens[i+1].type!=TK_HEXNUM&&
+							tokens[i+1].type!=TK_REG&&tokens[i+1].type!=TK_L_BRACKET&&
+							tokens[i+1].type!=TK_MINUS&&tokens[i+1].type!=TK_POINTER&&
+							tokens[i+1].type!=TK_NOT&&tokens[i+1].type!=TK_OBJECT)){
+			  return false;
+			}else if(i!=0&&((!isoperator(i-1)&&tokens[i-1].type!=TK_L_BRACKET)||
+								(tokens[i+1].type!=TK_NUM&&tokens[i+1].type!=TK_HEXNUM&&
+								 tokens[i+1].type!=TK_MINUS&&tokens[i+1].type!=TK_POINTER&&
+								 tokens[i+1].type!=TK_NOT&&tokens[i+1].type!=TK_OBJECT))){
+			  return false;
+			}
+		}
+	}
+	return true;
+}
 
 
 
