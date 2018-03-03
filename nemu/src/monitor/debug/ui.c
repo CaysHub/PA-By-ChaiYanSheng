@@ -55,16 +55,20 @@ static int cmd_si(char *args) {
 }
 
 //info打印寄存器状态
-static void dump_registers(){
-  int i;
-  for(i = R_EAX; i <= R_EDI; i ++) {
-    printf("%s: 0x%08x\n", regsl[i], cpu.gpr[i]._32);
-  }
+static void print_registers(){
+  printf("eax:   0x%x   %d\n", cpu.eax,cpu.eax);
+  printf("edx:   0x%x   %d\n",cpu.edx,cpu.edx);
+  printf("ecx:   0x%x   %d\n",cpu.ecx,cpu.ecx);
+  printf("ebx:   0x%x   %d\n",cpu.ebx,cpu.ebx);
+  printf("ebp:   0x%x   %d\n",cpu.ebp,cpu.ebp);
+  printf("esi:   0x%x   %d\n",cpu.esi,cpu.esi);
+  printf("edi:   0x%x   %d\n",cpu.edi,cpu.edi);
+  printf("esp:   0x%x   %d\n",cpu.esp,cpu.esp);
   printf("eip: 0x%08x\n", cpu.eip);
 }
 static int cmd_info(char *args){
   switch(*args){
-    case 'r':dump_registers(); return 0;
+    case 'r':print_registers(); return 0;
     default:return 1;
   }
 }
