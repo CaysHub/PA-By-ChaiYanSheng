@@ -32,18 +32,17 @@ static struct rule {
   {"-",TK_SUB},            // subtract
   {"\\*",TK_MUL},          // multiply
   {"/",TK_DIV},            // divide
-  {"\\(",TK_L_BRACKET},		 // left bracket
+  {"\\(",TK_L_BRACKET},    // left bracket
   {"\\)",TK_R_BRACKET},    // rigth bracket
-	{"0[xX][0-9a-fA-F]+",TK_HEXNUM},  // HEXNUM
-	{"\\$e[abcd]x",TK_REG},  // register
-	{"\\$e[bs]p",TK_REG},    // register
-	{"\\$e[sd]i",TK_REG},    // register
-	{"\\$eip",TK_REG},       // register
-	{"&&",TK_AND},           // &&
-	{"\\|\\|",TK_OR},        // ||
-	{"!",TK_NOT},            // !
-	{"!=",TK_NEQ},           // !=
-
+  {"0[xX][0-9a-fA-F]+",TK_HEXNUM},  // HEXNUM
+  {"\\$e[abcd]x",TK_REG},  // register
+  {"\\$e[bs]p",TK_REG},    // register
+  {"\\$e[sd]i",TK_REG},    // register
+  {"\\$eip",TK_REG},       // register
+  {"&&",TK_AND},           // &&
+  {"\\|\\|",TK_OR},        // ||
+  {"!",TK_NOT},            // !
+  {"!=",TK_NEQ},           // !=
   {"==", TK_EQ}            // equal
 };
 
@@ -132,7 +131,7 @@ int find_dominant(int p,int q);
 bool isoperator(int index);
 bool isinbracket(int index,int p,int q);
 int priority(int i);
-static int getnum(char ch){
+int getnum(char ch){
   if(ch>='0'&&ch<='9')return ch-'0';
 	else if(ch>='a'&&ch<='z')return ch-'a'+10;
 	else if(ch>='A'&&ch<='Z')return ch-'A'+10;
@@ -151,10 +150,10 @@ uint32_t expr(char *e, bool *success) {
 	for(i=0;i<nr_token;i++){
 	  if(tokens[i].type==TK_MUL&&(i==0||isoperator(i-1)||
 				tokens[i-1].type==TK_L_BRACKET)){
-		  tokens[i].type==TK_POINTER;
+		  tokens[i].type=TK_POINTER;
 		}else if(tokens[i].type==TK_SUB&&(i==0||isoperator(i-1)||
 					   tokens[i-1].type==TK_L_BRACKET)){
-		  tokens[i].type==TK_MINUS;
+		  tokens[i].type=TK_MINUS;
 		}
 	}
 	if(!judge_exp()){
@@ -210,14 +209,14 @@ int find_dominant(int p,int q){
   int i,operator_num=0;
 	int *operator=(int*)malloc((q-p+1)*sizeof(int));
 	for(i=p;i<=q;i++){
-	  if(isoperator(i)&&!isinbracket(i)){
+	  if(isoperator(i)&&!isinbracket(i,p,q)){
 		  operator[operator_num]=i;
 			operator_num++;
 		}
 	}
 	int min=0;
 	for(i=0;i<operator_num;i++){
-	  if(priority(operator[i])<priority(operator[min])min=i;
+	  if(priority(operator[i])<priority(operator[min]))min=i;
 	}
 	if(priority(operator[min])==3){
 	  for(i=0;i<operator_num;i++){
@@ -239,7 +238,7 @@ int find_dominant(int p,int q){
 	free(operator);
 	return result;
 }
-bool check_parentheses(int ,int q){
+bool check_parentheses(int p,int q){
   if(tokens[p].type==TK_L_BRACKET&&tokens[q].type==TK_R_BRACKET){
 			int *op=(int*)malloc(32*sizeof(int));
 			int i,count=-1;
@@ -273,7 +272,7 @@ int eval(int p,int q){
 						    num=10*num+tokens[p].str[i]-'0';
 						}
 						return num;
-				}else if(tokens[p].type==REG)	{
+				}else if(tokens[p].type==TK_REG){
 						if(strcmp(tokens[p].str,"$eax")==0) return cpu.eax;
 						else if(strcmp(tokens[p].str,"$ebx")==0) return cpu.ebx;
 						else if(strcmp(tokens[p].str,"$ecx")==0) return cpu.ecx;
@@ -306,7 +305,7 @@ int eval(int p,int q){
 							case TK_AND:return val1&&val12;break;
 							case TK_OR:return val1||val12;break;
 							case TK_EQ:return val1==val12;break;
-							case TK_NEQ:return val1!=val2;break;
+							case TK_NEQ:return val1!=val12;break;
 							default:return -1;
 					}
 				}
