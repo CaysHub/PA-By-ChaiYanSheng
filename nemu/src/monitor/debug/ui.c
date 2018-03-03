@@ -64,7 +64,7 @@ static void print_registers(){
   printf("esi:   0x%x   %d\n",cpu.esi,cpu.esi);
   printf("edi:   0x%x   %d\n",cpu.edi,cpu.edi);
   printf("esp:   0x%x   %d\n",cpu.esp,cpu.esp);
-  printf("eip: 0x%08x\n", cpu.eip);
+  printf("eip:   0x%08x   %d\n", cpu.eip,cpu.eip);
 }
 static int cmd_info(char *args){
   switch(*args){
