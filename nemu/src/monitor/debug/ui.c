@@ -58,7 +58,7 @@ static int cmd_si(char *args) {
 static void dump_registers(){
   int i;
   for(i = R_EAX; i <= R_EDI; i ++) {
-    printf("%s: 0x%08x  0x%08x\n", regsl[i], cpu.gpr[i]._32,vaddr_read(cpu.gpr[i]._32,4));
+    printf("%s: 0x%08x\n", regsl[i], cpu.gpr[i]._32);
   }
   printf("eip: 0x%08x\n", cpu.eip);
 }
