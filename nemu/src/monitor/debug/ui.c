@@ -86,12 +86,13 @@ static int cmd_x(char *args){
   }
   printf("length:%d address:0x%x\n",length,address);
   int i;
+	printf("Address     Big-Andian  Little-Andian\n");
   for(i=1;i<=length;i++){
     int content=vaddr_read(address,4);
-    printf("0x%08x  0x%08x ",address,content);
+    printf("0x%08x    0x%08x    ",address,content);
 		int j;
 		for(j=0;j<4;j++)
-		    printf("0x%02x ",vaddr_read(address+j,1));
+		    printf("%02x ",vaddr_read(address+j,1));
 		printf("\n");
     address+=4;
   }
