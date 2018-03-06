@@ -84,9 +84,9 @@ static int cmd_x(char *args){
     printf("You input an invalid expression\n");
     return 0;
   }
-  printf("length:%d address:0x%x\n",length,address);
+  //printf("length:%d address:0x%x\n",length,address);
   int i;
-	printf("Address     Big-Andian  Little-Andian\n");
+	printf("Address       Big-Andian     Little-Andian\n");
   for(i=1;i<=length;i++){
     int content=vaddr_read(address,4);
     printf("0x%08x    0x%08x    ",address,content);
