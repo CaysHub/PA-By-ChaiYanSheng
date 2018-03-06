@@ -88,7 +88,7 @@ static int cmd_x(char *args){
   int i;
   for(i=1;i<=length;i++){
     int content=vaddr_read(address,4);
-    printf("0x%08X\n",content);
+    printf("0x%-8x  0x%08X\n",address,content);
     address+=4;
   }
   return 0;
