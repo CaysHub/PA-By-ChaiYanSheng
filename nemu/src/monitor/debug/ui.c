@@ -91,7 +91,8 @@ static int cmd_x(char *args){
     printf("0x%-8x  0x%08x ",address,content);
 		int j;
 		for(j=0;j<4;j++)
-		    printf("0x%-2x\n",vaddr_read(address+4-j-1,1));
+		    printf("0x%-2x ",vaddr_read(address+4-j-1,1));
+		printf("\n");
     address+=4;
   }
   return 0;
