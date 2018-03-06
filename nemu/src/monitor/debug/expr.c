@@ -96,19 +96,19 @@ static bool make_token(char *e) {
          * of tokens, some extra actions should be performed.
          */
 
-	if(rules[i].token_type==TK_NOTYPE);
-	else{
-    tokens[nr_token].type=rules[i].token_type;
-	  if(tokens[nr_token].type==TK_NUM||tokens[nr_token].type==TK_HEXNUM||
-				tokens[nr_token].type==TK_REG||tokens[nr_token].type==TK_OBJECT){
-	    int j;
-	    for(j=0;j<substr_len;j++){
-	      tokens[nr_token].str[j]=substr_start[j];
-	    }
-	    tokens[nr_token].str[j]='\0';
-	  }
-	  nr_token++;
-	}
+	      if(rules[i].token_type==TK_NOTYPE);
+	      else{
+            tokens[nr_token].type=rules[i].token_type;
+	          if(tokens[nr_token].type==TK_NUM||tokens[nr_token].type==TK_HEXNUM||
+				        tokens[nr_token].type==TK_REG||tokens[nr_token].type==TK_OBJECT){
+	              int j;
+	          for(j=0;j<substr_len;j++){
+	              tokens[nr_token].str[j]=substr_start[j];
+	          }
+	          tokens[nr_token].str[j]='\0';
+	        }
+	        nr_token++;
+	      }
         /*switch (rules[i].token_type) {
           default: TODO();
         }*/
