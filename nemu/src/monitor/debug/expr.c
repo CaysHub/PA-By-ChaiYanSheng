@@ -102,17 +102,16 @@ static bool make_token(char *e) {
 	          if(tokens[nr_token].type==TK_NUM||tokens[nr_token].type==TK_HEXNUM||
 				        tokens[nr_token].type==TK_REG||tokens[nr_token].type==TK_OBJECT){
 	              int j;
-	          for(j=0;j<substr_len;j++){
-	              tokens[nr_token].str[j]=substr_start[j];
+	              for(j=0;j<substr_len;j++){
+	                  tokens[nr_token].str[j]=substr_start[j];
+	              }
+	              tokens[nr_token].str[j]='\0';
 	          }
-	          tokens[nr_token].str[j]='\0';
-	        }
-	        nr_token++;
+	          nr_token++;
 	      }
         /*switch (rules[i].token_type) {
           default: TODO();
         }*/
-
         break;
       }
     }
