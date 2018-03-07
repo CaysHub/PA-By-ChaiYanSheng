@@ -28,6 +28,7 @@ static struct rule {
 
   {" +", TK_NOTYPE},       // spaces
   {"[0-9]+",TK_NUM},       // number
+	{"!=",TK_NEQ},           // !=
   {"\\+", TK_ADD},         // plus
   {"-",TK_SUB},            // subtract
   {"\\*",TK_MUL},          // multiply
@@ -42,7 +43,6 @@ static struct rule {
   {"&&",TK_AND},           // &&
   {"\\|\\|",TK_OR},        // ||
   {"!",TK_NOT},            // !
-  {"!=",TK_NEQ},           // !=
   {"==", TK_EQ}            // equal
 };
 
@@ -136,7 +136,7 @@ int getnum(char ch){
 	else if(ch>='A'&&ch<='Z')return ch-'A'+10;
 	return 0;
 }
-bool judge_exp();
+bool check_expression();
 uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
@@ -155,11 +155,17 @@ uint32_t expr(char *e, bool *success) {
 		  tokens[i].type=TK_MINUS;
 		}
 	}
-	if(!judge_exp()){
+	if(!check_expression()){
 	  *success=false;
 	}
 	if(*success==true){
-	  return eval(0,nr_token-1);
+	  int num=eval(0,nr_token-1);
+		if(num==-1){
+		  printf("Somthing wrong with the expressions!\n");
+			return 0;
+		}else{
+		  return num;
+		}
 	}
   return 0;
 }
@@ -262,15 +268,16 @@ bool check_parentheses(int p,int q){
 }
 int eval(int p,int q){
     if(p>q){
-				printf("Somthing Wrong\n");
+				printf("Error!\n");
 				return -1;
 		}else if(p==q){
 				if(tokens[p].type==TK_NUM){
-				    int num=0,len=strlen(tokens[p].str),i;
-						for(i=0;i<len;i++){
-						    num=10*num+tokens[p].str[i]-'0';
-						}
-						return num;
+				    int num=atoi(tokens[p].str);//len=strlen(tokens[p].str),i;
+						//for(i=0;i<len;i++){
+						//    num=10*num+tokens[p].str[i]-'0';
+						//}
+						if(p>0&&tokens[p-1].type==TK_MINUS)return -num;
+						else return num;
 				}else if(tokens[p].type==TK_REG){
 						if(strcmp(tokens[p].str,"$eax")==0) return cpu.eax;
 						else if(strcmp(tokens[p].str,"$ebx")==0) return cpu.ebx;
@@ -284,13 +291,17 @@ int eval(int p,int q){
 						else;
 				}else if(tokens[p].type==TK_OBJECT){
 				   // return vaddr_read(tokens[p].str);
-				}else;
+				}else{
+				    //do nothing;
+				};
 		}else if(check_parentheses(p,q)){
 				return eval(p+1,q-1);
 		}else{
 				int dominant=find_dominant(p,q);
 				if(tokens[dominant].type==TK_POINTER){
 				  return vaddr_read(eval(dominant+1,q),4);
+				}else if(tokens[dominant].type==TK_MINUS){
+				  return -eval(dominant+1,q);
 				}else if(tokens[dominant].type==TK_NOT){
 				  return !eval(dominant+1,q);
 				}else{
@@ -311,7 +322,7 @@ int eval(int p,int q){
 		}
 		return 0;
 }
-bool judge_exp(){
+bool check_expression(){
   int *bracket=(int*)malloc(nr_token*sizeof(int));
 	int i;
 	for(i=0;i<nr_token;i++)bracket[i]=-1;
@@ -342,8 +353,7 @@ bool judge_exp(){
 							 tokens[i-1].type!=TK_OBJECT)||(tokens[i+1].type!=TK_NUM&&
 							 tokens[i+1].type!=TK_HEXNUM&&tokens[i+1].type!=TK_REG&&
 							 tokens[i+1].type!=TK_L_BRACKET&&tokens[i+1].type!=TK_MINUS&&
-							 tokens[i+1].type!=TK_POINTER&&tokens[i+1].type!=TK_NOT&&
-							 tokens[i+1].type!=TK_OBJECT)){
+							 tokens[i+1].type!=TK_POINTER&&tokens[i+1].type!=TK_NOT)){
 			  return false;
 			}
 		}else if(tokens[i].type==TK_MINUS||tokens[i].type==TK_POINTER||
