@@ -289,8 +289,6 @@ int eval(int p,int q){
 						else if(strcmp(tokens[p].str,"$edi")==0) return cpu.edi;
 						else if(strcmp(tokens[p].str,"$eip")==0) return cpu.eip;
 						else;
-				}else if(tokens[p].type==TK_OBJECT){
-				   // return vaddr_read(tokens[p].str);
 				}else{
 				    //do nothing;
 				};
