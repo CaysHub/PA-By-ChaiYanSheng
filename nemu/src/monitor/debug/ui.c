@@ -43,7 +43,7 @@ static int cmd_si(char *args) {
   //printf("args:%s\n",args);
   if(args==NULL){
     cpu_exec(1);
-    return -1;
+    return 0;
   }
   int n=0,i;
   for(i=0;i<strlen(args);i++){
@@ -140,7 +140,7 @@ static int cmd_help(char *args) {
   return 0;
 }
 static int cmd_expr(char *args){
-	int num=expr(args,false);
+	uint32_t num=expr(args,false);
 	printf("%d\n",num);
   return 0;
 }
