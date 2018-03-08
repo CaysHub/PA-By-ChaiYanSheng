@@ -142,6 +142,10 @@ static int cmd_help(char *args) {
 static int cmd_expr(char *args){
 	bool flag=true;
 	uint32_t num=expr(args,&flag);
+	if(!flag){
+	  printf("Unknownknown expression '%s'!\n",args);
+		return 0;
+	}
 	printf("%d\n",num);
   return 0;
 }
