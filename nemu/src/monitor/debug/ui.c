@@ -139,6 +139,7 @@ static int cmd_help(char *args) {
   }
   return 0;
 }
+//test expression
 static int cmd_expr(char *args){
 	bool flag=true;
 	uint32_t num=expr(args,&flag);
