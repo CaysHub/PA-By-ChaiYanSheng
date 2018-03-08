@@ -276,7 +276,6 @@ int eval(int p,int q){
 						//for(i=0;i<len;i++){
 						//    num=10*num+tokens[p].str[i]-'0';
 						//}
-						printf("number:%d\n",num);
 						if(p>0&&tokens[p-1].type==TK_MINUS)return -num;
 						else return num;
 				}else if(tokens[p].type==TK_REG){
@@ -305,16 +304,16 @@ int eval(int p,int q){
 				  return !eval(dominant+1,q);
 				}else{
 					int val1=eval(p,dominant-1);
-					int val12=eval(dominant+1,q);
+					int val2=eval(dominant+1,q);
 					switch(tokens[dominant].type){
-				   	  case TK_ADD:return val1+val12;break;
-							case TK_SUB:return val1-val12;break;
-							case TK_MUL:return val1*val1;break;
-							case TK_DIV:return val1/val12;break;
-							case TK_AND:return val1&&val12;break;
-							case TK_OR:return val1||val12;break;
-							case TK_EQ:return val1==val12;break;
-							case TK_NEQ:return val1!=val12;break;
+				   	  case TK_ADD:return val1+val2;break;
+							case TK_SUB:return val1-val2;break;
+							case TK_MUL:return val1*val2;break;
+							case TK_DIV:return val1/val2;break;
+							case TK_AND:return val1&&val2;break;
+							case TK_OR:return val1||val2;break;
+							case TK_EQ:return val1==val2;break;
+							case TK_NEQ:return val1!=val2;break;
 							default:return -1;
 					}
 				}
