@@ -140,7 +140,8 @@ static int cmd_help(char *args) {
   return 0;
 }
 static int cmd_expr(char *args){
-	uint32_t num=expr(args,false);
+	bool flag=true;
+	uint32_t num=expr(args,&flag);
 	printf("%d\n",num);
   return 0;
 }
