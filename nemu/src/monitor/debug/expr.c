@@ -276,6 +276,7 @@ int eval(int p,int q){
 						//for(i=0;i<len;i++){
 						//    num=10*num+tokens[p].str[i]-'0';
 						//}
+						printf("number:%d\n",num);
 						if(p>0&&tokens[p-1].type==TK_MINUS)return -num;
 						else return num;
 				}else if(tokens[p].type==TK_REG){
