@@ -43,7 +43,7 @@ static int cmd_si(char *args) {
   //printf("args:%s\n",args);
   if(args==NULL){
     cpu_exec(1);
-    return 0;
+    return -1;
   }
   int n=0,i;
   for(i=0;i<strlen(args);i++){
