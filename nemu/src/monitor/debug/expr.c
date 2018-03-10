@@ -271,7 +271,7 @@ int eval(int p,int q){
 				printf("Error!\n");
 				return -1;
 		}else if(p==q){
-				if(tokens[p].type==TK_NUM){
+				if(tokens[p].type==TK_NUM||tokens[p].type==TK_HEXNUM){
 				    int num=atoi(tokens[p].str);//len=strlen(tokens[p].str),i;
 						//for(i=0;i<len;i++){
 						//    num=10*num+tokens[p].str[i]-'0';
