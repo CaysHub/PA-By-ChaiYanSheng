@@ -9,6 +9,8 @@
 
 void cpu_exec(uint64_t);
 uint32_t expr(char* e,bool* success);
+void insert_wp(char *args);
+void print_all_wp();
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
   static char *line_read = NULL;
@@ -38,6 +40,8 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 static int cmd_p(char *args);
+static int cmd_w(char *args);
+static int cmd_d(char *args);
 //单步执行
 static int cmd_si(char *args) {
   //printf("args:%s\n",args);
@@ -69,6 +73,7 @@ static void print_registers(){
 static int cmd_info(char *args){
   switch(*args){
     case 'r':print_registers(); return 0;
+		case 'w':print_all_wp();return 0;
     default:return 1;
   }
 }
@@ -112,7 +117,8 @@ static struct {
   {"info","Print message of registers",cmd_info},
   {"x","dump memory:x length address",cmd_x},
 	{"p","Calculate the expression test",cmd_p},
-
+	{"w","Add an Watchpoint",cmd_w},
+	{"d","Delete the Watchpoint",cmd_d},
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
@@ -148,6 +154,15 @@ static int cmd_p(char *args){
 		return 0;
 	}
 	printf("%d\n",num);
+  return 0;
+}
+//Add an Watchpoint
+static int cmd_w(char *args){
+  insert_wp(args);
+	return 0;
+}
+//Delete the Watchpoint
+static int cmd_d(char *args){
   return 0;
 }
 void ui_mainloop(int is_batch_mode) {

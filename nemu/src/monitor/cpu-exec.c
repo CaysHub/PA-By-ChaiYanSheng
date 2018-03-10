@@ -7,7 +7,7 @@
  * You can modify this value as you want.
  */
 #define MAX_INSTR_TO_PRINT 10
-
+bool check_changed_wp();
 int nemu_state = NEMU_STOP;
 
 void exec_wrapper(bool);
@@ -29,7 +29,9 @@ void cpu_exec(uint64_t n) {
 
 #ifdef DEBUG
     /* TODO: check watchpoints here. */
-
+		if(check_changed_wp()){
+		  nemu_state=NEMU_STOP;
+		}
 #endif
 
 #ifdef HAS_IOE
