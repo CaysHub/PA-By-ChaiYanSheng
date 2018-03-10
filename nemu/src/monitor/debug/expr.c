@@ -27,6 +27,7 @@ static struct rule {
    */
 
   {" +", TK_NOTYPE},       // spaces
+	{"0[xX][0-9a-fA-F]+",TK_HEXNUM},// HEXNUM
   {"[0-9]+",TK_NUM},       // number
 	{"!=",TK_NEQ},           // !=
   {"\\+", TK_ADD},         // plus
@@ -35,7 +36,6 @@ static struct rule {
   {"/",TK_DIV},            // divide
   {"\\(",TK_L_BRACKET},    // left bracket
   {"\\)",TK_R_BRACKET},    // rigth bracket
-  {"0[xX][0-9a-fA-F]+",TK_HEXNUM},  // HEXNUM
   {"\\$e[abcd]x",TK_REG},  // register
   {"\\$e[bs]p",TK_REG},    // register
   {"\\$e[sd]i",TK_REG},    // register
