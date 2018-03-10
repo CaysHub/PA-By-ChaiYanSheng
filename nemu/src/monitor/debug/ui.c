@@ -37,7 +37,7 @@ static int cmd_q(char *args) {
 }
 
 static int cmd_help(char *args);
-static int cmd_expr(char *args);
+static int cmd_p(char *args);
 //单步执行
 static int cmd_si(char *args) {
   //printf("args:%s\n",args);
@@ -111,7 +111,7 @@ static struct {
   {"si","Single Step",cmd_si},
   {"info","Print message of registers",cmd_info},
   {"x","dump memory:x length address",cmd_x},
-	{"expr","Calculate the expression test",cmd_expr},
+	{"expr","Calculate the expression test",cmd_p},
 
 };
 
@@ -140,7 +140,7 @@ static int cmd_help(char *args) {
   return 0;
 }
 //test expression
-static int cmd_expr(char *args){
+static int cmd_p(char *args){
 	bool flag=true;
 	uint32_t num=expr(args,&flag);
 	if(!flag){
