@@ -11,6 +11,7 @@ void cpu_exec(uint64_t);
 uint32_t expr(char* e,bool* success);
 void insert_wp(char *args);
 void print_all_wp();
+void delete_wp(int no);
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
   static char *line_read = NULL;
@@ -81,15 +82,19 @@ static int cmd_info(char *args){
 //扫描内存
 static int cmd_x(char *args){
   int address,length;
-  bool flag=true;
-  if(!sscanf(args,"%d 0x%x",&length,&address)){
-    flag=false;
-  }
-  if(!flag){
+	char *numStr=strtok(NULL," ");
+	char *exp=strtok(NULL," ");
+  if(numStr==NULL||exp==NULL){
     printf("You input an invalid expression\n");
     return 0;
   }
-  //printf("length:%d address:0x%x\n",length,address);
+	bool s=true;
+	address=expr(exp,&s);
+	if(!s){
+	  printf("Unknown expression '%s'\n",exp);
+		return 0;
+	}
+  length=atoi(numStr);
   int i;
 	printf("Address       Big-Endian    Little-Endian\n");
   for(i=1;i<=length;i++){
@@ -163,6 +168,12 @@ static int cmd_w(char *args){
 }
 //Delete the Watchpoint
 static int cmd_d(char *args){
+	if(args==NULL){
+	  printf("You have input error order to delete watchpoint\n");
+		return 0;
+	}
+	int n=atoi(args);
+	delete_wp(n);
   return 0;
 }
 void ui_mainloop(int is_batch_mode) {

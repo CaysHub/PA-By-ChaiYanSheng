@@ -93,8 +93,7 @@ void print_one_wp(int no){
 		bool s=true;
 	  int new_value=expr(p->expression,&s);
 		if(!s)return;
-		printf("No.%-9d",p->NO);
-		printf("Watchpoint: %s\n",p->expression);
+		printf("Watchpoint  %d: %s\n",p->NO,p->expression);
 		printf("Old Value   %d\n",p->value);
 		printf("New Value   %d\n",new_value);
 	}
