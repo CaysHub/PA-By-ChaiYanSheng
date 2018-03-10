@@ -271,11 +271,8 @@ int eval(int p,int q){
 				printf("Error!\n");
 				return -1;
 		}else if(p==q){
-				if(tokens[p].type==TK_NUM||tokens[p].type==TK_HEXNUM){
-				    int num=atoi(tokens[p].str);//len=strlen(tokens[p].str),i;
-						//for(i=0;i<len;i++){
-						//    num=10*num+tokens[p].str[i]-'0';
-						//}
+				if(tokens[p].type==TK_NUM){
+				    int num=atoi(tokens[p].str);
 						if(p>0&&tokens[p-1].type==TK_MINUS)return -num;
 						else return num;
 				}else if(tokens[p].type==TK_REG){
@@ -289,6 +286,10 @@ int eval(int p,int q){
 						else if(strcmp(tokens[p].str,"$edi")==0) return cpu.edi;
 						else if(strcmp(tokens[p].str,"$eip")==0) return cpu.eip;
 						else;
+				}else if(tokens[p].type==TK_HEXNUM){
+				  int num;
+					sscanf(tokens[p].str,"0x%x",&num);
+					return num;
 				}else{
 				    //do nothing;
 				};
