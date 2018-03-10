@@ -111,7 +111,7 @@ static struct {
   {"si","Single Step",cmd_si},
   {"info","Print message of registers",cmd_info},
   {"x","dump memory:x length address",cmd_x},
-	{"expr","Calculate the expression test",cmd_p},
+	{"p","Calculate the expression test",cmd_p},
 
 };
 
