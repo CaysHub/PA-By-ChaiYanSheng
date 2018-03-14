@@ -45,17 +45,13 @@ static int cmd_w(char *args);
 static int cmd_d(char *args);
 //单步执行
 static int cmd_si(char *args) {
-  //printf("args:%s\n",args);
   if(args==NULL){
     cpu_exec(1);
     return 0;
   }
-  int n=0,i;
-  for(i=0;i<strlen(args);i++){
-    n=10*n+args[i]-'0';
-  }
-  //printf("n:%d\n",n);
-  cpu_exec(n);
+  int n=atoi(args);
+  if(n==0)cpu_exec(1);
+	else cpu_exec(n);
   return 0;
 }
 
