@@ -51,7 +51,9 @@ static int cmd_si(char *args) {
   }
   int n=atoi(args);
   if(n==0)cpu_exec(1);
-	else cpu_exec(n);
+	else if(n<-1){
+	  printf("Unknown number '%d'\n",n);
+	}else cpu_exec(n);
   return 0;
 }
 
