@@ -296,7 +296,6 @@ int eval(int p,int q){
 				return eval(p+1,q-1);
 		}else{
 				int dominant=find_dominant(p,q);
-				printf("dominant:%d\ntype:%d\n",dominant,TK_MINUS==tokens[dominant].type);
 				if(tokens[dominant].type==TK_POINTER){
 				  return vaddr_read(eval(dominant+1,q),4);
 				}else if(tokens[dominant].type==TK_MINUS){
