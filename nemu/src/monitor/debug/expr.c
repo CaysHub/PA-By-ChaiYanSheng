@@ -105,7 +105,6 @@ static bool make_token(char *e) {
 	              for(j=0;j<substr_len;j++){
 	                  tokens[nr_token].str[j]=substr_start[j];
 	              }
-								printf("%s\n",tokens[nr_token].str);
 	              tokens[nr_token].str[j]='\0';
 	          }
 	          nr_token++;
@@ -363,7 +362,7 @@ bool check_expression(){
 							tokens[i+1].type!=TK_MINUS&&tokens[i+1].type!=TK_POINTER&&
 							tokens[i+1].type!=TK_NOT)){
 			  return false;
-			}else if(i!=0&&((!isoperator(i-1)&&tokens[i-1].type!=TK_L_BRACKET)||
+			}else if(i!=0&&((isoperator(i-1)&&tokens[i-1].type!=TK_L_BRACKET)||
 								(tokens[i+1].type!=TK_NUM&&tokens[i+1].type!=TK_HEXNUM&&
 								 tokens[i+1].type!=TK_MINUS&&tokens[i+1].type!=TK_POINTER&&
 								 tokens[i+1].type!=TK_NOT))){
