@@ -362,11 +362,13 @@ bool check_expression(){
 							tokens[i+1].type!=TK_REG&&tokens[i+1].type!=TK_L_BRACKET&&
 							tokens[i+1].type!=TK_MINUS&&tokens[i+1].type!=TK_POINTER&&
 							tokens[i+1].type!=TK_NOT)){
+				printf("1\n");
 			  return false;
-			}else if(i!=0&&((isoperator(i-1)&&tokens[i-1].type!=TK_L_BRACKET)||
+			}else if(i!=0&&((!isoperator(i-1)&&tokens[i-1].type!=TK_L_BRACKET)||
 								(tokens[i+1].type!=TK_NUM&&tokens[i+1].type!=TK_HEXNUM&&
 								 tokens[i+1].type!=TK_MINUS&&tokens[i+1].type!=TK_POINTER&&
 								 tokens[i+1].type!=TK_NOT))){
+				printf("2\n");
 			  return false;
 			}
 		}
