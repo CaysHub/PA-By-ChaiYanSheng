@@ -156,6 +156,7 @@ uint32_t expr(char *e, bool *success) {
 		}
 	}
 	if(!check_expression()){
+		printf("Expression Error\n");
 	  *success=false;
 	}
 	if(*success==true){
