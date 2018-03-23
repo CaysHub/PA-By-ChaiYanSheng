@@ -269,7 +269,7 @@ bool check_parentheses(int p,int q){
 int eval(int p,int q){
     if(p>q){
 				printf("Error!\n");
-				return -1;
+				return -2147483648;
 		}else if(p==q){
 				if(tokens[p].type==TK_NUM){
 				    int num=atoi(tokens[p].str);
@@ -315,7 +315,7 @@ int eval(int p,int q){
 							case TK_OR:return val1||val2;break;
 							case TK_EQ:return val1==val2;break;
 							case TK_NEQ:return val1!=val2;break;
-							default:return -1;
+							default:return -2147483648;
 					}
 				}
 		}
@@ -361,12 +361,12 @@ bool check_expression(){
 			else if(i==0&&(tokens[i+1].type!=TK_NUM&&tokens[i+1].type!=TK_HEXNUM&&
 							tokens[i+1].type!=TK_REG&&tokens[i+1].type!=TK_L_BRACKET&&
 							tokens[i+1].type!=TK_MINUS&&tokens[i+1].type!=TK_POINTER&&
-							tokens[i+1].type!=TK_NOT&&tokens[i+1].type!=TK_OBJECT)){
+							tokens[i+1].type!=TK_NOT)){
 			  return false;
 			}else if(i!=0&&((!isoperator(i-1)&&tokens[i-1].type!=TK_L_BRACKET)||
 								(tokens[i+1].type!=TK_NUM&&tokens[i+1].type!=TK_HEXNUM&&
 								 tokens[i+1].type!=TK_MINUS&&tokens[i+1].type!=TK_POINTER&&
-								 tokens[i+1].type!=TK_NOT&&tokens[i+1].type!=TK_OBJECT))){
+								 tokens[i+1].type!=TK_NOT))){
 			  return false;
 			}
 		}
