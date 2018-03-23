@@ -273,8 +273,7 @@ int eval(int p,int q){
 		}else if(p==q){
 				if(tokens[p].type==TK_NUM){
 				    int num=atoi(tokens[p].str);
-						if(p>0&&tokens[p-1].type==TK_MINUS)return -num;
-						else return num;
+						return num;
 				}else if(tokens[p].type==TK_REG){
 						if(strcmp(tokens[p].str,"$eax")==0) return cpu.eax;
 						else if(strcmp(tokens[p].str,"$ebx")==0) return cpu.ebx;
