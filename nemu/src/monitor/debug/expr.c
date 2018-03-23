@@ -136,7 +136,6 @@ int getnum(char ch){
 	else if(ch>='A'&&ch<='Z')return ch-'A'+10;
 	return 0;
 }
-bool check_expression();
 uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
@@ -317,60 +316,7 @@ int eval(int p,int q){
 		}
 		return 0;
 }
-bool check_expression(){
-  int *bracket=(int*)malloc(nr_token*sizeof(int));
-	int i;
-	for(i=0;i<nr_token;i++)bracket[i]=-1;
-	int count=-1;
-	for(i=0;i<nr_token;i++){
-	  if(tokens[i].type==TK_L_BRACKET){
-		  count++;
-			bracket[count]=i;
-		}else if(tokens[i].type==TK_R_BRACKET){
-		  if(count==-1){
-			  free(bracket);
-				return false;
-			}else count--;
-		}
-	}
-	if(count!=-1){
-	  free(bracket);
-		return false;
-	}
-	free(bracket);
-	for(i=0;i<nr_token;i++){
-	  if(tokens[i].type==TK_ADD||tokens[i].type==TK_SUB||tokens[i].type==TK_MUL||
-				tokens[i].type==TK_DIV||tokens[i].type==TK_EQ||tokens[i].type==TK_NEQ||
-			  tokens[i].type==TK_AND||tokens[i].type==TK_OR){
-		  if(i==0||i==nr_token-1)return false;
-			else if((tokens[i-1].type!=TK_NUM&&tokens[i-1].type!=TK_HEXNUM&&
-						   tokens[i-1].type!=TK_REG&&tokens[i-1].type!=TK_R_BRACKET&&
-							 tokens[i-1].type!=TK_OBJECT)||(tokens[i+1].type!=TK_NUM&&
-							 tokens[i+1].type!=TK_HEXNUM&&tokens[i+1].type!=TK_REG&&
-							 tokens[i+1].type!=TK_L_BRACKET&&tokens[i+1].type!=TK_MINUS&&
-							 tokens[i+1].type!=TK_POINTER&&tokens[i+1].type!=TK_NOT)){
-			  return false;
-			}
-		}else if(tokens[i].type==TK_MINUS||tokens[i].type==TK_POINTER||
-							tokens[i].type==TK_NOT){
-		  if(i==nr_token-1)return false;
-			else if(i==0&&(tokens[i+1].type!=TK_NUM&&tokens[i+1].type!=TK_HEXNUM&&
-							tokens[i+1].type!=TK_REG&&tokens[i+1].type!=TK_L_BRACKET&&
-							tokens[i+1].type!=TK_MINUS&&tokens[i+1].type!=TK_POINTER&&
-							tokens[i+1].type!=TK_NOT)){
-				printf("1\n");
-			  return false;
-			}else if(i!=0&&((!isoperator(i-1)&&tokens[i-1].type!=TK_L_BRACKET)||
-								(tokens[i+1].type!=TK_NUM&&tokens[i+1].type!=TK_HEXNUM&&
-								 tokens[i+1].type!=TK_MINUS&&tokens[i+1].type!=TK_POINTER&&
-								 tokens[i+1].type!=TK_NOT))){
-				printf("2\n");
-			  return false;
-			}
-		}
-	}
-	return true;
-}
+
 
 
 
