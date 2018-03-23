@@ -55,3 +55,6 @@ clean:
 
 count:
 	find . -name "*.[ch]"|xargs cat|wc -l
+
+count_n:
+	find . -name "*.[ch]"|xargs cat|grep -v ^$$|wc -l
