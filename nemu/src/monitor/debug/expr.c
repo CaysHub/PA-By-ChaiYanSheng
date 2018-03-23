@@ -160,7 +160,7 @@ uint32_t expr(char *e, bool *success) {
 	}
 	if(*success==true){
 	  int num=eval(0,nr_token-1);
-		if(num==-1){
+		if(num==-2147483648){
 		  printf("Somthing wrong with the expressions!\n");
 			return 0;
 		}else{
