@@ -40,6 +40,10 @@ static struct rule {
   {"\\$e[bs]p",TK_REG},    // register
   {"\\$e[sd]i",TK_REG},    // register
   {"\\$eip",TK_REG},       // register
+	{"\\$[abcd][lh]",TK_REG},// register
+	{"\\$[abcd]x",TK_REG},   // register
+	{"\\$[bs]p",TK_REG},     // register
+	{"\\$[ds]i",TK_REG},     // register
   {"&&",TK_AND},           // &&
   {"\\|\\|",TK_OR},        // ||
   {"!",TK_NOT},            // !
@@ -275,6 +279,10 @@ int eval(int p,int q){
 						for(i=0;i<8;i++){
 						    if(strcmp(tokens[p].str,regsl[i])==0){
 								    return reg_l(i);
+								}else if(strcmp(tokens[p].str,regsw[i])==0){
+								    return reg_w(i);
+								}else if(strcmp(tokens[p].str,regsb[i])==0){
+								    return reg_b(i);
 								}
 						}
 				}else if(tokens[p].type==TK_HEXNUM){
