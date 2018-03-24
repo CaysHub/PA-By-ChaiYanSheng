@@ -162,7 +162,7 @@ uint32_t expr(char *e, bool *success) {
 		}
 	}
 	if(!check_expression()){
-		//*success=false;
+		*success=false;
 	}
 	if(*success==true){
 	  int num=eval(0,nr_token-1);
@@ -346,7 +346,7 @@ bool check_expression(){
 								if(i==nr_token-1)
 										return false;
 						    else if(i!=0&&(tl==TK_R_BRACKET||tl==TK_NUM||tl==TK_HEXNUM||
-										tl==TK_REG||tr==TK_L_BRACKET||(isoperator(i+1)&&tr!=TK_MINUS&&tr!=TK_POINTER&&
+										tl==TK_REG||tr==TK_L_BRACKET||(isoperator(i+1)&&tr!=TK_POINTER&&
 										tr!=TK_L_BRACKET)))
 										return false;
 						}else{
