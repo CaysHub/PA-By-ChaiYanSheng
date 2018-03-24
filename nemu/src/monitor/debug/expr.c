@@ -102,7 +102,7 @@ static bool make_token(char *e) {
 	          if(tokens[nr_token].type==TK_NUM||tokens[nr_token].type==TK_HEXNUM||
 				        tokens[nr_token].type==TK_REG){
 	              int j;
-	              for(j=0;j<substr_len;j++){
+	              for(j=1;j<substr_len;j++){
 	                  tokens[nr_token].str[j]=substr_start[j];
 	              }
 	              tokens[nr_token].str[j]='\0';
@@ -271,16 +271,12 @@ int eval(int p,int q){
 				    int num=atoi(tokens[p].str);
 						return num;
 				}else if(tokens[p].type==TK_REG){
-						if(strcmp(tokens[p].str,"$eax")==0) return cpu.eax;
-						else if(strcmp(tokens[p].str,"$ebx")==0) return cpu.ebx;
-						else if(strcmp(tokens[p].str,"$ecx")==0) return cpu.ecx;
-						else if(strcmp(tokens[p].str,"$edx")==0) return cpu.edx;
-						else if(strcmp(tokens[p].str,"$ebp")==0) return cpu.ebp;
-						else if(strcmp(tokens[p].str,"$esp")==0) return cpu.esp;
-						else if(strcmp(tokens[p].str,"$esi")==0) return cpu.esi;
-						else if(strcmp(tokens[p].str,"$edi")==0) return cpu.edi;
-						else if(strcmp(tokens[p].str,"$eip")==0) return cpu.eip;
-						else;
+						int i;
+						for(i=0;i<8;i++){
+						    if(strcmp(tokens[p].str,regsl[i])==0){
+								    return reg_l(i);
+								}
+						}
 				}else if(tokens[p].type==TK_HEXNUM){
 				  int num;
 					sscanf(tokens[p].str,"0x%x",&num);
