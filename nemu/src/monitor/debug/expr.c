@@ -105,11 +105,13 @@ static bool make_token(char *e) {
             tokens[nr_token].type=rules[i].token_type;
 	          if(tokens[nr_token].type==TK_NUM||tokens[nr_token].type==TK_HEXNUM||
 				        tokens[nr_token].type==TK_REG){
-	              int j;
-	              for(j=1;j<substr_len;j++){
-	                  tokens[nr_token].str[j-1]=substr_start[j];
+	              int j,k;
+								if(tokens[nr_token].type==TK_REG){j=1;k=-1;}
+								else {j=0;k=0;}
+	              for(;j<substr_len;j++){
+	                  tokens[nr_token].str[j+k]=substr_start[j];
 	              }
-	              tokens[nr_token].str[j-1]='\0';
+	              tokens[nr_token].str[j+k]='\0';
 	          }
 	          nr_token++;
 	      }
