@@ -162,7 +162,6 @@ uint32_t expr(char *e, bool *success) {
 		}
 	}
 	if(!check_expression()){
-	  printf("Unknown Expression '%s'\n",e);
 		*success=false;
 	}
 	if(*success==true){
