@@ -103,9 +103,9 @@ static bool make_token(char *e) {
 				        tokens[nr_token].type==TK_REG){
 	              int j;
 	              for(j=1;j<substr_len;j++){
-	                  tokens[nr_token].str[j]=substr_start[j];
+	                  tokens[nr_token].str[j-1]=substr_start[j];
 	              }
-	              tokens[nr_token].str[j]='\0';
+	              tokens[nr_token].str[j-1]='\0';
 	          }
 	          nr_token++;
 	      }
