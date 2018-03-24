@@ -136,6 +136,7 @@ int find_dominant(int p,int q);
 bool isoperator(int index);
 bool isinbracket(int index,int p,int q);
 int priority(int i);
+bool check_expression();
 int getnum(char ch){
   if(ch>='0'&&ch<='9')return ch-'0';
 	else if(ch>='a'&&ch<='z')return ch-'a'+10;
@@ -159,6 +160,10 @@ uint32_t expr(char *e, bool *success) {
 					   tokens[i-1].type==TK_L_BRACKET)){
 		  tokens[i].type=TK_MINUS;
 		}
+	}
+	if(!check_expression()){
+	  printf("Unknown Expression '%s'\n",args);
+		*success=false;
 	}
 	if(*success==true){
 	  int num=eval(0,nr_token-1);
@@ -322,7 +327,47 @@ int eval(int p,int q){
 		}
 		return 0;
 }
-
+bool check_expression(){
+    int l=0,r=0,i,j,k;
+		for(i=0;i<nr_token;i++){
+		    if(tokens[i].type==TK_L_BRACKET){
+				    l++;
+				}else if(tokens[i].type==TK_R_BRACKET){
+				    if(l>0)l--;
+						else return false;
+				}
+		}
+		if(l>0)return false;
+		for(i=0;i<nr_token;i++){
+		    int t=tokens[i].type,tl=-1,tr=-1;
+				if(i>0)tl=tokens[i-1].type;
+				if(i<nr_token-1)tr=tokens[i+1].type;
+				if(isoperator(i)){
+				    if(t==TK_POINTER||t==TK_MINUS){
+								if(i==nr_token-1)
+										return false;
+						    else if(i!=0&&(tl==TK_R_BRACKET||tl==TK_NUM||tl==TK_HEXNUM||
+										tl==TK_REG||tr==TK_L_BRACKET||isoperator(i+1)))
+										return false;
+						}else{
+						    if(i==0||i==nr_token-1)
+								    return false;
+								else if(tl==TK_L_BRACKET||tr==TK_R_BRACKET||isoperator(i-1))
+								    return false;
+						}
+				}else if(t==TK_NUM||t==TK_REG||t==TK_HEXNUM){
+				    if(i!=0&&i!=nr_token-1&&(tl==TK_R_BRACKET||tr==TK_L_BRACKET||tl==TK_NUM||tl==TK_HEXNUM||
+						    tl==TK_REG||tr==TK_NUM||tr==TK_HEXNUM||tr==TK_REG||tr==TK_MINUS||tr==TK_POINTER))
+								return false;
+						else if(i==0&&(tr==TK_L_BRACKET||tr==TK_NUM||tr==TK_REG||tr==TK_HEXNUM||tr==TK_MINUS||
+									    tr==TK_POINTER))
+								return false;
+						else if(i==nr_token-1&&(tl==TK_R_BRACKET||tl==TK_NUM||tl==TK_HEXNUM||tl==TK_REG))
+								return false;
+				}
+		}
+    return true;
+}
 
 
 
