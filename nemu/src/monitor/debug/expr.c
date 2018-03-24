@@ -162,7 +162,7 @@ uint32_t expr(char *e, bool *success) {
 		}
 	}
 	if(!check_expression()){
-	  printf("Unknown Expression '%s'\n",args);
+	  printf("Unknown Expression '%s'\n",e);
 		*success=false;
 	}
 	if(*success==true){
@@ -328,7 +328,7 @@ int eval(int p,int q){
 		return 0;
 }
 bool check_expression(){
-    int l=0,r=0,i,j,k;
+    int l=0,i;
 		for(i=0;i<nr_token;i++){
 		    if(tokens[i].type==TK_L_BRACKET){
 				    l++;
