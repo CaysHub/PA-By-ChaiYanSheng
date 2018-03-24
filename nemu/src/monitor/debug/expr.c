@@ -162,7 +162,7 @@ uint32_t expr(char *e, bool *success) {
 		}
 	}
 	if(!check_expression()){
-		*success=false;
+		//*success=false;
 	}
 	if(*success==true){
 	  int num=eval(0,nr_token-1);
