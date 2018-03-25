@@ -161,6 +161,9 @@ uint32_t expr(char *e, bool *success) {
 		  tokens[i].type=TK_MINUS;
 		}
 	}
+	if(!check_expression()){
+	  *success=false;
+	}
 	if(*success==true){
 	  int num=eval(0,nr_token-1);
 		if(num==-2147483648){
