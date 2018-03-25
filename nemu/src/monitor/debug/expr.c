@@ -334,10 +334,11 @@ bool check_expression(){
 				}
 		}
 		if(l>0)return false;
-		i=0;int ty=tokens[i].type;
+		i=0;
+		int ty=tokens[i].type;
 		if(ty==TK_ADD||ty==TK_MUL||ty==TK_SUB||
 				ty==TK_DIV||ty==TK_AND||ty==TK_OR||
-				ty==TK_EQ||ty==TK_NEQ||ty==TK_R_BRACKET）
+				ty==TK_EQ||ty==TK_NEQ||ty==TK_R_BRACKET)
 				return false;
 		for(i=1;i<nr_token-1;i++){
 		    int t=tokens[i].type,tr=tokens[i+1].type;
@@ -365,7 +366,7 @@ bool check_expression(){
 							break;
 					}
 					case TK_L_BRACKET:{
-					    if(tr==tr==TK_ADD||tr==TK_MUL||tr==TK_SUB||
+					    if(tr==TK_ADD||tr==TK_MUL||tr==TK_SUB||
 									tr==TK_DIV||tr==TK_AND||tr==TK_OR||
 									tr==TK_EQ||tr==TK_NEQ||tr==TK_NOT||
 									tr==TK_R_BRACKET)
@@ -399,7 +400,7 @@ bool check_expression(){
 					default:break;
 				}
 		}
-		ty==tokens[i].type;
+		ty=tokens[i].type;
 		if(ty==TK_EQ||ty==TK_SUB||ty==TK_ADD||
 				ty==TK_MUL||ty==TK_DIV||ty==TK_L_BRACKET||
 				ty==TK_AND||ty==TK_OR||ty==TK_NOT||
