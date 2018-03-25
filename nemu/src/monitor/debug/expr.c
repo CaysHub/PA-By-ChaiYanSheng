@@ -334,35 +334,77 @@ bool check_expression(){
 				}
 		}
 		if(l>0)return false;
-		for(i=0;i<nr_token;i++){
-		    int t=tokens[i].type,tl=-1,tr=-1;
-				if(i>0)tl=tokens[i-1].type;
-				if(i<nr_token-1)tr=tokens[i+1].type;
-				if(isoperator(i)){
-				    if(t==TK_POINTER||t==TK_MINUS){
-								if(i==nr_token-1)
-										return false;
-						    else if(i!=0&&(tl==TK_R_BRACKET||tl==TK_NUM||tl==TK_HEXNUM||
-										tl==TK_REG||tr==TK_L_BRACKET||(isoperator(i+1)&&tr!=TK_POINTER&&
-										tr!=TK_L_BRACKET)))
-										return false;
-						}else{
-						    if(i==0||i==nr_token-1)
-								    return false;
-								else if(tl==TK_L_BRACKET||tr==TK_R_BRACKET||isoperator(i-1))
-								    return false;
-						}
-				}else if(t==TK_NUM||t==TK_REG||t==TK_HEXNUM){
-				    if(i!=0&&i!=nr_token-1&&(tl==TK_R_BRACKET||tr==TK_L_BRACKET||tl==TK_NUM||tl==TK_HEXNUM||
-						    tl==TK_REG||tr==TK_NUM||tr==TK_HEXNUM||tr==TK_REG||tr==TK_MINUS||tr==TK_POINTER))
-								return false;
-						else if(i==0&&(tr==TK_L_BRACKET||tr==TK_NUM||tr==TK_REG||tr==TK_HEXNUM||tr==TK_MINUS||
-									    tr==TK_POINTER))
-								return false;
-						else if(i==nr_token-1&&(tl==TK_R_BRACKET||tl==TK_NUM||tl==TK_HEXNUM||tl==TK_REG))
-								return false;
+		i=0;int ty=tokens[i].type;
+		if(ty==TK_ADD||ty==TK_MUL||ty==TK_SUB||
+				ty==TK_DIV||ty==TK_AND||ty==TK_OR||
+				ty==TK_EQ||ty==TK_NEQ||ty==TK_R_BRACKET）
+				return false;
+		for(i=1;i<nr_token-1;i++){
+		    int t=tokens[i].type,tr=tokens[i+1].type;
+				switch(t){
+				  case TK_ADD:
+					case TK_MUL:
+					case TK_SUB:
+					case TK_DIV:
+					case TK_AND:
+					case TK_OR:
+					case TK_EQ:
+					case TK_NEQ:{
+					    if(tr==TK_ADD||tr==TK_MUL||tr==TK_SUB||
+							    tr==TK_DIV||tr==TK_AND||tr==TK_OR||
+									tr==TK_EQ||tr==TK_NEQ||tr==TK_NOT||
+									tr==TK_R_BRACKET)
+									return false;
+							break;
+					}
+					case TK_NOT:{
+							if(tr==TK_ADD||tr==TK_SUB||tr==TK_MUL||
+									tr==TK_DIV||tr==TK_AND||tr==TK_OR||
+									tr==TK_EQ||tr==TK_NEQ||tr==TK_R_BRACKET)
+									return false;
+							break;
+					}
+					case TK_L_BRACKET:{
+					    if(tr==tr==TK_ADD||tr==TK_MUL||tr==TK_SUB||
+									tr==TK_DIV||tr==TK_AND||tr==TK_OR||
+									tr==TK_EQ||tr==TK_NEQ||tr==TK_NOT||
+									tr==TK_R_BRACKET)
+									return false;
+							break;
+					}
+					case TK_R_BRACKET:{
+							if(tr==TK_NOT||tr==TK_NUM||tr==TK_MINUS||
+									tr==TK_HEXNUM||tr==TK_REG||tr==TK_POINTER||
+								  tr==TK_L_BRACKET)
+									return false;
+							break;
+					}
+					case TK_REG:
+					case TK_NUM:
+					case TK_HEXNUM:{
+							if(tr==TK_NOT||tr==TK_NUM||tr==TK_REG||
+									tr==TK_HEXNUM||tr==TK_POINTER||
+								  tr==TK_MINUS||tr==TK_L_BRACKET)
+									return false;
+							break;
+					}
+					case TK_POINTER:
+					case TK_MINUS:{
+							if(tr==TK_ADD||tr==TK_SUB||tr==TK_MUL||
+									tr==TK_DIV||tr==TK_AND||tr==TK_OR||
+									tr==TK_EQ||tr==TK_NEQ)
+									return false;
+							break;
+					}
+					default:break;
 				}
 		}
+		ty==tokens[i].type;
+		if(ty==TK_EQ||ty==TK_SUB||ty==TK_ADD||
+				ty==TK_MUL||ty==TK_DIV||ty==TK_L_BRACKET||
+				ty==TK_AND||ty==TK_OR||ty==TK_NOT||
+				ty==TK_POINTER||ty==TK_MINUS)
+				return false;
     return true;
 }
 
