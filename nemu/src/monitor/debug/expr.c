@@ -112,7 +112,6 @@ static bool make_token(char *e) {
 	                  tokens[nr_token].str[j+k]=substr_start[j];
 	              }
 	              tokens[nr_token].str[j+k]='\0';
-								printf("register:%s\n",tokens[nr_token].str);
 	          }
 	          nr_token++;
 	      }
