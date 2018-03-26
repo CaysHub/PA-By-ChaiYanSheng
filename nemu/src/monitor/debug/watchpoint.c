@@ -80,7 +80,7 @@ void print_all_wp(){
 	while(p!=NULL){
 	  printf("%-8d",p->NO);
 		printf("%-8c",p->type);
-		printf("%-12x",p->value);
+		printf("0x%-8x",p->value);
 		printf("%-5c",p->enb);
 		printf("%-8s",p->expression);
 		printf("\n");
@@ -102,6 +102,7 @@ void print_one_wp(int no){
 		printf("Watchpoint  %d: %s\n",p->NO,p->expression);
 		printf("Old Value   %d\n",p->value);
 		printf("New Value   %d\n",new_value);
+		printf("W%s\n",p->expression);
 	}
 }
 
