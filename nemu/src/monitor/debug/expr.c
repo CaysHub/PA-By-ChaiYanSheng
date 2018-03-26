@@ -282,9 +282,11 @@ int eval(int p,int q){
 						return num;
 				}else if(tokens[p].type==TK_REG){
 						int i;
+						if(strcmp(tokens[p].str,"eip")){
+						  return cpu.eip;
+						}
 						for(i=0;i<8;i++){
 						    if(strcmp(tokens[p].str,regsl[i])==0){
-										printf("%d %d\n",reg_l(i),cpu.eip);
 								    return reg_l(i);
 								}else if(strcmp(tokens[p].str,regsw[i])==0){
 								    return reg_w(i);
