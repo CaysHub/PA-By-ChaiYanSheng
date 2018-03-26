@@ -342,7 +342,7 @@ bool check_expression(){
 		}
 		if(l>0)return false;
 		i=0;
-		int ty=tokens[i].type;
+		int ty=tokens[0].type;
 		if(ty==TK_ADD||ty==TK_MUL||ty==TK_SUB||
 				ty==TK_DIV||ty==TK_AND||ty==TK_OR||
 				ty==TK_EQ||ty==TK_NEQ||ty==TK_R_BRACKET)
@@ -404,10 +404,10 @@ bool check_expression(){
 									return false;
 							break;
 					}
-					default:;
+					default:return false;break;
 				}
 		}
-		ty=tokens[i].type;
+		ty=tokens[nr_token-1].type;
 		if(ty==TK_EQ||ty==TK_SUB||ty==TK_ADD||
 				ty==TK_MUL||ty==TK_DIV||ty==TK_L_BRACKET||
 				ty==TK_AND||ty==TK_OR||ty==TK_NOT||
