@@ -403,7 +403,7 @@ bool check_expression(){
 									return false;
 							break;
 					}
-					default:break;
+					default:;
 				}
 		}
 		ty=tokens[i].type;
