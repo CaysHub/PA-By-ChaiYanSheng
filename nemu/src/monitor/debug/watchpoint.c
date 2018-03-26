@@ -37,6 +37,8 @@ void free_wp(WP* wp){
 	if(wp==NULL){
 	  assert(0);
 	}else{
+		wp->type=' ';
+		wp->enb='n';
 	  wp->next=free_;
 		free_=wp;
 	}
@@ -50,10 +52,12 @@ void insert_wp(char *args){
 	  return;
 	}
 	WP *wp1=new_wp();
+	wp1->type='w';
+	wp1->enb='y';
 	strcpy(wp1->expression,args);
 	wp1->value=value;
 	if(head==NULL){
-	  wp1->NO=1;
+		wp1->NO=1;
 		head=wp1;
 		wp1->next=NULL;
 	}else{
@@ -71,12 +75,14 @@ void print_all_wp(){
 		printf("No watchpoint\n");
 	  return;
 	}
-	printf("No.     Name        Value   \n");
+	printf("Num     Type    Value    Enb  What    \n");
 	WP *p=head;
 	while(p!=NULL){
 	  printf("%-8d",p->NO);
-		printf("%-12s",p->expression);
-		printf("%-8d",p->value);
+		printf("%-8c",p->type);
+		printf("%-12x",p->value);
+		printf("%-5c",p->enb);
+		printf("%-8s",p->expression);
 		printf("\n");
 		p=p->next;
 	}

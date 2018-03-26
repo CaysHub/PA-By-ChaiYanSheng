@@ -10,6 +10,8 @@ typedef struct watchpoint {
   /* TODO: Add more members if necessary */
   char expression[128];
 	int value;
+	char type;
+	char enb;
 
 } WP;
 
