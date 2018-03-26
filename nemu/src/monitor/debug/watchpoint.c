@@ -80,7 +80,7 @@ void print_all_wp(){
 	while(p!=NULL){
 	  printf("%-8d",p->NO);
 		printf("%-8c",p->type);
-		printf("0x%-8x",p->value);
+		printf("0x%-7x",p->value);
 		printf("%-5c",p->enb);
 		printf("%-8s",p->expression);
 		printf("\n");
