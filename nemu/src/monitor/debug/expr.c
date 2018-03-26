@@ -282,7 +282,7 @@ int eval(int p,int q){
 						return num;
 				}else if(tokens[p].type==TK_REG){
 						int i;
-						if(strcmp(tokens[p].str,"eip")){
+						if(strcmp(tokens[p].str,"eip")==0){
 						  return cpu.eip;
 						}
 						for(i=0;i<8;i++){
