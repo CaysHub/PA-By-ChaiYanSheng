@@ -39,8 +39,18 @@ void free_wp(WP* wp){
 	}else{
 		wp->type=' ';
 		wp->enb='n';
-	  wp->next=free_;
-		free_=wp;
+		if(wp->NO<free_->NO){
+	    wp->next=free_;
+		  free_=wp;
+		}else{
+		  WP *p,*q;
+			p=free_;q=p->next;
+			while(q!=NULL&&q->NO<wp->NO){
+			  p=p->next;q=p->next;
+			}
+			p->next=wp;
+			wp->next=q;
+		}
 	}
 }
 
@@ -57,13 +67,11 @@ void insert_wp(char *args){
 	strcpy(wp1->expression,args);
 	wp1->value=value;
 	if(head==NULL){
-		wp1->NO=1;
 		head=wp1;
 		wp1->next=NULL;
 	}else{
 	  WP *p=head;
 		while(p->next!=NULL)p=p->next;
-		wp1->NO=p->NO+1;
 		p->next=wp1;
 		wp1->next=NULL;
 	}
