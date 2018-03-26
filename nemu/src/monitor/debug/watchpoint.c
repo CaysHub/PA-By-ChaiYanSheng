@@ -37,8 +37,6 @@ void free_wp(WP* wp){
 	if(wp==NULL){
 	  assert(0);
 	}else{
-		wp->type=' ';
-		wp->enb='n';
 		if(wp->NO<free_->NO){
 	    wp->next=free_;
 		  free_=wp;
@@ -62,8 +60,6 @@ void insert_wp(char *args){
 	  return;
 	}
 	WP *wp1=new_wp();
-	wp1->type='w';
-	wp1->enb='y';
 	strcpy(wp1->expression,args);
 	wp1->value=value;
 	if(head==NULL){
@@ -83,13 +79,11 @@ void print_all_wp(){
 		printf("No watchpoint\n");
 	  return;
 	}
-	printf("Num     Type    Value    Enb  What    \n");
+	printf("Num     Value    What    \n");
 	WP *p=head;
 	while(p!=NULL){
 	  printf("%-8d",p->NO);
-		printf("%-8c",p->type);
 		printf("0x%-7x",p->value);
-		printf("%-5c",p->enb);
 		printf("%-8s",p->expression);
 		printf("\n");
 		p=p->next;
@@ -107,10 +101,10 @@ void print_one_wp(int no){
 		bool s=true;
 	  int new_value=expr(p->expression,&s);
 		if(!s)return;
-		printf("Watchpoint  %d: %s\n",p->NO,p->expression);
-		printf("Old Value   %d\n",p->value);
-		printf("New Value   %d\n",new_value);
-		printf("W%s\n",p->expression);
+		printf("Watchpoint  NO.%d: %s\n",p->NO,p->expression);
+		printf("Old Value   :%d\n",p->value);
+		printf("New Value   :%d\n",new_value);
+		printf("Watchpoint  :%s\n",p->expression);
 	}
 }
 
