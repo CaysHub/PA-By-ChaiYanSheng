@@ -79,11 +79,11 @@ void print_all_wp(){
 		printf("No watchpoint\n");
 	  return;
 	}
-	printf("Num     Value    What    \n");
+	printf("Num     Value      What    \n");
 	WP *p=head;
 	while(p!=NULL){
 	  printf("%-8d",p->NO);
-		printf("0x%-7x",p->value);
+		printf("0x%-9x",p->value);
 		printf("%-8s",p->expression);
 		printf("\n");
 		p=p->next;
