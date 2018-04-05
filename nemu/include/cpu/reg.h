@@ -33,7 +33,7 @@ typedef struct {
     };
 		// EFLAGS
 		union{
-		  uint32_t EFLAGS;        // 00000002H
+		  uint32_t val;        // 00000002H
 			struct{
 			  unsigned int CF:1;    // carry flag
 				unsigned int ZF:1;    // zero flag
@@ -41,7 +41,7 @@ typedef struct {
 				unsigned int IF:1;    // interrupt flag
 				unsigned int OF:1;    // overflow flag
 			};
-		};
+		}eflags;
   };
   vaddr_t eip;
 
