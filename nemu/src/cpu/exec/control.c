@@ -28,6 +28,7 @@ make_EHelper(call) {
   // TODO();
   if(decoding.is_operand_size_16){
 	}else{
+		printf("0x%x\n",cpu.eip);
 	  rtl_push(&cpu.eip);
 		cpu.eip+=id_src->val;
 	}
