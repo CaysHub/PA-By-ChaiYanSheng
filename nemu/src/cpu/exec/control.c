@@ -30,7 +30,7 @@ make_EHelper(call) {
 	}else{
 		printf("0x%x\n",cpu.eip);
 	  rtl_push(&cpu.eip);
-		cpu.eip+=id_dest->val;
+		cpu.eip+=id_dest->val+1+4;
 		printf("0x%x\n",cpu.eip);
 	}
   decoding.is_jmp=1;
