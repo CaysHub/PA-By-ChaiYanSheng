@@ -8,6 +8,7 @@ make_EHelper(add) {
 make_EHelper(sub) {
   // TODO();
 	rtl_sub(&t2,&id_dest->val,&id_src->val);
+	printf("The src :%d\n",id_src->width);
 	rtl_sltu(&t3,&id_dest->val,&t2);
 	//rtl_get_CF(&t1);
 	operand_write(id_dest,&t2);
