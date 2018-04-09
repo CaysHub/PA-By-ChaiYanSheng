@@ -42,6 +42,7 @@ static inline make_DopHelper(SI) {
   // TODO();
 	op->simm=instr_fetch(eip,op->width);
 	printf("SI:op->width:%d\n",op->width);
+	printf("Opcode:0x%x\n",decoding.opcode);
 	op->val=op->simm;
   rtl_li(&op->val, op->simm);
 
