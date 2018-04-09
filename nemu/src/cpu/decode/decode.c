@@ -15,7 +15,7 @@ static inline make_DopHelper(I) {
   /* eip here is pointing to the immediate */
   op->type = OP_TYPE_IMM;
   op->imm = instr_fetch(eip, op->width);
-	printf("op->width:%d\n",op->width);
+	printf("I:op->width:%d\n",op->width);
   rtl_li(&op->val, op->imm);
 
 #ifdef DEBUG
@@ -41,6 +41,7 @@ static inline make_DopHelper(SI) {
    */
   // TODO();
 	op->simm=instr_fetch(eip,op->width);
+	printf("SI:op->width:%d\n",op->width);
 	op->val=op->simm;
   rtl_li(&op->val, op->simm);
 
