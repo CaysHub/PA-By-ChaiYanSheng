@@ -15,7 +15,7 @@ make_EHelper(sub) {
 
 	rtl_update_ZFSF(&t2,id_dest->width);
   //printf("The dest width:%d\n",id_dest->width);
-	rtl_sltu(&t0,&id_dest->val,&t2);
+	rtl_sltu(&t0,&t2,&id_dest->val);
 	rtl_or(&t0,&t3,&t0);
 	rtl_set_CF(&t0);
 
