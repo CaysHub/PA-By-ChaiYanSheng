@@ -29,22 +29,21 @@ typedef struct {
 		 * add the CPU_state
      */
     struct {
-      uint32_t eax, ecx, edx, ebx, esp, ebp, esi, edi;
+      rtlreg_t eax, ecx, edx, ebx, esp, ebp, esi, edi;
     };
-		// EFLAGS
-		union{
-		  uint32_t val;        // 00000002H
-			struct{
-			  unsigned int CF:1;    // carry flag
-				unsigned int ZF:1;    // zero flag
-				unsigned int SF:1;    // sign flag
-				unsigned int IF:1;    // interrupt flag
-				unsigned int OF:1;    // overflow flag
-			};
-		}eflags;
   };
   vaddr_t eip;
-
+  // EFLAGS
+	union{
+		uint32_t val;        // 00000002H
+		struct{
+			unsigned int CF:1;  // carry flag
+			unsigned int ZF:1;  // zero flag
+			unsigned int SF:1;  // sign flag
+			unsigned int IF:1;  // interrupt flag
+			unsigned int OF:1;  // overflow flag
+		};
+	}eflags;
 } CPU_state;
 
 extern CPU_state cpu;
