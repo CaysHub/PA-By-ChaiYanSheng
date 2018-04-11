@@ -23,7 +23,7 @@ static inline void set_width(int width) {
 /* Instruction Decode and EXecute */
 static inline void idex(vaddr_t *eip, opcode_entry *e) {
   /* eip is pointing to the byte next to opcode */
-  if (e->decode)
+  if (e->execute)
 	{e->decode(eip);
   e->execute(eip);}
 }
