@@ -198,11 +198,10 @@ make_DHelper(test_I) {
 
 make_DHelper(SI2E) {
   assert(id_dest->width == 2 || id_dest->width == 4);
-	printf("eip:0x%x  modR_M:0x%x\n",*eip,vaddr_read(*eip,1));
   decode_op_rm(eip, id_dest, true, NULL, false);
   id_src->width = 1;
   decode_op_SI(eip, id_src, true);
-	printf("Interrupt:eip:0x%x\n",*eip);
+	//printf("Interrupt:eip:0x%x\n",*eip);
   if (id_dest->width == 2) {
     id_src->val &= 0xffff;
   }
