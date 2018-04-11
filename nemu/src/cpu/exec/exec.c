@@ -39,7 +39,7 @@ static make_EHelper(2byte_esc);
     /* 0x04 */	item4, item5, item6, item7  \
   }; \
 static make_EHelper(name) { \
-  idex(eip, &concat(opcode_table_, name)[decoding.ext_opcode]); \
+  if(isExcute==1){idex(eip, &concat(opcode_table_, name)[decoding.ext_opcode]);isExcute=0;} \
 }
 
 /* 0x80, 0x81, 0x83 */
@@ -216,10 +216,11 @@ static make_EHelper(2byte_esc) {
 }
 
 make_EHelper(real) {
+	if(isExcute==0)isExcute=1;
   uint32_t opcode = instr_fetch(eip, 1);
   decoding.opcode = opcode;
   set_width(opcode_table[opcode].width);
-  idex(eip, &opcode_table[opcode]);
+  if(isExcute==1){idex(eip, &opcode_table[opcode]);isExcute=0;}
 	printf("opcode:0x%x\n",decoding.opcode);
 }
 
