@@ -37,7 +37,8 @@ static make_EHelper(2byte_esc);
     /* 0x04 */	item4, item5, item6, item7  \
   }; \
 static make_EHelper(name) { \
-  idex(eip, &concat(opcode_table_, name)[decoding.ext_opcode]); \
+  idex(eip, &concat(opcode_table_, name)[decoding.ext_opcode]);\
+	printf("1\n"); \
 }
 
 /* 0x80, 0x81, 0x83 */
