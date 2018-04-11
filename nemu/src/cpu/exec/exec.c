@@ -23,9 +23,9 @@ static inline void set_width(int width) {
 /* Instruction Decode and EXecute */
 static inline void idex(vaddr_t *eip, opcode_entry *e) {
   /* eip is pointing to the byte next to opcode */
-  if (e->execute)
-	{e->decode(eip);
-  e->execute(eip);}
+  if (e->decode)
+	  e->decode(eip);
+  e->execute(eip);
 }
 
 static make_EHelper(2byte_esc);
