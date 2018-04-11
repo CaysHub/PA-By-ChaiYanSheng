@@ -13,7 +13,6 @@ typedef struct {
 #define EX(ex)             EXW(ex, 0)
 #define EMPTY              EX(inv)
 
-int isExcute=0;
 
 static inline void set_width(int width) {
   if (width == 0) {
@@ -39,7 +38,7 @@ static make_EHelper(2byte_esc);
     /* 0x04 */	item4, item5, item6, item7  \
   }; \
 static make_EHelper(name) { \
-  if(isExcute==0){idex(eip, &concat(opcode_table_, name)[decoding.ext_opcode]);isExcute=1;} \
+  idex(eip, &concat(opcode_table_, name)[decoding.ext_opcode]); \
 }
 
 /* 0x80, 0x81, 0x83 */
@@ -216,11 +215,10 @@ static make_EHelper(2byte_esc) {
 }
 
 make_EHelper(real) {
-	if(isExcute==1)return;
   uint32_t opcode = instr_fetch(eip, 1);
   decoding.opcode = opcode;
   set_width(opcode_table[opcode].width);
-  if(isExcute==0){idex(eip, &opcode_table[opcode]);isExcute=1;}
+  idex(eip, &opcode_table[opcode]);
 	printf("opcode:0x%x\n",decoding.opcode);
 }
 
