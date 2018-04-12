@@ -38,8 +38,9 @@ make_EHelper(call) {
 
 make_EHelper(ret) {
   rtl_li(&t0,id_dest->width);
-  rtl_pop(&t1);
-	printf("0x%x\nt0:0x%x\n",t1,t0);
+	uint32_t a=0;
+  rtl_pop(&a);
+	printf("0x%x\nt0:0x%x\n",a,t0);
 	cpu.eip=t1;
 	decoding.seq_eip=cpu.eip;
 	decoding.is_jmp=1;
