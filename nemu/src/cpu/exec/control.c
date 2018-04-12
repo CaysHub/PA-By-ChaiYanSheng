@@ -44,6 +44,7 @@ make_EHelper(ret) {
 	cpu.eip=a;
 	//decoding.seq_eip=cpu.eip;
 	decoding.is_jmp=1;
+	decoding.jmp_eip=cpu.eip;
   print_asm("ret");
 }
 
