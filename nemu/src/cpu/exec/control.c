@@ -37,7 +37,7 @@ make_EHelper(call) {
 }
 
 make_EHelper(ret) {
-  rtl_li(&t0,id_src->val);
+  rtl_li(&t0,id_dest->val);
   rtl_pop(&t1);
 	printf("0x%x\nt0:0x%x\n",t1,t0);
 	cpu.eip=t1;
