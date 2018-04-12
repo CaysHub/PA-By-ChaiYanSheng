@@ -42,7 +42,7 @@ make_EHelper(ret) {
   rtl_pop(&a);
 	printf("0x%x\nt0:0x%x\nb:0x%x\n",a,t0,b);
 	cpu.eip=a;
-	decoding.seq_eip=cpu.eip;
+	//decoding.seq_eip=cpu.eip;
 	decoding.is_jmp=1;
   print_asm("ret");
 }
