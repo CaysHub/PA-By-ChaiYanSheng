@@ -28,6 +28,7 @@ make_EHelper(call) {
   // TODO();
 		//printf("0x%x\n",cpu.eip);
 	  rtl_push(&cpu.eip);
+		printf("0x%x\n",cpu.eip);
 		cpu.eip=cpu.eip+id_dest->val+1+4;
 		//printf("0x%x\n",cpu.eip);
 	
