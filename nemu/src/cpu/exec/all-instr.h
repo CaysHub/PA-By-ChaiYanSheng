@@ -14,3 +14,4 @@ make_EHelper(xor);
 make_EHelper(ret);
 make_EHelper(sbb);
 make_EHelper(leave);
+make_EHelper(cltd);

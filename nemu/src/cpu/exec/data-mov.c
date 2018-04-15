@@ -51,10 +51,18 @@ make_EHelper(leave) {
 
 make_EHelper(cltd) {
   if (decoding.is_operand_size_16) {
-    TODO();
+    int r_ax=0,i,r_dx;
+		for(i=0;i<8;i++){
+			if(strcmp(regsb[i],"ax")==0)r_ax=i;
+			if(strcmp(regsb[i],"dx")==0)r_dx=i;
+		}
+		uint16_t ax=cpu.gpr[r_ax]._16;
+		if(ax&0x8000)cpu.gpr[r_dx]._16=0xffff;
+		else cpu.gpr[r_dx]._16=0;
   }
   else {
-    TODO();
+    if(cpu.eax&0x80000000)cpu.edx=0xffffffff;
+		else cpu.edx=0;
   }
 
   print_asm(decoding.is_operand_size_16 ? "cwtl" : "cltd");
