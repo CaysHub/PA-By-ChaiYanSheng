@@ -30,7 +30,17 @@ make_EHelper(popa) {
 }
 
 make_EHelper(leave) {
-  TODO();
+  cpu.esp=cpu.ebp;
+	if(decoding.is_operand_size_16){
+	  uint16_t src=vaddr_read(cpu.esp,2);
+		cpu.gpr[5]._16=src;
+		cpu.esp+=2;
+	}else{
+	  uint32_t src;
+		rtl_lm(&src,&cpu.esp,4);
+		cpu.ebp=src;
+		cpu.esp+=4;
+	}
 
   print_asm("leave");
 }
