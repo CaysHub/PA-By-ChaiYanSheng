@@ -33,7 +33,11 @@ make_EHelper(leave) {
   cpu.esp=cpu.ebp;
 	if(decoding.is_operand_size_16){
 	  uint16_t src=vaddr_read(cpu.esp,2);
-		cpu.gpr[5]._16=src;
+		int r_bp=0,i;
+		for(i=0;i<8;i++){
+		  if(strcmp(regsb[i],"bp")==0)r_bp=i;
+		}
+		cpu.gpr[r_bp]._16=src;
 		cpu.esp+=2;
 	}else{
 	  uint32_t src;
