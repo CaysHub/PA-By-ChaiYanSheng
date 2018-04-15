@@ -51,7 +51,7 @@ make_EHelper(leave) {
 
 make_EHelper(cltd) {
   if (decoding.is_operand_size_16) {
-    int r_ax=0,i,r_dx;
+    int r_ax=0,i,r_dx=0;
 		for(i=0;i<8;i++){
 			if(strcmp(regsb[i],"ax")==0)r_ax=i;
 			if(strcmp(regsb[i],"dx")==0)r_dx=i;
