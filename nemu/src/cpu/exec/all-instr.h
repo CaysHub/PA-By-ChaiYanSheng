@@ -21,3 +21,4 @@ make_EHelper(add);
 make_EHelper(inc);
 make_EHelper(dec);
 make_EHelper(lea);
+make_EHelper(and);
