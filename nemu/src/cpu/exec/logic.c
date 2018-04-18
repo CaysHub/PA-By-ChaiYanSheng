@@ -9,7 +9,7 @@ make_EHelper(test) {
 make_EHelper(and) {
 	rtl_sext(&id_src->val,&id_src->val,id_src->width);
 	id_src->width=id_dest->width;
-	printf("src:0x%x\n",id_src->val);
+	printf("src:0x%x\ndest:0x%x\n",id_src->val,id_dest->val);
   rtl_and(&t0,&id_dest->val,&id_src->val);
 	operand_write(id_dest,&t0);
 	printf("dest:0x%x\n",id_dest->val);
