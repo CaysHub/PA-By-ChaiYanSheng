@@ -20,3 +20,4 @@ make_EHelper(movzx);
 make_EHelper(add);
 make_EHelper(inc);
 make_EHelper(dec);
+make_EHelper(lea);
