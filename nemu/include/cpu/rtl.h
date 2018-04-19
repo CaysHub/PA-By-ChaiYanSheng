@@ -157,7 +157,6 @@ static inline void rtl_push(const rtlreg_t* src1) {
 	rtlreg_t a=4;
 	rtl_sub(&cpu.esp,&cpu.esp,&a);
 	rtl_sm(&cpu.esp,4,src1);
-	printf("push:esp:0x%x\n",cpu.esp);
 }
 
 static inline void rtl_pop(rtlreg_t* dest) {
