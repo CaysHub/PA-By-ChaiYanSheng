@@ -215,6 +215,7 @@ static make_EHelper(2byte_esc) {
 }
 
 make_EHelper(real) {
+	printf("real:esp:0x%x\n",cpu.esp);
   uint32_t opcode = instr_fetch(eip, 1);
   decoding.opcode = opcode;
   set_width(opcode_table[opcode].width);
