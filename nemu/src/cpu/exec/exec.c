@@ -218,6 +218,7 @@ make_EHelper(real) {
   decoding.opcode = opcode;
   set_width(opcode_table[opcode].width);
   idex(eip, &opcode_table[opcode]);
+	printf("seq_eip:0x%x\n",decoding.seq_eip);
 }
 
 static inline void update_eip(void) {
