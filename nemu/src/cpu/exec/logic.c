@@ -7,11 +7,11 @@ make_EHelper(test) {
 }
 
 make_EHelper(and) {
-	rtl_sext(&id_src->val,&id_src->val,id_src->width);
-	id_src->width=id_dest->width;
-  rtl_and(&t0,&id_dest->val,&id_src->val);
+	uint32_t a=0;
+	rtl_sext(&a,&id_src->val,id_src->width);
+  rtl_and(&t0,&id_dest->val,&a);
 	operand_write(id_dest,&t0);
-	
+  snprintf(id_src->str, OP_STR_SIZE, "$0x%x", a);	
 	rtl_update_ZFSF(&t0,id_dest->width);
 
 	t1=0;
