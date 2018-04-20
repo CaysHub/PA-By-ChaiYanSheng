@@ -31,6 +31,7 @@ make_EHelper(call) {
 	cpu.eip=cpu.eip+id_dest->val+5;
   decoding.is_jmp=1;
 	decoding.jmp_eip=cpu.eip;
+	printf("esp:0x%x\nebp:0x%x\n",cpu.esp,cpu.ebp);
   print_asm("call %x", decoding.jmp_eip);
 }
 
