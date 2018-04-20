@@ -225,6 +225,8 @@ static inline void update_eip(void) {
 }
 
 void exec_wrapper(bool print_flag) {
+	printf("esp:0x%x\nebp:0x%x\n",cpu.esp,cpu.ebp);
+
 #ifdef DEBUG
   decoding.p = decoding.asm_buf;
   decoding.p += sprintf(decoding.p, "%8x:   ", cpu.eip);
@@ -253,4 +255,6 @@ void exec_wrapper(bool print_flag) {
   void difftest_step(uint32_t);
   difftest_step(eip);
 #endif
+	printf("esp:0x%x\nebp:0x%x\n",cpu.esp,cpu.ebp);
+
 }
