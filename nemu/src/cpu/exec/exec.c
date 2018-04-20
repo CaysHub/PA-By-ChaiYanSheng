@@ -229,10 +229,10 @@ void exec_wrapper(bool print_flag) {
   decoding.p = decoding.asm_buf;
   decoding.p += sprintf(decoding.p, "%8x:   ", cpu.eip);
 #endif
-
+  printf("esp:0x%x\nebp:0x%x\n",cpu.esp,cpu.ebp);
   decoding.seq_eip = cpu.eip;
   exec_real(&decoding.seq_eip);
-	printf("esp:0x%x\nebp:0x%x\n",cpu.esp,cpu.ebp);
+
 #ifdef DEBUG
   int instr_len = decoding.seq_eip - cpu.eip;
   sprintf(decoding.p, "%*.s", 50 - (12 + 3 * instr_len), "");
