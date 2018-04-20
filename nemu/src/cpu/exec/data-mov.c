@@ -95,7 +95,6 @@ make_EHelper(movzx) {
 }
 
 make_EHelper(lea) {
-	printf("lea:ebp:0x%x\n",cpu.ebp);
   rtl_li(&t2, id_src->addr);
   operand_write(id_dest, &t2);
   print_asm_template2(lea);
