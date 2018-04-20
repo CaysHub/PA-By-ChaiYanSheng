@@ -239,6 +239,8 @@ void exec_wrapper(bool print_flag) {
 
   sprintf(decoding.p, "%*.s", 50 - (12 + 3 * instr_len), "");
   strcat(decoding.asm_buf, decoding.assembly);
+	printf("esp:0x%x\nebp:0x%x\n",cpu.esp,cpu.ebp);
+
   Log_write("%s\n", decoding.asm_buf);
 	printf("esp:0x%x\nebp:0x%x\n",cpu.esp,cpu.ebp);
 
