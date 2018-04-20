@@ -238,12 +238,12 @@ void exec_wrapper(bool print_flag) {
 	printf("esp:0x%x\nebp:0x%x\n",cpu.esp,cpu.ebp);
 
   sprintf(decoding.p, "%*.s", 50 - (12 + 3 * instr_len), "");
+	printf("esp:0x%x\nebp:0x%x\n",cpu.esp,cpu.ebp);
+
   strcat(decoding.asm_buf, decoding.assembly);
 	printf("esp:0x%x\nebp:0x%x\n",cpu.esp,cpu.ebp);
 
   Log_write("%s\n", decoding.asm_buf);
-	printf("esp:0x%x\nebp:0x%x\n",cpu.esp,cpu.ebp);
-
   if (print_flag) {
     puts(decoding.asm_buf);
   }
