@@ -27,6 +27,7 @@ void cpu_exec(uint64_t n) {
      * instruction decode, and the actual execution. */
 		printf("esp:0x%x\nebp:0x%x\n",cpu.esp,cpu.ebp);
     exec_wrapper(print_flag);
+		printf("esp:0x%x\nebp:0x%x\n",cpu.esp,cpu.ebp);
 
 #ifdef DEBUG
     /* TODO: check watchpoints here. */
