@@ -239,11 +239,12 @@ void exec_wrapper(bool print_flag) {
   sprintf(decoding.p, "%*.s", 50 - (12 + 3 * instr_len), "");
   strcat(decoding.asm_buf, decoding.assembly);
   Log_write("%s\n", decoding.asm_buf);
+	printf("esp:0x%x\nebp:0x%x\n",cpu.esp,cpu.ebp);
+
   if (print_flag) {
     puts(decoding.asm_buf);
   }
 #endif
-  printf("esp:0x%x\nebp:0x%x\n",cpu.esp,cpu.ebp);
 
 #ifdef DIFF_TEST
   uint32_t eip = cpu.eip;
