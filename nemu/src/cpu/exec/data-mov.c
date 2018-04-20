@@ -6,14 +6,16 @@ make_EHelper(mov) {
 }
 
 make_EHelper(push) {
-  rtl_push(&id_dest->val);
-
+  //rtl_push(&id_dest->val);
+	cpu.esp-=id_dest->width;
+	vaddr_write(cpu.esp,id_dest->width,id_dest->val);
   print_asm_template1(push);
 }
 
 make_EHelper(pop) {
   // TODO();
-  rtl_pop(&id_dest->val);
+  id_dest->val=vaddr_read(cpu.esp,id_dest->width);
+	cpu.esp+=id_dest->width;
   print_asm_template1(pop);
 }
 
