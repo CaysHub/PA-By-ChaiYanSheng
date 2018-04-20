@@ -231,7 +231,6 @@ void exec_wrapper(bool print_flag) {
 #endif
 
   decoding.seq_eip = cpu.eip;
-	 printf("before:seq_eip:0x%x\ncpu.eip:0x%x\n",decoding.seq_eip,cpu.eip);
   exec_real(&decoding.seq_eip);
 
 #ifdef DEBUG
