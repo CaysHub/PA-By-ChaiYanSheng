@@ -265,7 +265,7 @@ make_DHelper(J) {
   decode_op_SI(eip, id_dest, false);
   // the target address can be computed in the decode stage
 	printf("simm:0x%x\nval:0x%x\neip:0x%x\n",id_dest->simm,id_dest->val,*eip);
-  decoding.jmp_eip = id_dest->simm + (int)*eip;
+  decoding.jmp_eip = (int)id_dest->simm + (int)*eip;
 	printf("jmp_eip:0x%x\n",decoding.jmp_eip);
 }
 
