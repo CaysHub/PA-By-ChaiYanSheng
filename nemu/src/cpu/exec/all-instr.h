@@ -25,4 +25,4 @@ make_EHelper(and);
 make_EHelper(nop);
 make_EHelper(cmp);
 make_EHelper(setcc);
-//static make_EHelper(2byte_esc);
+make_EHelper(test);
