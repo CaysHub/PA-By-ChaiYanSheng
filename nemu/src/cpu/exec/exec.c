@@ -218,7 +218,7 @@ make_EHelper(real) {
   decoding.opcode = opcode;
   set_width(opcode_table[opcode].width);
   idex(eip, &opcode_table[opcode]);
-	printf("eax:0x%x\n",cpu.eax);
+	printf("edx:0x%x\n",cpu.edx);
 }
 static inline void update_eip(void) {
   cpu.eip = (decoding.is_jmp ? (decoding.is_jmp = 0, decoding.jmp_eip) : decoding.seq_eip);
