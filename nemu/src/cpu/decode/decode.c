@@ -126,6 +126,7 @@ make_DHelper(E2G) {
 
 make_DHelper(mov_E2G) {
   decode_op_rm(eip, id_src, true, id_dest, false);
+	printf("dest:0x%x\tsrc:0x%x\n",id_dest->val,id_src->val);
 }
 
 make_DHelper(lea_M2G) {

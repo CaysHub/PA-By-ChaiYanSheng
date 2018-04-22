@@ -232,12 +232,12 @@ void exec_wrapper(bool print_flag) {
 
   decoding.seq_eip = cpu.eip;
 
-	printf("ebp1:0x%x\n",cpu.ebp);
-	printf("\tecx1:0x%x\n",cpu.ecx);
+	printf("\nebp1:0x%x\n",cpu.ebp);
+	printf("ecx1:0x%x\n",cpu.ecx);
   exec_real(&decoding.seq_eip);
-	printf("\tecx2:0x%x\n",cpu.ecx);
-	printf("\teip:0x%x\n",cpu.eip);
-	printf("ebp2:0x%x\n",cpu.ebp);
+	printf("ecx2:0x%x\n",cpu.ecx);
+	printf("eip:0x%x\n",cpu.eip);
+	printf("ebp2:0x%x\n\n",cpu.ebp);
 
 #ifdef DEBUG
   int instr_len = decoding.seq_eip - cpu.eip;
