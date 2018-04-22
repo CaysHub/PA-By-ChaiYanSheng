@@ -17,10 +17,15 @@ make_EHelper(leave);
 make_EHelper(cltd);
 make_EHelper(movsx);
 make_EHelper(movzx);
+
 make_EHelper(add);
+make_EHelper(adc);
+
 make_EHelper(inc);
 make_EHelper(dec);
+
 make_EHelper(lea);
+
 make_EHelper(and);
 make_EHelper(nop);
 make_EHelper(cmp);
