@@ -66,11 +66,11 @@ make_EHelper(call_rm) {
 		cpu.esp-=2;
 		vaddr_write(cpu.esp,2,ip);
 		uint16_t rm=vaddr_read(id_dest->addr,2);
-		decoding.jmp_eip=(*eip+rm)&0x0000ffff;
+		decoding.jmp_eip=rm&0x0000ffff;
 	}else{
 	  cpu.esp-=4;
 		vaddr_write(cpu.esp,4,*eip);
-		printf("dest:0x%x\n",id_dest->addr);
+		//printf("dest:0x%x\n",id_dest->addr);
 		uint32_t rm=vaddr_read(id_dest->addr,4);
 		decoding.jmp_eip=rm;
 	}
