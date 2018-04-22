@@ -52,8 +52,8 @@ make_group(gp2,
 
   /* 0xf6, 0xf7 */
 make_group(gp3,
-    EMPTY, EMPTY, EMPTY, EMPTY,
-    EX(mul), EX(imul1), EMPTY, EMPTY)
+    EX(test), EMPTY, EMPTY, EMPTY,
+    EX(mul), EX(imul1), EX(div), EX(idiv))
 
   /* 0xfe */
 make_group(gp4,
