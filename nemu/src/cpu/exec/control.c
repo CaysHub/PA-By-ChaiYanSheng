@@ -27,10 +27,22 @@ make_EHelper(jmp_rm) {
 make_EHelper(call) {
   // the target address is calculated at the decode stage
   // TODO();
-	t0=*eip;
-	rtl_push(&t0);
+	if(decoding.is_operand_size_16){
+	  uint16_t ip=0;int i=0;
+		for(i=0;i<8;i++)
+			if(strcmp(regsw[i],"ip")==0){
+			  ip=reg_w(i);break;
+			}
+		cpu.esp-=2;
+		vaddr_write(cpu.esp,2,ip);
+		decoding.jmp_eip=(*eip+id_dest->val)&0x0000ffff;
+	}else{
+	  t0=*eip;
+	  rtl_push(&t0);
+		decoding.jmp_eip=*eip+id_dest->val;
+	}
   decoding.is_jmp=1;
-	decoding.jmp_eip=*eip+id_dest->val;
+	//decoding.jmp_eip=*eip+id_dest->val;
   print_asm("call %x", decoding.jmp_eip);
 }
 
@@ -43,7 +55,25 @@ make_EHelper(ret) {
 }
 
 make_EHelper(call_rm) {
-  TODO();
+  //TODO();
+	
+  if(decoding.is_operand_size_16){
+	  uint16_t ip=0;int i=0;
+		for(i=0;i<8;i++)
+			if(strcmp(regsw[i],"ip")==0){
+				ip=reg_w(i);break;
+			}
+		cpu.esp-=2;
+		vaddr_write(cpu.esp,2,ip);
+		uint16_t rm=vaddr_read(id_dest->val,2);
+		decoding.jmp_eip=(*eip+rm)&0x0000ffff;
+	}else{
+	  cpu.esp-=4;
+		vaddr_write(cpu.esp,4,*eip);
+		uint32_t rm=vaddr_read(id_dest->val,4);
+		decoding.jmp_eip=*eip+rm;
+	}
+	decoding.is_jmp=1;
 
   print_asm("call *%s", id_dest->str);
 }
