@@ -70,6 +70,7 @@ make_EHelper(call_rm) {
 	}else{
 	  cpu.esp-=4;
 		vaddr_write(cpu.esp,4,*eip);
+		printf("dest:0x%x\n",id_dest->val);
 		uint32_t rm=vaddr_read(id_dest->val,4);
 		decoding.jmp_eip=*eip+rm;
 	}
