@@ -109,6 +109,26 @@ make_EHelper(dec) {
 
 make_EHelper(neg) {
   TODO();
+	t1=0;t2=id_dest->val;
+  t0=-t2;
+	operand_write(id_dest,&t0);
+
+	rtl_update_ZFSF(&t0,id_dest->width);
+
+  uint32_t at1=~t2; 
+	int cin=1,acin=0,i=0;
+	for(i=1;i<=8*id_dest->width;i++){
+		int a1=at1&0x1;
+		at1=at1>>1;
+		int a2=t0&0x1;
+		t0=t0>>1;
+		int r=a1+a2+cin;
+		if(r==2||r==3)cin=1;
+		else cin=0;
+		if(i==(8*id_dest->width-1))acin=cin;
+	}
+	rtlreg_t cf=(!cin)?1:0;rtl_set_CF(&cf);
+	uint32_t of=cin^acin;rtl_set_OF(&of);
 
   print_asm_template1(neg);
 }
