@@ -82,29 +82,30 @@ make_EHelper(inc) {
 		else cin=0;
 		if(i==(8*id_dest->width-1))acin=cin;
 	}
-  rtlreg_t cf=(!cin)?1:0;rtl_set_CF(&cf);
+	rtlreg_t cf=(!cin)?1:0;rtl_set_CF(&cf);
 	uint32_t of=cin^acin;rtl_set_OF(&of);
 
   print_asm_template1(inc);
 }
 
 make_EHelper(dec) {
-  uint32_t src=1;
-  rtl_sub(&t2,&id_dest->val,&src);
-	rtl_sltu(&t3,&id_dest->val,&t2);
-	operand_write(id_dest,&t2);
+  t1=id_dest->val;uint32_t src=1;
+  rtl_sub(&t2,&t1,&src);
 
+	operand_write(id_dest,&t2);
 	rtl_update_ZFSF(&t2,id_dest->width);
 
-  rtl_sltu(&t0,&t2,&id_dest->val);
-	rtl_or(&t0,&t3,&t0);
-	rtl_set_CF(&t0);
-
-	rtl_xor(&t0, &id_dest->val, &src);
-	rtl_xor(&t1, &id_dest->val, &t2);
-	rtl_and(&t0, &t0, &t1);
-	rtl_msb(&t0, &t0, id_dest->width);
-	rtl_set_OF(&t0);
+ int cin=1,acin=0,i=0;uint32_t a=~src;
+ for(i=1;i<=8*id_dest->width;i++){
+	 int a1=t1&1;t1=t1>>1;
+	 int a2=a&1;a=a>>1;
+	 int x=a1+a2+cin;
+	 if(x==2||x==3)cin=1;
+	 else cin=0;
+	 if(i==(8*id_dest->width-1))acin=cin;
+ }
+ rtlreg_t cf=(!cin)?1:0;rtl_set_CF(&cf);
+ uint32_t of=cin^acin;rtl_set_OF(&of);
 
   print_asm_template1(dec);
 }
