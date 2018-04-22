@@ -37,7 +37,7 @@ make_EHelper(leave) {
 	  uint16_t src=vaddr_read(cpu.esp,2);
 		int r_bp=0,i;
 		for(i=0;i<8;i++){
-		  if(strcmp(regsb[i],"bp")==0)r_bp=i;
+		  if(strcmp(regsw[i],"bp")==0)r_bp=i;
 		}
 		cpu.gpr[r_bp]._16=src;
 		cpu.esp+=2;
