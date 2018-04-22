@@ -97,6 +97,8 @@ make_EHelper(movzx) {
 
 make_EHelper(lea) {
 	printf("lea1:esp:0x%x\n",cpu.esp);
+	printf("lea:dest:0x%x\taddress:0x%x\n",id_dest->val,id_dest->addr);
+	printf("lea:src:0x%x\taddress:0x%x\n",id_src->val,id_src->addr);
   rtl_li(&t2, id_src->addr);
   operand_write(id_dest, &t2);
   printf("lea2:esp:0x%x\n",cpu.esp);
