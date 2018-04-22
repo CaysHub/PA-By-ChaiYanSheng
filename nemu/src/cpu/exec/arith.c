@@ -115,13 +115,13 @@ make_EHelper(neg) {
 
 	rtl_update_ZFSF(&t0,id_dest->width);
 
-  uint32_t at1=~t2; 
+  uint32_t at2=~t2; 
 	int cin=1,acin=0,i=0;
 	for(i=1;i<=8*id_dest->width;i++){
-		int a1=at1&0x1;
-		at1=at1>>1;
-		int a2=t0&0x1;
-		t0=t0>>1;
+		int a1=at2&0x1;
+		at2=at2>>1;
+		int a2=t1&0x1;
+		t1=t1>>1;
 		int r=a1+a2+cin;
 		if(r==2||r==3)cin=1;
 		else cin=0;
