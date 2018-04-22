@@ -235,7 +235,7 @@ void exec_wrapper(bool print_flag) {
 	printf("ebp1:0x%x\n",cpu.ebp);
   exec_real(&decoding.seq_eip);
 	printf("\teip:0x%x\n",cpu.eip);
-	printf("ecbp2:0x%x\n",cpu.ebp);
+	printf("ebp2:0x%x\n",cpu.ebp);
 
 #ifdef DEBUG
   int instr_len = decoding.seq_eip - cpu.eip;
