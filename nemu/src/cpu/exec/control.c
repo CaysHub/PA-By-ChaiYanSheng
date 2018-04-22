@@ -72,7 +72,7 @@ make_EHelper(call_rm) {
 		vaddr_write(cpu.esp,4,*eip);
 		printf("dest:0x%x\n",id_dest->addr);
 		uint32_t rm=vaddr_read(id_dest->addr,4);
-		decoding.jmp_eip=*eip+rm;
+		decoding.jmp_eip=rm;
 	}
 	decoding.is_jmp=1;
 
