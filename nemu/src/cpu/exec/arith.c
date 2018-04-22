@@ -69,20 +69,22 @@ make_EHelper(cmp) {
 make_EHelper(inc) {
 	t1=1;uint32_t a=id_dest->val;
   rtl_add(&t0,&id_dest->val,&t1);
-	rtl_sltu(&t2,&t0,&id_dest->val);
+
 	operand_write(id_dest,&t0);
 	rtl_update_ZFSF(&t0,id_dest->width);
 
-  rtl_sltu(&t3,&t0,&id_dest->val);
-	rtl_or(&t3,&t2,&t3);
-	rtl_set_CF(&t3);
+  int cin=0,acin=0,i=0;
+  for(i=1;i<=8*id_dest->width;i++){
+	  int a1=t1&1;t1=t1>>1;
+		int a2=a&1;a=a>>1;
+		int x=a1+a2+cin;
+		if(x==2||x==3)cin=1;
+		else cin=0;
+		if(i==(8*id_dest->width-1))acin=cin;
+	}
+  rtlreg_t cf=(!cin)?1:0;rtl_set_CF(&cf);
+	uint32_t of=cin^acin;rtl_set_OF(&of);
 
-  rtl_xor(&t3,&id_dest->val,&a);
-	rtl_not(&t3);
-	rtl_xor(&t2,&id_dest->val,&t0);
-	rtl_and(&t3,&t3,&t2);
-	rtl_msb(&t3,&t3,id_dest->width);
-	rtl_set_OF(&t3);
   print_asm_template1(inc);
 }
 
