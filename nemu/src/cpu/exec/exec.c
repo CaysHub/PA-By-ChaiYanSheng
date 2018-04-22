@@ -234,6 +234,7 @@ void exec_wrapper(bool print_flag) {
 
 	printf("esp1:0x%x\n",cpu.esp);
   exec_real(&decoding.seq_eip);
+	printf("eip:0x%x\n",cpu.eip);
 	printf("esp2:0x%x\n",cpu.esp);
 
 #ifdef DEBUG
