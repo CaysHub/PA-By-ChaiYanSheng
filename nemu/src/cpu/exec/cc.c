@@ -3,7 +3,7 @@
 /* Condition Code */
 
 void rtl_setcc(rtlreg_t* dest, uint8_t subcode) {
-  //bool invert = subcode & 0x1;
+  bool invert = subcode & 0x1;
   enum {
     CC_O, CC_NO, CC_B,  CC_NB,
     CC_E, CC_NE, CC_BE, CC_NBE,
@@ -13,7 +13,7 @@ void rtl_setcc(rtlreg_t* dest, uint8_t subcode) {
 
   // TODO: Query EFLAGS to determine whether the condition code is satisfied.
   // dest <- ( cc is satisfied ? 1 : 0)
-  switch (subcode & 0xf) {
+  switch (subcode & 0xe) {
     case CC_O:*dest=(cpu.eflags.OF==1);break;
     case CC_B:*dest=(cpu.eflags.CF==1);break;
     case CC_E:*dest=(cpu.eflags.ZF==1);break;
@@ -22,18 +22,18 @@ void rtl_setcc(rtlreg_t* dest, uint8_t subcode) {
     case CC_L:*dest=(cpu.eflags.SF!=cpu.eflags.OF);break;
     case CC_LE:*dest=((cpu.eflags.ZF==1)||(cpu.eflags.SF!=cpu.eflags.OF));break;
       //TODO();
-		case CC_NO:*dest=(cpu.eflags.OF==0);break;
-		case CC_NB:*dest=(cpu.eflags.CF==0);break;
-		case CC_NE:*dest=(cpu.eflags.ZF==0);printf("ZF:0x%x\n",cpu.eflags.ZF);break;
-		case CC_NBE:*dest=(cpu.eflags.CF==0&&cpu.eflags.ZF==0);break;
-		case CC_NS:*dest=(cpu.eflags.SF==0);break;
-		case CC_NL:*dest=(cpu.eflags.SF==cpu.eflags.OF);break;
-		case CC_NLE:*dest=(cpu.eflags.ZF==0&&cpu.eflags.SF==cpu.eflags.OF);break;
+		//case CC_NO:*dest=(cpu.eflags.OF==0);break;
+		//case CC_NB:*dest=(cpu.eflags.CF==0);break;
+		//case CC_NE:*dest=(cpu.eflags.ZF==0);printf("ZF:0x%x\n",cpu.eflags.ZF);break;
+		//case CC_NBE:*dest=(cpu.eflags.CF==0&&cpu.eflags.ZF==0);break;
+		//case CC_NS:*dest=(cpu.eflags.SF==0);break;
+		//case CC_NL:*dest=(cpu.eflags.SF==cpu.eflags.OF);break;
+		//case CC_NLE:*dest=(cpu.eflags.ZF==0&&cpu.eflags.SF==cpu.eflags.OF);break;
     default: panic("should not reach here");
     case CC_P: panic("n86 does not have PF");
   }
 
-  //if (invert) {
-    //rtl_xori(dest, dest, 0x1);
-  //}
+  if (invert) {
+    rtl_xori(dest, dest, 0x1);
+  }
 }
