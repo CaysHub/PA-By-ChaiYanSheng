@@ -3,7 +3,7 @@
 /* Condition Code */
 
 void rtl_setcc(rtlreg_t* dest, uint8_t subcode) {
-  bool invert = subcode & 0x1;
+  //bool invert = subcode & 0x1;
   enum {
     CC_O, CC_NO, CC_B,  CC_NB,
     CC_E, CC_NE, CC_BE, CC_NBE,
@@ -33,7 +33,7 @@ void rtl_setcc(rtlreg_t* dest, uint8_t subcode) {
     case CC_P: panic("n86 does not have PF");
   }
 
-  if (invert) {
-    rtl_xori(dest, dest, 0x1);
-  }
+  //if (invert) {
+    //rtl_xori(dest, dest, 0x1);
+  //}
 }

@@ -3,11 +3,9 @@
 make_EHelper(test) {
   //TODO();
 	rtl_and(&t0,&id_dest->val,&id_src->val);
-  printf("test:t0:0x%x\n",t0);
 	operand_write(id_dest,&t0);
 	t1=0;
 	rtl_update_ZFSF(&t0,id_dest->width);
-	printf("test:ZF:0x%x\tSF:0x%x\n",cpu.eflags.ZF,cpu.eflags.SF);
 	rtl_set_CF(&t1);
 	rtl_set_OF(&t1);
 	
