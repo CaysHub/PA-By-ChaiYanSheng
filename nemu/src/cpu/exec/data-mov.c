@@ -83,8 +83,10 @@ make_EHelper(cwtl) {
 
 make_EHelper(movsx) {
   id_dest->width = decoding.is_operand_size_16 ? 2 : 4;
+	printf("movzx:src:0x%x\n",id_src->val);
   rtl_sext(&t2, &id_src->val, id_src->width);
   operand_write(id_dest, &t2);
+	printf("movzx:dest:0x%x\n",id_dest->val);
   print_asm_template2(movsx);
 }
 
