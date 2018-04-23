@@ -60,7 +60,7 @@ make_EHelper(cmp) {
 		else cin=0;
 		if(i==(8*id_dest->width-1))acin=cin;
 	}
-	rtlreg_t cf=(!cin)?1:0;rtl_set_CF(&cf);
+	rtlreg_t cf=(cin)?1:0;rtl_set_CF(&cf);
 	uint32_t of=cin^acin;rtl_set_OF(&of);
 
   print_asm_template2(cmp);
@@ -82,7 +82,7 @@ make_EHelper(inc) {
 		else cin=0;
 		if(i==(8*id_dest->width-1))acin=cin;
 	}
-	rtlreg_t cf=(!cin)?1:0;rtl_set_CF(&cf);
+	rtlreg_t cf=(cin)?1:0;rtl_set_CF(&cf);
 	uint32_t of=cin^acin;rtl_set_OF(&of);
 
   print_asm_template1(inc);
@@ -104,7 +104,7 @@ make_EHelper(dec) {
 	 else cin=0;
 	 if(i==(8*id_dest->width-1))acin=cin;
  }
- rtlreg_t cf=(!cin)?1:0;rtl_set_CF(&cf);
+ rtlreg_t cf=(cin)?1:0;rtl_set_CF(&cf);
  uint32_t of=cin^acin;rtl_set_OF(&of);
 
   print_asm_template1(dec);
@@ -130,7 +130,7 @@ make_EHelper(neg) {
 		else cin=0;
 		if(i==(8*id_dest->width-1))acin=cin;
 	}
-	rtlreg_t cf=(!cin)?1:0;rtl_set_CF(&cf);
+	rtlreg_t cf=(cin)?1:0;rtl_set_CF(&cf);
 	uint32_t of=cin^acin;rtl_set_OF(&of);
 
   print_asm_template1(neg);
