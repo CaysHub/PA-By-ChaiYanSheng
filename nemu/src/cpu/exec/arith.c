@@ -43,7 +43,8 @@ make_EHelper(sub) {
 make_EHelper(cmp) {
   // TODO();
   t0=id_dest->val;
-	rtl_sext(&t1,&id_src->val,id_dest->width);
+	t3=id_src->val;
+	rtl_sext(&t1,&t3,id_dest->width);
 	printf("cmp:t1:0x%x\ndest_width:0x%x\n",t1,id_dest->width);
 	rtl_sub(&t2,&t0,&t1);
 
