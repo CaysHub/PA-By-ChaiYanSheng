@@ -7,8 +7,14 @@ make_EHelper(mov) {
 
 make_EHelper(push) {
   //rtl_push(&id_dest->val);
-	cpu.esp-=id_dest->width;
-	vaddr_write(cpu.esp,id_dest->width,id_dest->val);
+	if(id_dest->width==1){
+		rtl_sext(&t0,&id_dest->val,id_dest->width);
+		cpu.esp-=4;
+		vaddr_write(cpu.esp,4,t0);
+	}else{
+	  cpu.esp-=id_dest->width;
+	  vaddr_write(cpu.esp,id_dest->width,id_dest->val);
+	}
   print_asm_template1(push);
 }
 
