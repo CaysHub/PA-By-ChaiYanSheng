@@ -187,7 +187,22 @@ void difftest_step(uint32_t eip) {
 		printf("   \terror\tright\neip\t0x%x\t0x%x\n",cpu.eip,r.eip);
 		diff=true;
 	}
-
+  if((r.eflags&0x1)!=cpu.eflags.CF){
+		printf("CF Error\n");
+		diff=true;
+	}
+	if(((r.eflags>>10)&0x1)!=cpu.eflags.OF){
+		printf("OF Error\n");
+		diff=true;
+	}
+	if(((r.eflags>>7)&0x1)!=cpu.eflags.SF){
+		printf("SF Error\n");
+		diff=true;
+	}
+	if(((r.eflags>>6)&0x1)!=cpu.eflags.ZF){
+		printf("ZF Error\n");
+		diff=true;
+	}
   if (diff) {
     nemu_state = NEMU_END;
   }
