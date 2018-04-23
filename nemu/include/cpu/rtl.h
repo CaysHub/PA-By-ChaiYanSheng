@@ -196,8 +196,8 @@ static inline void rtl_update_ZF(const rtlreg_t* result, int width) {
   // TODO();
   rtlreg_t zf=0;
 	rtlreg_t r=0;
-	if(width==1)r=*result&0xff;
-	else if(width==2)r=*result&0xffff;
+	if(width==1)r=*result&0x000000ff;
+	else if(width==2)r=*result&0x0000ffff;
 	else if(width==4)r=*result&0xffffffff;
 	rtl_eq0(&zf,&r);
 	rtl_set_ZF(&zf);
