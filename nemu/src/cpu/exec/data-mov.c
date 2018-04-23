@@ -91,6 +91,7 @@ make_EHelper(movsx) {
 make_EHelper(movzx) {
 	printf("movzx:src:0x%x\n",id_src->val);
   id_dest->width = decoding.is_operand_size_16 ? 2 : 4;
+  printf("movzx:dest:0x%x\n",id_dest->val);
   operand_write(id_dest, &id_src->val);
 	printf("movzx:dest_width:0x%x\n",id_dest->width);
 	printf("movzx:dest:0x%x\n",id_dest->val);
