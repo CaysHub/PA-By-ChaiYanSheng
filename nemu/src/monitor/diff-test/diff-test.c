@@ -188,19 +188,19 @@ void difftest_step(uint32_t eip) {
 		diff=true;
 	}
   if((r.eflags&0x1)!=cpu.eflags.CF){
-		printf("CF Error\n");
+		printf("CF Error:Error:0x%08x\tRight:0x%08x\n",cpu.eflags.CF,r.eflags&0x1);
 		diff=true;
 	}
 	if(((r.eflags>>10)&0x1)!=cpu.eflags.OF){
-		printf("OF Error\n");
+		printf("OF Error:Error:0x%08x\tRight:0x%08x\n",cpu.eflags.OF,r.eflags>>10);
 		diff=true;
 	}
 	if(((r.eflags>>7)&0x1)!=cpu.eflags.SF){
-		printf("SF Error\n");
+		printf("SF Error:Error:0x%08x\tRight:0x%08x\n",cpu.eflags.SF,r.eflags>>7);
 		diff=true;
 	}
 	if(((r.eflags>>6)&0x1)!=cpu.eflags.ZF){
-		printf("ZF Error\n");
+		printf("ZF Error:Error:0x%08x\tRight:0x%08x\n",cpu.eflags.ZF,r.eflags>>6);
 		diff=true;
 	}
   if (diff) {
