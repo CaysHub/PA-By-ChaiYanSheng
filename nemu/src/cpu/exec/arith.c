@@ -44,7 +44,7 @@ make_EHelper(cmp) {
   // TODO();
   t0=id_dest->val;
 	t1=id_src->val;
-	rtl_sub(&t2,&t1,&t0);
+	rtl_sub(&t2,&t0,&t1);
 
 	rtl_update_ZFSF(&t2,id_dest->width);
 
