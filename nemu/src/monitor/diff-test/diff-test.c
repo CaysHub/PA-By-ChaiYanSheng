@@ -152,6 +152,7 @@ void difftest_step(uint32_t eip) {
   //TODO();
 	if(r.eax!=cpu.eax){
 	  printf("   \terror\tright\neax\t0x%x\t0x%x\n",cpu.eax,r.eax);
+		
 		diff=true;
 	}
   if(r.ebx!=cpu.ebx){
