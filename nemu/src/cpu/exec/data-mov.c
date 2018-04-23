@@ -46,7 +46,6 @@ make_EHelper(leave) {
 		rtl_lm(&src,&cpu.esp,4);
 		cpu.ebp=src;
 		cpu.esp+=4;
-		printf("leave:esp:0x%x\n",cpu.esp);
 	}
 
   print_asm("leave");

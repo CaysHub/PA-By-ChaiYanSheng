@@ -151,39 +151,39 @@ void difftest_step(uint32_t eip) {
   // Set `diff` as `true` if they are not the same.
   //TODO();
 	if(r.eax!=cpu.eax){
-	  printf("   \terror\tright\neax\t0x%x\t0x%x\n",r.eax,cpu.eax);
+	  printf("   \terror\tright\neax\t0x%x\t0x%x\n",cpu.eax,r.eax);
 		diff=true;
 	}
   if(r.ebx!=cpu.ebx){
-		printf("   \terror\tright\nebx\t0x%x\t0x%x\n",r.ebx,cpu.ebx);
+		printf("   \terror\tright\nebx\t0x%x\t0x%x\n",cpu.ebx,r.ebx);
 		diff=true;
 	}
   if(r.ecx!=cpu.ecx){
-		printf("   \terror\tright\necx\t0x%x\t0x%x\n",r.ecx,cpu.ecx);
+		printf("   \terror\tright\necx\t0x%x\t0x%x\n",cpu.ecx,r.ecx);
 		diff=true;
 	}
   if(r.edx!=cpu.edx){
-		printf("   \terror\tright\nedx\t0x%x\t0x%x\n",r.edx,cpu.edx);
+		printf("   \terror\tright\nedx\t0x%x\t0x%x\n",cpu.edx,r.edx);
 		diff=true;
 	}
   if(r.ebp!=cpu.ebp){
-		printf("   \terror\tright\nebp\t0x%x\t0x%x\n",r.ebp,cpu.ebp);
+		printf("   \terror\tright\nebp\t0x%x\t0x%x\n",cpu.ebp,r.ebp);
 		diff=true;
 	}
   if(r.esp!=cpu.esp){
-		printf("   \terror\tright\nesp\t0x%x\t0x%x\n",r.esp,cpu.esp);
+		printf("   \terror\tright\nesp\t0x%x\t0x%x\n",cpu.esp,r.esp);
 		diff=true;
 	}
   if(r.edi!=cpu.edi){
-		printf("   \terror\tright\nedi\t0x%x\t0x%x\n",r.edi,cpu.edi);
+		printf("   \terror\tright\nedi\t0x%x\t0x%x\n",cpu.edi,r.edi);
 		diff=true;
 	}
   if(r.esi!=cpu.esi){
-	  printf("   \terror\tright\nesi\t0x%x\t0x%x\n",r.esi,cpu.esi);
+	  printf("   \terror\tright\nesi\t0x%x\t0x%x\n",cpu.esi,r.esi);
 		diff=true;
 	}
   if(r.eip!=cpu.eip){
-		printf("   \terror\tright\neip\t0x%x\t0x%x\n",r.eip,cpu.eip);
+		printf("   \terror\tright\neip\t0x%x\t0x%x\n",cpu.eip,r.eip);
 		diff=true;
 	}
 
