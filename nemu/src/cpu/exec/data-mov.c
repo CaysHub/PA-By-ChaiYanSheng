@@ -14,7 +14,8 @@ make_EHelper(push) {
 
 make_EHelper(pop) {
   // TODO();
-  id_dest->val=vaddr_read(cpu.esp,id_dest->width);
+  t0=vaddr_read(cpu.esp,id_dest->width);
+	operand_write(id_dest,&t0);
 	cpu.esp+=id_dest->width;
   print_asm_template1(pop);
 }
