@@ -3,8 +3,7 @@
 make_EHelper(test) {
   //TODO();
 	rtl_and(&t0,&id_dest->val,&id_src->val);
-	//operand_write(id_dest,&t0);
-	printf("test:dest:0x%x\tsrc:0x%x\n",id_dest->val,id_src->val);
+
 	t1=0;
 	rtl_update_ZFSF(&t0,id_dest->width);
 	rtl_set_CF(&t1);
@@ -86,11 +85,9 @@ make_EHelper(shr) {
 
 make_EHelper(setcc) {
   uint8_t subcode = decoding.opcode & 0xf;
-	printf("setcc:opcode:0x%x\n",decoding.opcode);
-	printf("setcc:t2:0x%x\n",t2);
+	
   rtl_setcc(&t2, subcode);
   operand_write(id_dest, &t2);
-	printf("setcc:t2:0x%x\n",t2);
 
   print_asm("set%s %s", get_cc_name(subcode), id_dest->str);
 }
