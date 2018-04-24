@@ -199,10 +199,7 @@ void difftest_step(uint32_t eip) {
 		printf("SF Error:Error:0x%08x\tRight:0x%08x\n",cpu.eflags.SF,r.eflags>>7);
 		diff=true;
 	}
-	if(((r.eflags>>6)&0x1)!=cpu.eflags.ZF){
-		printf("ZF Error:Error:0x%08x\tRight:0x%08x\n",cpu.eflags.ZF,r.eflags>>6);
-		diff=true;
-	}
+	
   if (diff) {
     nemu_state = NEMU_END;
   }
