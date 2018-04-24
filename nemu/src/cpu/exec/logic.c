@@ -3,6 +3,8 @@
 make_EHelper(test) {
   //TODO();
 	rtl_and(&t0,&id_dest->val,&id_src->val);
+	printf("test:dest:0x%x\tsrc:0x%x\n",id_dest->val,id_src->val);
+
 	operand_write(id_dest,&t0);
 	printf("test:dest:0x%x\tsrc:0x%x\n",id_dest->val,id_src->val);
 	t1=0;
