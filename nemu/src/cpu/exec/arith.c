@@ -45,6 +45,8 @@ make_EHelper(cmp) {
   t0=id_dest->val;
 	t3=id_src->val;
 	rtl_sext(&t1,&t3,id_src->width);
+	if(id_dest->width==2)t1=t1&0x0000ffff;
+	else if(id_dest->width==1)t1=t1&0x000000ff;
 	//printf("cmp:t1:0x%x\ndest_width:0x%x\n",t1,id_dest->width);
 	rtl_sub(&t2,&t0,&t1);
 
