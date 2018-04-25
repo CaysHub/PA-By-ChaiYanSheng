@@ -38,6 +38,7 @@ make_EHelper(sub) {
 		if(i==id_dest->width*8-1)an_1=an;
 	}
   t3=(an)?1:0;rtl_set_CF(&t3);
+	printf("sub:CF:0x%x\n",t3);
 	t3=an^an_1;rtl_set_OF(&t3);
   print_asm_template2(sub);
 }
