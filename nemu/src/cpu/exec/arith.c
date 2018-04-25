@@ -24,7 +24,6 @@ make_EHelper(sub) {
 	rtl_sub(&t2,&id_dest->val,&id_src->val);
 	t1=id_dest->val;
 	operand_write(id_dest,&t2);
-  printf("sub:dest:0x%x\tsrc:0x%x\n",id_dest->val,id_src->val);
 	rtl_update_ZFSF(&t2,id_dest->width);
 
 	t2=~id_src->val;
@@ -38,7 +37,6 @@ make_EHelper(sub) {
 		if(i==id_dest->width*8-1)an_1=an;
 	}
   t3=(!an)?1:0;rtl_set_CF(&t3);
-	printf("sub:CF:0x%x\n",t3);
 	t3=an^an_1;rtl_set_OF(&t3);
   print_asm_template2(sub);
 }
@@ -173,7 +171,7 @@ make_EHelper(sbb) {
   rtl_sltu(&t3, &id_dest->val, &t2);
   rtl_get_CF(&t1);
   rtl_sub(&t2, &t2, &t1);
-	printf("sbb:dest:0x%x\tsrc:0x%x\tCF:0x%x\n",id_dest->val,id_src->val,t1);
+	
   operand_write(id_dest, &t2);
 
   rtl_update_ZFSF(&t2, id_dest->width);
