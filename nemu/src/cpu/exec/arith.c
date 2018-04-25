@@ -22,21 +22,23 @@ make_EHelper(add) {
 make_EHelper(sub) {
   // TODO();
 	rtl_sub(&t2,&id_dest->val,&id_src->val);
-	rtl_sltu(&t3,&t2,&id_dest->val);
+	t1=id_dest->val;
 	operand_write(id_dest,&t2);
 
 	rtl_update_ZFSF(&t2,id_dest->width);
 
-	rtl_sltu(&t0,&t2,&id_dest->val);
-	rtl_or(&t0,&t3,&t0);
-	rtl_set_CF(&t0);
-
-	rtl_xor(&t0, &id_dest->val, &id_src->val);
-	rtl_xor(&t1, &id_dest->val, &t2);
-	rtl_and(&t0, &t0, &t1);
-	rtl_msb(&t0, &t0, id_dest->width);
-	rtl_set_OF(&t0);
-
+	t2=~id_src->val+1;
+	int i=0,an=0,an_1=0;
+	for(i=1;i<=8*id_dest->width;i++){
+	  int dest=t1&0x1,src=t2&0x1;
+		t1>>=1;t2>>=1;
+		int a=an+dest+src;
+		if(a==2||a==3)an=1;
+		else an=0;
+		if(i==id_dest->width*8-1)an_1=an;
+	}
+  t3=(an)?1:0;rtl_set_CF(&t3);
+	t3=an^an_1;rtl_set_OF(&t3);
   print_asm_template2(sub);
 }
 
