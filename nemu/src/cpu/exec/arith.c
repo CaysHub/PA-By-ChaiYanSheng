@@ -27,8 +27,8 @@ make_EHelper(sub) {
   printf("sub:dest:0x%x\tsrc:0x%x\n",id_dest->val,id_src->val);
 	rtl_update_ZFSF(&t2,id_dest->width);
 
-	t2=~id_src->val+1;
-	int i=0,an=0,an_1=0;
+	t2=~id_src->val;
+	int i=0,an=1,an_1=0;
 	for(i=1;i<=8*id_dest->width;i++){
 	  int dest=t1&0x1,src=t2&0x1;
 		t1>>=1;t2>>=1;
