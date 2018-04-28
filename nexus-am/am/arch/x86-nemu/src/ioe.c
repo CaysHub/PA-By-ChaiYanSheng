@@ -9,9 +9,6 @@ void _ioe_init() {
 }
 
 unsigned long _uptime() {
-	//struct timeval now;
-  //_gettimeofday(&now, NULL);
-	//unsigned long seconds = now.tv_sec;
 	unsigned long current_seconds=inl(0);
   return current_seconds-boot_time;
 }
