@@ -42,7 +42,6 @@ make_EHelper(call) {
 		decoding.jmp_eip=*eip+id_dest->val;
 	}
   decoding.is_jmp=1;
-	//decoding.jmp_eip=*eip+id_dest->val;
   print_asm("call %x", decoding.jmp_eip);
 }
 
@@ -69,9 +68,7 @@ make_EHelper(call_rm) {
 		decoding.jmp_eip=rm&0x0000ffff;
 	}else{
 	  cpu.esp-=4;
-		printf("ret:esp:0x%x\n",cpu.esp);
 		vaddr_write(cpu.esp,4,*eip);
-		//printf("dest:0x%x\n",id_dest->addr);
 		uint32_t rm=vaddr_read(id_dest->addr,4);
 		decoding.jmp_eip=rm;
 	}
