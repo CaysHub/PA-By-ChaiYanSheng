@@ -87,6 +87,7 @@ make_EHelper(cwtl) {
 		}
 		rtl_lr_b(&t0,r_al);
 		rtl_sext(&t1,&t0,1);
+		t1=t1&0x0000ffff;
 		rtl_sr_w(r_ax,&t1);
   }
   else {
