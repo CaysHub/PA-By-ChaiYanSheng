@@ -11,6 +11,7 @@ int main(){
     } else {
       printf("%d seconds.\n", sec);
     }
+		printf("current:0x%x\n",_uptime());
     sec ++;
   }
   return 0;
