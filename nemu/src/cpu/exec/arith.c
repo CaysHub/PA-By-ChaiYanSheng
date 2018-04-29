@@ -49,7 +49,6 @@ make_EHelper(cmp) {
 	else t1=t3;
 	if(id_dest->width==2)t1=t1&0x0000ffff;
 	else if(id_dest->width==1)t1=t1&0x000000ff;
-//	printf("cmp:t0:0x%x\nt1:0x%x\n",t0,t1);
 	rtl_sub(&t2,&t0,&t1);
 
 	rtl_update_ZFSF(&t2,id_dest->width);
@@ -67,7 +66,6 @@ make_EHelper(cmp) {
 		if(i==(8*id_dest->width-1))acin=cin;
 	}
 	rtlreg_t cf=(!cin)?1:0;rtl_set_CF(&cf);
-	//printf("cmp:CF:0x%x\n",cf);
 	uint32_t of=cin^acin;rtl_set_OF(&of);
 
   print_asm_template2(cmp);
