@@ -9,7 +9,7 @@ void _ioe_init() {
 }
 
 unsigned long _uptime() {
-	unsigned long current_seconds=inl(RTC_PORT);
+	unsigned long current_seconds=inl(RTC_PORT)-boot_time;
   return current_seconds;
 }
 
