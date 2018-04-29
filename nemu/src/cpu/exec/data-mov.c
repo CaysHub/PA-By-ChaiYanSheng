@@ -63,8 +63,8 @@ make_EHelper(cltd) {
   if (decoding.is_operand_size_16) {
     int r_ax=0,i,r_dx=0;
 		for(i=0;i<8;i++){
-			if(strcmp(regsb[i],"ax")==0)r_ax=i;
-			if(strcmp(regsb[i],"dx")==0)r_dx=i;
+			if(strcmp(regsw[i],"ax")==0)r_ax=i;
+			if(strcmp(regsw[i],"dx")==0)r_dx=i;
 		}
 		uint16_t ax=cpu.gpr[r_ax]._16;
 		if(ax&0x8000)cpu.gpr[r_dx]._16=0xffff;
@@ -80,10 +80,23 @@ make_EHelper(cltd) {
 
 make_EHelper(cwtl) {
   if (decoding.is_operand_size_16) {
-    TODO();
+    int i=0,r_al=-1,r_ax=-1;
+		for(i=0;i<8;i++){
+		  if(strcmp(regsb[i],"al")==0)r_al=i;
+			if(strcmp(regsw[i],"ax")==0)r_ax=i;
+		}
+		rtl_lr_b(&t0,r_al);
+		rtl_sext(&t1,&t0,1);
+		rtl_sr_w(r_ax,&t1);
   }
   else {
-    TODO();
+    int i=0,r_ax=-1;
+		for(i=0;i<8;i++){
+		  if(strcmp(regsw[i],"ax")==0)r_ax=i;
+		}
+		rtl_lr_w(&t0,r_ax);
+		rtl_sext(&t1,&t0,2);
+		cpu.eax=t1;
   }
 
   print_asm(decoding.is_operand_size_16 ? "cbtw" : "cwtl");
