@@ -106,3 +106,20 @@ make_EHelper(not) {
 	rtl_update_ZFSF(&t0,id_dest->width);
   print_asm_template1(not);
 }
+make_EHelper(rol){
+  t0=id_src->val;
+	t1=id_dest->val;
+	while(t0!=0){
+	  rtl_msb(&t2,&t1,id_dest->width);
+		t1=t1*2+t2;
+		t0-=1;
+	}
+	operand_write(id_dest,&t1);
+	if(id_src->val==1){
+	  rtl_msb(&t2,&id_dest->val,id_dest->width);
+		if(t2!=cpu.eflags.CF){
+		  t3=1;
+		}else t3=0;
+		rtl_set_OF(&t3);
+	}
+}
