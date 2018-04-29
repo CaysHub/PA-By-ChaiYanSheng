@@ -118,7 +118,7 @@ make_EHelper(dec) {
 }
 
 make_EHelper(neg) {
-  TODO();
+  //TODO();
 	t1=0;t2=id_dest->val;
   t0=-t2;
 	operand_write(id_dest,&t0);
