@@ -10,7 +10,7 @@ void _ioe_init() {
 
 unsigned long _uptime() {
 	unsigned long current_seconds=inl(RTC_PORT)-boot_time;
-  return current_seconds/1000;
+  return current_seconds;
 }
 
 uint32_t* const fb = (uint32_t *)0x40000;
