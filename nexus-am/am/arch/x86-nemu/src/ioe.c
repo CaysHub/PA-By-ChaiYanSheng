@@ -27,13 +27,13 @@ void _draw_rect(const uint32_t *pixels, int x, int y, int w, int h) {
   //for (i = 0; i < _screen.width * _screen.height; i++) {
     //fb[i] = i;
   //}
-	uint32_t* p=fb;
-
+	//uint32_t* p=fb;
+  int cp_bytes = 0;
+	if(w<_screen.width-x)cp_bytes=sizeof(uint32_t) * w;
+	else cp_bytes=sizeof(uint32_t)*(_screen.width-x);
 	//p=p+(x-1)*(_screen.width)+y;
 	for(int j=0;j<h&&j+y<_screen.height;j++){
-    for(int i=0;i<w*4&&i+x<_screen.width*4;i++){
-		  p[(y+j)*_screen.width*4+x+i]=pixels[i];
-		}
+    memcpy(&fb[(y + j) * _screen.width + x], pixels, cp_bytes);
 		pixels=pixels+w;
 	}
 }
