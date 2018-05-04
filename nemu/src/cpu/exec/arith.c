@@ -4,10 +4,9 @@ make_EHelper(add) {
   rtl_add(&t0,&id_dest->val,&id_src->val);
 	rtl_sltu(&t1,&t0,&id_dest->val);
 	operand_write(id_dest,&t0);
+	
 	rtl_update_ZFSF(&t0,id_dest->width);
 
-	rtl_sltu(&t2,&t0,&id_dest->val);
-	rtl_or(&t1,&t2,&t1);
 	rtl_set_CF(&t1);
 
 	rtl_xor(&t1, &id_dest->val, &id_src->val);
@@ -22,22 +21,18 @@ make_EHelper(add) {
 make_EHelper(sub) {
   // TODO();
 	rtl_sub(&t2,&id_dest->val,&id_src->val);
-	t1=id_dest->val;
+	rtl_sltu(&t3,&id_dest->val,&t2);
 	operand_write(id_dest,&t2);
+	
 	rtl_update_ZFSF(&t2,id_dest->width);
 
-	t2=~id_src->val;
-	int i=0,an=1,an_1=0;
-	for(i=1;i<=8*id_dest->width;i++){
-	  int dest=t1&0x1,src=t2&0x1;
-		t1>>=1;t2>>=1;
-		int a=an+dest+src;
-		if(a==2||a==3)an=1;
-		else an=0;
-		if(i==id_dest->width*8-1)an_1=an;
-	}
-  t3=(!an)?1:0;rtl_set_CF(&t3);
-	t3=an^an_1;rtl_set_OF(&t3);
+	rtl_set_CF(&t3);
+
+	rtl_xor(&t0,&id_dest->val,&id_src->val);
+	rtl_xor(&t1,&id_dest->val,&t2);
+	rtl_and(&t0,&t0,&t1);
+	rtl_msb(&t0,&t0,id_dest->width);
+	rtl_set_OF(&t0);
   print_asm_template2(sub);
 }
 
@@ -50,94 +45,71 @@ make_EHelper(cmp) {
 	if(id_dest->width==2)t1=t1&0x0000ffff;
 	else if(id_dest->width==1)t1=t1&0x000000ff;
 	rtl_sub(&t2,&t0,&t1);
-
+	rtl_sltu(&t3,&t0,&t2);
 	rtl_update_ZFSF(&t2,id_dest->width);
 
-	uint32_t at1=~t1;
-	int cin=1,acin=0,i=0;
-	for(i=1;i<=8*id_dest->width;i++){
-	  int a1=at1&0x1;
-		at1=at1>>1;
-		int a2=t0&0x1;
-		t0=t0>>1;
-		int r=a1+a2+cin;
-		if(r==2||r==3)cin=1;
-		else cin=0;
-		if(i==(8*id_dest->width-1))acin=cin;
-	}
-	rtlreg_t cf=(!cin)?1:0;rtl_set_CF(&cf);
-	uint32_t of=cin^acin;rtl_set_OF(&of);
+	rtl_set_CF(&t3);
 
+	uint32_t t4=0;
+	rtl_xor(&t3,&t0,&t1);
+	rtl_xor(&t4,&t0,&t2);
+	rtl_and(&t3,&t3,&t4);
+	rtl_msb(&t3,&t3,id_dest->width);
+	rtl_set_OF(&t3);
   print_asm_template2(cmp);
 }
 
 make_EHelper(inc) {
-	t1=1;uint32_t a=id_dest->val;
-  rtl_add(&t0,&id_dest->val,&t1);
+	t1=1;
+  rtl_add(&t2,&id_dest->val,&t1);
+	rtl_sltu(&t3,&t2,&id_dest->val);
+	operand_write(id_dest,&t2);
+	rtl_update_ZFSF(&t2,id_dest->width);
 
-	operand_write(id_dest,&t0);
-	rtl_update_ZFSF(&t0,id_dest->width);
+  rtl_set_CF(&t3);t3=0;
 
-  int cin=0,acin=0,i=0;
-  for(i=1;i<=8*id_dest->width;i++){
-	  int a1=t1&1;t1=t1>>1;
-		int a2=a&1;a=a>>1;
-		int x=a1+a2+cin;
-		if(x==2||x==3)cin=1;
-		else cin=0;
-		if(i==(8*id_dest->width-1))acin=cin;
-	}
-	rtlreg_t cf=(cin)?1:0;rtl_set_CF(&cf);
-	uint32_t of=cin^acin;rtl_set_OF(&of);
-
+	rtl_xor(&t0,&id_dest->val,&id_src->val);
+	rtl_not(&t0);
+	rtl_xor(&t3,&id_dest->val,&t2);
+	rtl_and(&t0,&t0,&t3);
+	rtl_msb(&t0,&t0,id_dest->width);
+	rtl_set_OF(&t0);
   print_asm_template1(inc);
 }
 
 make_EHelper(dec) {
-  t1=id_dest->val;uint32_t src=1;
-  rtl_sub(&t2,&t1,&src);
-
+  uint32_t src=1;
+  rtl_sub(&t2,&id_dest->val,&src);
+	rtl_sltu(&t3,&id_dest->val,&t2);
 	operand_write(id_dest,&t2);
 	rtl_update_ZFSF(&t2,id_dest->width);
 
- int cin=1,acin=0,i=0;uint32_t a=~src;
- for(i=1;i<=8*id_dest->width;i++){
-	 int a1=t1&1;t1=t1>>1;
-	 int a2=a&1;a=a>>1;
-	 int x=a1+a2+cin;
-	 if(x==2||x==3)cin=1;
-	 else cin=0;
-	 if(i==(8*id_dest->width-1))acin=cin;
- }
- rtlreg_t cf=(!cin)?1:0;rtl_set_CF(&cf);
- uint32_t of=cin^acin;rtl_set_OF(&of);
+ rtl_set_CF(&t3);
 
+ rtl_xor(&t0,&id_dest->val,&src);
+ rtl_xor(&t1,&id_dest->val,&t2);
+ rtl_and(&t0,&t0,&t1);
+ rtl_msb(&t0,&t0,id_dest->width);
+ rtl_set_OF(&t0);
   print_asm_template1(dec);
 }
 
 make_EHelper(neg) {
   //TODO();
-	t1=0;t2=id_dest->val;
-  t0=-t2;
-	operand_write(id_dest,&t0);
+	uint32_t src=0;
+	rtl_sub(&t2,&src,&id_dest->val);
+	rtl_sltu(&t3,&src,&t2);
+	operand_write(id_dest,&t2);
 
-	rtl_update_ZFSF(&t0,id_dest->width);
+	rtl_update_ZFSF(&t2,id_dest->width);
 
-  uint32_t at2=~t2; 
-	int cin=1,acin=0,i=0;
-	for(i=1;i<=8*id_dest->width;i++){
-		int a1=at2&0x1;
-		at2=at2>>1;
-		int a2=t1&0x1;
-		t1=t1>>1;
-		int r=a1+a2+cin;
-		if(r==2||r==3)cin=1;
-		else cin=0;
-		if(i==(8*id_dest->width-1))acin=cin;
-	}
-	rtlreg_t cf=(!cin)?1:0;rtl_set_CF(&cf);
-	uint32_t of=cin^acin;rtl_set_OF(&of);
+  rtl_set_CF(&t3);
 
+  rtl_xor(&t0,&src,&id_dest->val);
+	rtl_xor(&t1,&src,&t2);
+	rtl_and(&t0,&t0,&t1);
+	rtl_msb(&t0,&t0,id_dest->width);
+	rtl_set_OF(&t0);
   print_asm_template1(neg);
 }
 
