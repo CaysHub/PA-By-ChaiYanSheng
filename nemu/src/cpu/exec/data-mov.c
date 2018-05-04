@@ -42,12 +42,8 @@ make_EHelper(popa) {
 make_EHelper(leave) {
   cpu.esp=cpu.ebp;
 	if(decoding.is_operand_size_16){
-	  uint16_t src=vaddr_read(cpu.esp,2);
-		int r_bp=0,i;
-		for(i=0;i<8;i++){
-		  if(strcmp(regsw[i],"bp")==0)r_bp=i;
-		}
-		cpu.gpr[r_bp]._16=src;
+		rtl_lm(&t0,&cpu.esp,2);
+		rtl_sr_w(R_BP,&t0);
 		cpu.esp+=2;
 	}else{
 	  uint32_t src;
