@@ -57,14 +57,9 @@ make_EHelper(leave) {
 
 make_EHelper(cltd) {
   if (decoding.is_operand_size_16) {
-    int r_ax=0,i,r_dx=0;
-		for(i=0;i<8;i++){
-			if(strcmp(regsw[i],"ax")==0)r_ax=i;
-			if(strcmp(regsw[i],"dx")==0)r_dx=i;
-		}
-		uint16_t ax=cpu.gpr[r_ax]._16;
-		if(ax&0x8000)cpu.gpr[r_dx]._16=0xffff;
-		else cpu.gpr[r_dx]._16=0;
+		rtl_lr_w(&t0,R_AX);
+		if(t0&0x8000)cpu.gpr[R_DX]._16=0xffff;
+		else cpu.gpr[R_DX]._16=0;
   }
   else {
     if(cpu.eax&0x80000000)cpu.edx=0xffffffff;
@@ -76,22 +71,13 @@ make_EHelper(cltd) {
 
 make_EHelper(cwtl) {
   if (decoding.is_operand_size_16) {
-    int i=0,r_al=-1,r_ax=-1;
-		for(i=0;i<8;i++){
-		  if(strcmp(regsb[i],"al")==0)r_al=i;
-			if(strcmp(regsw[i],"ax")==0)r_ax=i;
-		}
-		rtl_lr_b(&t0,r_al);
+		rtl_lr_b(&t0,R_AL);
 		rtl_sext(&t1,&t0,1);
 		t1=t1&0x0000ffff;
-		rtl_sr_w(r_ax,&t1);
+		rtl_sr_w(R_AX,&t1);
   }
   else {
-    int i=0,r_ax=-1;
-		for(i=0;i<8;i++){
-		  if(strcmp(regsw[i],"ax")==0)r_ax=i;
-		}
-		rtl_lr_w(&t0,r_ax);
+		rtl_lr_w(&t0,R_AX);
 		rtl_sext(&t1,&t0,2);
 		cpu.eax=t1;
   }
@@ -107,13 +93,8 @@ make_EHelper(movsx) {
 }
 
 make_EHelper(movzx) {
-	//printf("movzx:src:0x%x\n",id_src->val);
   id_dest->width = decoding.is_operand_size_16 ? 2 : 4;
-  //printf("movzx:dest:0x%x\n",id_dest->val);
   operand_write(id_dest, &id_src->val);
-	//if(id_dest->type==OP_TYPE_REG)printf("dest:reg:0x%x\n",id_dest->reg);
-	//printf("movzx:dest_width:0x%x\n",id_dest->width);
-	//printf("movzx:dest:0x%x\n",id_dest->val);
   print_asm_template2(movzx);
 }
 
