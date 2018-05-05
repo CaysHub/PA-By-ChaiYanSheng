@@ -28,13 +28,9 @@ make_EHelper(call) {
   // the target address is calculated at the decode stage
   // TODO();
 	if(decoding.is_operand_size_16){
-	  uint16_t ip=0;int i=0;
-		for(i=0;i<8;i++)
-			if(strcmp(regsw[i],"ip")==0){
-			  ip=reg_w(i);break;
-			}
+	  t0=(*eip)&0x0000ffff;
 		cpu.esp-=2;
-		vaddr_write(cpu.esp,2,ip);
+		vaddr_write(cpu.esp,2,t0);
 		decoding.jmp_eip=(*eip+id_dest->val)&0x0000ffff;
 	}else{
 	  t0=*eip;
@@ -57,19 +53,16 @@ make_EHelper(call_rm) {
   //TODO();
 	
   if(decoding.is_operand_size_16){
-	  uint16_t ip=0;int i=0;
-		for(i=0;i<8;i++)
-			if(strcmp(regsw[i],"ip")==0){
-				ip=reg_w(i);break;
-			}
+	  t0=(*eip)&0x0000ffff;
 		cpu.esp-=2;
-		vaddr_write(cpu.esp,2,ip);
-		uint16_t rm=vaddr_read(id_dest->addr,2);
-		decoding.jmp_eip=rm&0x0000ffff;
+		rtl_sm(&cpu.esp,2,&t0);
+		rtl_lm(&t0,&id_dest->addr,2);
+		decoding.jmp_eip=t0&0x0000ffff;
 	}else{
 	  cpu.esp-=4;
-		vaddr_write(cpu.esp,4,*eip);
-		uint32_t rm=vaddr_read(id_dest->addr,4);
+		rtl_sm(&cpu.esp,4,eip);
+		uint32_t rm=0;
+		rtl_lm(&rm,&id_dest->addr,4);
 		decoding.jmp_eip=rm;
 	}
 	decoding.is_jmp=1;
