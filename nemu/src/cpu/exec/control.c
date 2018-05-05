@@ -60,13 +60,13 @@ make_EHelper(call_rm) {
 	  t0=(*eip)&0x0000ffff;
 		cpu.esp-=2;
 		rtl_sm(&cpu.esp,2,&t0);
-		rtl_lm(&t0,&id_dest->val,2);
+		rtl_lm(&t0,&id_dest->addr,id_dest->width);
 		decoding.jmp_eip=t0&0x0000ffff;
 	}else{
 	  cpu.esp-=4;
 		rtl_sm(&cpu.esp,4,eip);
 		uint32_t rm=0;
-		rtl_lm(&rm,&id_dest->val,4);
+		rtl_lm(&rm,&id_dest->addr,id_dest->width);
 		decoding.jmp_eip=rm;
 	}
 	decoding.is_jmp=1;
