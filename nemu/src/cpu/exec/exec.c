@@ -233,7 +233,7 @@ void exec_wrapper(bool print_flag) {
   decoding.seq_eip = cpu.eip;
   exec_real(&decoding.seq_eip);
 	if(decoding.jmp_eip<0x100000){
-	  printf("jmp_eip:0x%x\teip:0x%x\n",decoding.jmp_eip,cpu.eip);
+	  printf("jmp_eip:0x%x\teip:0x%x\tseq_eip:0x%x\n",decoding.jmp_eip,cpu.eip,decoding.seq_eip);
 	}
 
 #ifdef DEBUG
