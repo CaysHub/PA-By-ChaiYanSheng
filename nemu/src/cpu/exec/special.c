@@ -2,7 +2,7 @@
 #include "monitor/monitor.h"
 void operand_write(Operand *, rtlreg_t *);
 make_EHelper(nop) {
-	if(decoding.is_operand_size_16){
+	/*if(decoding.is_operand_size_16){
 	  uint16_t temp=id_dest->val;
 		id_dest->val=id_src->val;
 		id_src->val=temp;
@@ -10,7 +10,7 @@ make_EHelper(nop) {
 	  uint32_t temp=id_dest->val;
 	  id_dest->val=id_src->val;
 		id_src->val=temp;
-	}
+	}*/
   print_asm("nop");
 }
 
