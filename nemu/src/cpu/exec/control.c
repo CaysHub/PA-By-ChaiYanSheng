@@ -70,5 +70,6 @@ make_EHelper(call_rm) {
 	}
 	decoding.is_jmp=1;
   printf("call_rm:opcode:0x%x\tdest:0x%x\n",decoding.opcode,id_dest->val);
+	printf("call_rm:edx:0x%x\n",cpu.edx);
   print_asm("call *%s", id_dest->str);
 }
