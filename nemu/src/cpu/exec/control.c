@@ -68,7 +68,6 @@ make_EHelper(call_rm) {
 		rtl_lm(&rm,&id_dest->addr,4);
 		decoding.jmp_eip=rm;
 	}
-	printf("call_rm:dest_addr:0x%x\tjmp_eip:0x%x\n",id_dest->addr,decoding.jmp_eip);
 	decoding.is_jmp=1;
 
   print_asm("call *%s", id_dest->str);
