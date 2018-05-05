@@ -39,7 +39,7 @@ make_EHelper(call) {
 		printf("call:eip:0x%x\tdest:0x%x\n",*eip,id_dest->val);
 	}
 	printf("call:0x%x\n",decoding.jmp_eip);
-  decoding.is_jmp=1;
+  //decoding.is_jmp=1;
   print_asm("call %x", decoding.jmp_eip);
 }
 
