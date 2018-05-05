@@ -42,10 +42,14 @@ make_EHelper(call) {
 }
 
 make_EHelper(ret) {
-	uint32_t a=0;
-  rtl_pop(&a);
+	if(decoding.is_operand_size_16){
+	  rtl_lm(&t0,&cpu.esp,2);
+		cpu.esp+=2;
+	}else{
+	  rtl_pop(&t0);
+	}
 	decoding.is_jmp=1;
-	decoding.jmp_eip=a;
+	decoding.jmp_eip=t0;
   print_asm("ret");
 }
 
