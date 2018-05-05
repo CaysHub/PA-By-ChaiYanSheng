@@ -46,8 +46,8 @@ void pio_write(ioaddr_t, int, uint32_t);
 
 make_EHelper(in) {
   // TODO();
-  if(decoding.is_operand_size_16)t0=pio_read(id_src->addr,2);
-	else t0=pio_read(id_src->addr,id_src->width);
+  if(decoding.is_operand_size_16)t0=pio_read(id_src->val,2);
+	else t0=pio_read(id_src->val,id_src->width);
 	operand_write(id_dest,&t0);
 	
   print_asm_template2(in);
@@ -59,8 +59,8 @@ make_EHelper(in) {
 
 make_EHelper(out) {
   // TODO();
-	if(decoding.is_operand_size_16)pio_write(id_dest->addr,2,id_src->val);
-  else pio_write(id_dest->addr,id_src->width,id_src->val);
+	if(decoding.is_operand_size_16)pio_write(id_dest->val,2,id_src->val);
+  else pio_write(id_dest->val,id_src->width,id_src->val);
   print_asm_template2(out);
 
 #ifdef DIFF_TEST
