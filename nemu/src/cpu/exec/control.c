@@ -59,16 +59,16 @@ make_EHelper(call_rm) {
 	  t0=(*eip)&0x0000ffff;
 		cpu.esp-=2;
 		rtl_sm(&cpu.esp,2,&t0);
-		rtl_lm(&t0,&id_dest->val,2);
+		rtl_lm(&t0,&id_dest->addr,2);
 		decoding.jmp_eip=t0&0x0000ffff;
 	}else{
 	  cpu.esp-=4;
 		rtl_sm(&cpu.esp,4,eip);
 		uint32_t rm=0;
-		rtl_lm(&rm,&id_dest->val,4);
+		rtl_lm(&rm,&id_dest->addr,4);
 		decoding.jmp_eip=rm;
 	}
-	printf("call_rm:dest:0x%x\tjmp_eip:0x%x\n",id_dest->val,decoding.jmp_eip);
+	printf("call_rm:dest_addr:0x%x\tjmp_eip:0x%x\n",id_dest->addr,decoding.jmp_eip);
 	decoding.is_jmp=1;
 
   print_asm("call *%s", id_dest->str);
