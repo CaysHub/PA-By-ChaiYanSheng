@@ -54,8 +54,7 @@ make_EHelper(ret) {
 }
 
 make_EHelper(call_rm) {
-  //TODO();
-	
+  //TODO();	
   if(decoding.is_operand_size_16){
 	  t0=(*eip)&0x0000ffff;
 		cpu.esp-=2;
