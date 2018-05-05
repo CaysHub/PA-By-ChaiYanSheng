@@ -60,7 +60,7 @@ make_EHelper(call_rm) {
 	  t0=(*eip)&0x0000ffff;
 		cpu.esp-=2;
 		rtl_sm(&cpu.esp,2,&t0);
-		rtl_lm(&t0,&id_dest->addr,2);
+		rtl_lm(&t0,&id_dest->val,2);
 		decoding.jmp_eip=t0&0x0000ffff;
 	}else{
 	  cpu.esp-=4;
