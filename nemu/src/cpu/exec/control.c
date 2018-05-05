@@ -66,7 +66,7 @@ make_EHelper(call_rm) {
 	  cpu.esp-=4;
 		rtl_sm(&cpu.esp,4,eip);
 		uint32_t rm=0;
-		rtl_lm(&rm,&id_dest->addr,4);
+		rtl_lm(&rm,&id_dest->val,4);
 		decoding.jmp_eip=rm;
 	}
 	decoding.is_jmp=1;
