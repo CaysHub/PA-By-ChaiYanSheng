@@ -36,6 +36,7 @@ make_EHelper(call) {
 	  t0=*eip;
 	  rtl_push(&t0);
 		decoding.jmp_eip=*eip+id_dest->val;
+		printf("call:eip:0x%x\tdest:0x%x\n",*eip,id_dest->val);
 	}
 	printf("call:0x%x\n",decoding.jmp_eip);
   decoding.is_jmp=1;
