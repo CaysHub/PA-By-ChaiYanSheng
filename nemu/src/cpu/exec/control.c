@@ -64,8 +64,8 @@ make_EHelper(call_rm) {
 	}else{
 	  cpu.esp-=4;
 		rtl_sm(&cpu.esp,4,eip);
-		rtl_lm(&t0,&id_dest->addr,4);
-		decoding.jmp_eip=t0;
+		//rtl_lm(&t0,&id_dest->addr,4);
+		decoding.jmp_eip=id_dest->val;
 	}
 	decoding.is_jmp=1;
   //printf("call_rm:opcode:0x%x\tdest:0x%x\n",decoding.opcode,id_dest->val);
