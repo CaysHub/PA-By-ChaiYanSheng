@@ -7,6 +7,6 @@ size_t get_ramdisk_size();
 uintptr_t loader(_Protect *as, const char *filename) {
   //TODO();
 	size_t len=get_ramdisk_size();
-	ramdisk_write(DEFAULT_ENTRY,0x00000000,len);
+	ramdisk_write(DEFAULT_ENTRY,0,len);
 	return (uintptr_t)DEFAULT_ENTRY;
 }
