@@ -232,7 +232,7 @@ void exec_wrapper(bool print_flag) {
 
   decoding.seq_eip = cpu.eip;
   exec_real(&decoding.seq_eip);
-  if(decoding.seq_eip<0x400125a&&decoding.seq_eip-cpu.eip==2)
+  if(decoding.seq_eip<0x400025a&&decoding.seq_eip-cpu.eip==2)
 		printf("eip:0x%x\t seq_eip:0x%x\n",cpu.eip,decoding.seq_eip);
 #ifdef DEBUG
   int instr_len = decoding.seq_eip - cpu.eip;
