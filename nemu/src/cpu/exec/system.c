@@ -13,6 +13,7 @@ make_EHelper(lidt) {
 		cpu.IDTR.limit=id_dest->val&0xffff;
 		cpu.IDTR.base=(id_dest->val>>16)&0xffffffff;
 	}
+	printf("lidt:0x%x\n",id_dest->val);
   print_asm_template1(lidt);
 }
 
