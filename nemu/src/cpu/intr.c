@@ -8,8 +8,8 @@ void raise_intr(uint8_t NO, vaddr_t ret_addr) {
 
   //TODO();
 	rtl_push(&cpu.eflags.val);
-	cpu.esp-=2;uint32_t cs=cpu.CS.val;
-	rtl_sm(&cpu.esp,2,&cs);
+	uint32_t cs=cpu.CS.val;
+	rtl_push(&cs);
 	rtl_push(&ret_addr);
 	GateDesc a;
 	a.offset_15_0=vaddr_read(cpu.IDTR.base+NO*8,2);
