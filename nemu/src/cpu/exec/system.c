@@ -6,7 +6,7 @@ void raise_intr(uint8_t NO, vaddr_t ret_addr);
 
 make_EHelper(lidt) {
   //TODO();
-	printf("dest_width:0x%x\n",id_dest->width);
+	printf("dest_width:0x%x\n",id_src->width);
 	if(decoding.is_operand_size_16){
 	  cpu.IDTR.limit=id_dest->val&0xffff;
 		cpu.IDTR.base=(id_dest->val>>16)&0xffffff;
