@@ -6,14 +6,9 @@ void raise_intr(uint8_t NO, vaddr_t ret_addr);
 
 make_EHelper(lidt) {
   //TODO();
-	if(decoding.is_operand_size_16){
-	  cpu.IDTR.limit=id_dest->val&0xffff;
-		cpu.IDTR.base=(id_dest->val>>16)&0xffffff;
-	}else{
-		cpu.IDTR.limit=id_dest->val&0xffff;
-		cpu.IDTR.base=(id_dest->val>>16)&0xffffffff;
-	}
-	printf("lidt:0x%x\n",vaddr_read(id_dest->addr,2));
+	cpu.IDTR.limit=vaddr_read(cpu.eax,2);
+	cpu.IDTR.base=vaddr_read(cpu.eax+2,4);
+	//printf("lidt:0x%x\n",vaddr_read(id_dest->addr,2));
   print_asm_template1(lidt);
 }
 
