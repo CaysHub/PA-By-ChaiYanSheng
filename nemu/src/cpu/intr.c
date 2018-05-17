@@ -7,6 +7,7 @@ void raise_intr(uint8_t NO, vaddr_t ret_addr) {
    */
 
   //TODO();
+	printf("IDTR.base:0x%x\n",cpu.IDTR.base);
 	rtl_push(&cpu.eflags.val);
 	cpu.esp-=2;uint32_t cs=cpu.CS.val;
 	rtl_sm(&cpu.esp,2,&cs);
