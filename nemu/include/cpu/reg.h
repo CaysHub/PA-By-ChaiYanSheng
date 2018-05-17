@@ -44,6 +44,18 @@ typedef struct {
 			unsigned int OF:1;  // overflow flag
 		};
 	}eflags;
+	struct{
+	  uint16_t limit;
+		uint32_t base;
+	}IDTR;
+	union{
+	  struct{
+		  unsigned int rpl:2;
+			unsigned int tl:1;
+			unsigned int index:13;
+		};
+		uint16_t val;
+	}CS;
 } CPU_state;
 
 extern CPU_state cpu;
