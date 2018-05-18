@@ -34,6 +34,7 @@ make_EHelper(pusha) {
 	rtl_push(&cpu.ecx);
 	rtl_push(&cpu.edx);
 	rtl_push(&cpu.ebx);
+	printf("pusha:eip:0x%x  esp:0x%x\n",cpu.eip,cpu.esp);
 	rtl_push(&t0);
 	rtl_push(&cpu.ebp);
 	rtl_push(&cpu.esi);
@@ -44,6 +45,7 @@ make_EHelper(pusha) {
 
 make_EHelper(popa) {
   //TODO();
+	printf("popa:eip:0x%x  esp:0x%x\n",cpu.eip,cpu.esp);
   rtl_pop(&cpu.edi);
 	rtl_pop(&cpu.esi);
   rtl_pop(&cpu.ebp);
