@@ -39,7 +39,7 @@ make_EHelper(int) {
 }
 
 make_EHelper(iret) {
-  //TODO();
+  TODO();
   if(decoding.is_operand_size_16){
 	  assert(0);
 	}else{
