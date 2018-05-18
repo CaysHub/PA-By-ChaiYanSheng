@@ -58,3 +58,5 @@ make_EHelper(rol);
 
 make_EHelper(int);
 make_EHelper(lidt);
+make_EHelper(pusha);
+make_EHelper(popa);
