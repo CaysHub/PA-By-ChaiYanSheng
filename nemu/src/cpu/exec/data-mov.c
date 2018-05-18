@@ -43,7 +43,7 @@ make_EHelper(pusha) {
 }
 
 make_EHelper(popa) {
-  TODO();
+  //TODO();
   rtl_pop(&cpu.edi);
 	rtl_pop(&cpu.esi);
   rtl_pop(&cpu.ebp);

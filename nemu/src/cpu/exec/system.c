@@ -39,8 +39,15 @@ make_EHelper(int) {
 }
 
 make_EHelper(iret) {
-  TODO();
-
+  //TODO();
+  if(decoding.is_operand_size_16){
+	  assert(0);
+	}else{
+	  rtl_pop(eip);
+		rtl_pop(&t0);
+		cpu.CS.val=t0;
+		rtl_pop(&cpu.eflags.val);
+	}
   print_asm("iret");
 }
 
