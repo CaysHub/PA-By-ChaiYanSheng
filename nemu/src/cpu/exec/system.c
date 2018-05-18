@@ -43,12 +43,14 @@ make_EHelper(iret) {
   if(decoding.is_operand_size_16){
 	  assert(0);
 	}else{
-	  rtl_pop(eip);
-		*eip=*eip-1;
-		rtl_pop(&t0);
-		cpu.CS.val=t0&0xffff;
+	  rtl_pop(&t0);
+		rtl_pop(&t1);
+		cpu.CS.val=t1&0xffff;
 		rtl_pop(&cpu.eflags.val);
 	}
+	printf("iret:eip:0x%x\n",t0);
+	decoding.jmp_eip=t0;
+	decoding.is_jmp=1;
   print_asm("iret");
 }
 
