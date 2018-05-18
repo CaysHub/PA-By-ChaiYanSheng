@@ -1,7 +1,6 @@
 #include "common.h"
 _RegSet* do_syscall(_RegSet *r);
 static _RegSet* do_event(_Event e, _RegSet* r) {
-	Log("do_event event type %d",e.event);
   switch (e.event) {
 		case _EVENT_SYSCALL:do_syscall(r);break;
     default: panic("Unhandled event ID = %d", e.event);
