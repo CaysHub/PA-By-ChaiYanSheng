@@ -14,10 +14,10 @@ struct _RegSet {
 	uintptr_t eip,cs,eflags;
 };
 
-#define SYSCALL_ARG1(r) 0
-#define SYSCALL_ARG2(r) 0
-#define SYSCALL_ARG3(r) 0
-#define SYSCALL_ARG4(r) 0
+#define SYSCALL_ARG1(r) r->error_code
+#define SYSCALL_ARG2(r) r->error_code
+#define SYSCALL_ARG3(r) r->error_code
+#define SYSCALL_ARG4(r) r->error_code
 
 #ifdef __cplusplus
 extern "C" {
