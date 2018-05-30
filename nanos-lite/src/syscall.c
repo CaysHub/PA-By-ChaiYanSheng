@@ -28,6 +28,7 @@ int sys_write(int fd,void *buf,int len){
   if(fd==1||fd==2){
 	  int i=0;
 		for(i=0;i<len;i++){
+			Log("1");
 		  _putc(((char*)buf)[i]);
 		}
 	}
