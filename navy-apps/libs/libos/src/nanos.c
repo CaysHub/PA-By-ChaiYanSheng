@@ -31,7 +31,13 @@ int _write(int fd, void *buf, size_t count){
 }
 
 void *_sbrk(intptr_t increment){
-  return (void *)-1;
+  extern char end;
+	static char *program_break;char *pre_program_break;
+	if(program_break==0)program_break=&end;
+	_syscall_(SYS_brk,program_break+increment,0,0);
+	pre_program_break=program_break;
+	program_break+=increment;
+  return (void *)pre_program_break;
 }
 
 int _read(int fd, void *buf, size_t count) {
