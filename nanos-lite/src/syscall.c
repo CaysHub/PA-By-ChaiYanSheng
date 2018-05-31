@@ -21,15 +21,15 @@ _RegSet* do_syscall(_RegSet *r) {
 }
 
 int sys_none(){
-	printf("sys_none\n");
+	//printf("sys_none\n");
   return 1;
 }
 void sys_exit(int code){
-	printf("sys_exit\n");
+	//printf("sys_exit\n");
   _halt(code);
 }
 int sys_write(int fd,void *buf,int len){
-	printf("sys_write\n");
+	//printf("sys_write\n");
   if(fd==1||fd==2){
 	  int i=0;
 		for(i=0;i<len;i++){
