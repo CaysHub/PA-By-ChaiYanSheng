@@ -31,7 +31,7 @@ void sys_exit(int code){
   _halt(code);
 }
 int sys_write(int fd,void *buf,int len){
-	printf("sys_write\n");
+	Log("sys_write\n");
   if(fd==1||fd==2){
 	  int i=0;
 		for(i=0;i<len;i++){
