@@ -27,7 +27,7 @@ int sys_none(){
   return 1;
 }
 void sys_exit(int code){
-	printf("sys_exit\n");
+	Log("sys_exit\n");
   _halt(code);
 }
 int sys_write(int fd,void *buf,int len){
