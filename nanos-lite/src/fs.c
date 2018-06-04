@@ -24,6 +24,7 @@ static Finfo file_table[] __attribute__((used)) = {
 
 void init_fs() {
   // TODO: initialize the size of /dev/fb
+	file_table[FD_FB].size=_screen.width*_screen.height*4;
 }
 size_t fs_filesz(int fd);
 int fs_open(const char *pathname, int flags, int mode){
@@ -40,6 +41,9 @@ int fs_open(const char *pathname, int flags, int mode){
 }
 void ramdisk_read(void *buf, off_t offset, size_t len);
 void ramdisk_write(const void *buf, off_t offset, size_t len);
+void dispinfo_read(void *buf, off_t offset, size_t len);
+void fb_write(const void *buf, off_t offset, size_t len);
+
 ssize_t fs_read(int fd, void *buf, size_t len){
 	if(fd<3){
 	  panic("fs_resd fd<3");
@@ -48,7 +52,11 @@ ssize_t fs_read(int fd, void *buf, size_t len){
 	  len=file_table[fd].size-file_table[fd].open_offset;
 	}
 	Log("fs_read fd: %d,len: %d",fd,len);
-	ramdisk_read(buf,file_table[fd].disk_offset+file_table[fd].open_offset,len);
+	if(fd==FD_DISPINFO){
+		dispinfo_read(buf,file_table[fd].open_offset,len);
+	}else{
+	  ramdisk_read(buf,file_table[fd].disk_offset+file_table[fd].open_offset,len);
+	}
 	file_table[fd].open_offset+=len;
   return len;
 }
@@ -64,7 +72,11 @@ ssize_t fs_write(int fd, const void *buf, size_t len){
 	if(len>file_table[fd].size-file_table[fd].open_offset){
 		len=file_table[fd].size-file_table[fd].open_offset;
 	}
-	ramdisk_write(buf,file_table[fd].disk_offset+file_table[fd].open_offset,len);
+	if(fd==FD_FB){
+	  fb_write(buf,file_table[fd].open_offset,len);
+	}else{
+	  ramdisk_write(buf,file_table[fd].disk_offset+file_table[fd].open_offset,len);
+	}
 	file_table[fd].open_offset+=len;
 	Log("fs_write fd: %d,len: %d",fd,len);
   return len;
@@ -85,6 +97,7 @@ off_t fs_lseek(int fd, off_t offset, int whence){
 }
 int fs_close(int fd){
 	Log("fs_close fd: %d",fd);
+	file_table[fd].open_offset=0;
   return 0;
 }
 size_t fs_filesz(int fd){
