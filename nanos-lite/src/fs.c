@@ -28,7 +28,7 @@ void init_fs() {
 }
 size_t fs_filesz(int fd);
 int fs_open(const char *pathname, int flags, int mode){
-  Log("fs_open filename: %s",pathname);
+  //Log("fs_open filename: %s",pathname);
 	int i=0;;
 	for(i=0;i<NR_FILES;i++){
 	  if(strcmp(file_table[i].name,pathname)==0){
@@ -51,7 +51,7 @@ ssize_t fs_read(int fd, void *buf, size_t len){
 	if(file_table[fd].open_offset+len>file_table[fd].size){
 	  len=file_table[fd].size-file_table[fd].open_offset;
 	}
-	Log("fs_read fd: %d,len: %d",fd,len);
+	//Log("fs_read fd: %d,len: %d",fd,len);
 	if(fd==FD_DISPINFO){
 		dispinfo_read(buf,file_table[fd].open_offset,len);
 	}else{
@@ -66,7 +66,7 @@ ssize_t fs_write(int fd, const void *buf, size_t len){
 		for(i=0;i<len;i++){
 		  _putc(((char*)buf)[i]);
 		}
-		Log("fs_write fd: %d,len: %d",fd,len);
+		//Log("fs_write fd: %d,len: %d",fd,len);
 		return len;
 	}
 	if(len>file_table[fd].size-file_table[fd].open_offset){
@@ -78,11 +78,11 @@ ssize_t fs_write(int fd, const void *buf, size_t len){
 	  ramdisk_write(buf,file_table[fd].disk_offset+file_table[fd].open_offset,len);
 	}
 	file_table[fd].open_offset+=len;
-	Log("fs_write fd: %d,len: %d",fd,len);
+	//Log("fs_write fd: %d,len: %d",fd,len);
   return len;
 }
 off_t fs_lseek(int fd, off_t offset, int whence){
-	Log("fs_lseek fd: %d,offset: %d",fd,offset);
+	//Log("fs_lseek fd: %d,offset: %d",fd,offset);
   switch(whence){
 	  case SEEK_SET:file_table[fd].open_offset=offset;break;
 		case SEEK_CUR:file_table[fd].open_offset+=offset;break;
@@ -96,7 +96,7 @@ off_t fs_lseek(int fd, off_t offset, int whence){
 	return file_table[fd].open_offset;
 }
 int fs_close(int fd){
-	Log("fs_close fd: %d",fd);
+	//Log("fs_close fd: %d",fd);
 	file_table[fd].open_offset=0;
   return 0;
 }
