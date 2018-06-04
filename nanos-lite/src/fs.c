@@ -27,7 +27,7 @@ void init_fs() {
 }
 size_t fs_filesz(int fd);
 int fs_open(const char *pathname, int flags, int mode){
-  Log("fs_open");
+  Log("fs_open filename: %s",pathname);
 	int i=0;;
 	for(i=0;i<NR_FILES;i++){
 	  if(strcmp(file_table[i].name,pathname)==0){
@@ -47,6 +47,7 @@ ssize_t fs_read(int fd, void *buf, size_t len){
 	if(file_table[fd].open_offset+len>file_table[fd].size){
 	  len=file_table[fd].size-file_table[fd].open_offset;
 	}
+	Log("fs_read fd: %d,len: %d",fd,len);
 	ramdisk_read(buf,file_table[fd].disk_offset+file_table[fd].open_offset,len);
 	file_table[fd].open_offset+=len;
   return len;
@@ -55,6 +56,7 @@ ssize_t fs_write(int fd, const void *buf, size_t len){
   return len;
 }
 int fs_close(int fd){
+	Log("fs_close fd: %d",fd);
   return 0;
 }
 size_t fs_filesz(int fd){
