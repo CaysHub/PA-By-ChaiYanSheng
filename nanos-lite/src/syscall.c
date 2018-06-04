@@ -23,15 +23,15 @@ _RegSet* do_syscall(_RegSet *r) {
 }
 
 int sys_none(){
-	printf("sys_none\n");
+	Log("call sys_none");
   return 1;
 }
 void sys_exit(int code){
-	Log("sys_exit\n");
+	Log("call sys_exit");
   _halt(code);
 }
 int sys_write(int fd,void *buf,int len){
-	Log("sys_write\n");
+	Log("call sys_write");
   if(fd==1||fd==2){
 	  int i=0;
 		for(i=0;i<len;i++){
@@ -41,5 +41,6 @@ int sys_write(int fd,void *buf,int len){
 	return len;
 }
 int sys_brk(void *addr){
+	Log("call sys_brk");
   return 0;
 }
