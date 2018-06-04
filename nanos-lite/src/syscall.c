@@ -36,58 +36,42 @@ _RegSet* do_syscall(_RegSet *r) {
 }
 
 int sys_none(){
-#ifdef DEBUG
-	Log("call sys_none");
-#endif
+	//Log("call sys_none");
   return 1;
 }
 void sys_exit(int code){
-#ifdef DEBUG
-	Log("call sys_exit");
-#endif
+	//Log("call sys_exit");
   _halt(code);
 }
 int sys_write(int fd,void *buf,int len){
-#ifdef DEBUG
-	Log("call sys_write");
+	//Log("call sys_write");
   /*if(fd==1||fd==2){
 	  int i=0;
 		for(i=0;i<len;i++){
 		  _putc(((char*)buf)[i]);
 		}
 	}*/
-#endif
 	return fs_write(fd,buf,len);
 }
 
 int sys_brk(void *addr){
-#ifdef DEBUG
-	Log("call sys_brk");
-#endif
+	//Log("call sys_brk");
   return 0;
 }
 int sys_open(char *pathname,int flags,int mode){
-#ifdef DEBUG
-	Log("call sys_open filename: %s",pathname);
-#endif
+	//Log("call sys_open filename: %s",pathname);
   return fs_open(pathname,flags,mode);
 }
 ssize_t sys_read(int fd,void *buf,size_t len){
-#ifdef DEBUG
-	Log("call sys_read fd: %d",fd);
-#endif
+	//Log("call sys_read fd: %d",fd);
   return fs_read(fd,buf,len);
 }
 off_t sys_lseek(int fd,off_t offset,int whence){
-#ifdef DEBUG
-  Log("call sys_lseek fd: %d",fd);
-#endif
+  //Log("call sys_lseek fd: %d",fd);
 	return fs_lseek(fd,offset,whence);
 }
 int sys_close(int fd){
-#ifdef DEBUG
-	Log("call sys_close fd: %d",fd);
-#endif
+	//Log("call sys_close fd: %d",fd);
   return fs_close(fd);
 }
 
