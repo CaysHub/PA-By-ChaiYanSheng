@@ -51,7 +51,7 @@ ssize_t fs_read(int fd, void *buf, size_t len){
 	if(file_table[fd].open_offset+len>file_table[fd].size){
 	  len=file_table[fd].size-file_table[fd].open_offset;
 	}
-	//Log("fs_read fd: %d,len: %d",fd,len);
+	Log("fs_read fd: %d,len: %d",fd,len);
 	if(fd==FD_DISPINFO){
 		dispinfo_read(buf,file_table[fd].open_offset,len);
 	}else{
@@ -66,7 +66,7 @@ ssize_t fs_write(int fd, const void *buf, size_t len){
 		for(i=0;i<len;i++){
 		  _putc(((char*)buf)[i]);
 		}
-		//Log("fs_write fd: %d,len: %d",fd,len);
+		Log("fs_write fd: %d,len: %d",fd,len);
 		return len;
 	}
 	if(len>file_table[fd].size-file_table[fd].open_offset){
@@ -78,7 +78,7 @@ ssize_t fs_write(int fd, const void *buf, size_t len){
 	  ramdisk_write(buf,file_table[fd].disk_offset+file_table[fd].open_offset,len);
 	}
 	file_table[fd].open_offset+=len;
-	//Log("fs_write fd: %d,len: %d",fd,len);
+	Log("fs_write fd: %d,len: %d",fd,len);
   return len;
 }
 off_t fs_lseek(int fd, off_t offset, int whence){
