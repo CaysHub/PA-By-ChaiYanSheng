@@ -12,12 +12,12 @@ size_t events_read(void *buf, size_t len) {
   int key=_read_key();
 	if(key==0){
 	  unsigned long time=_uptime(); 
-	  return sprintf(buf,"t %lu",time)-1;
+	  return sprintf(buf,"t %lu",len,time)-1;
 	}
 	if((key&(0x8000))!=0){
-	  return sprintf(buf,"kd %s",keyname[key^0x8000])-1;
+	  return sprintf(buf,"kd %s",len,keyname[key^0x8000])-1;
 	}else{
-	  return sprintf(buf,"ku %s",keyname[key])-1;
+	  return sprintf(buf,"ku %s",len,keyname[key])-1;
 	}
 }
 
