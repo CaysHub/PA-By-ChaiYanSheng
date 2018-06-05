@@ -20,7 +20,7 @@ void dispinfo_read(void *buf, off_t offset, size_t len) {
 
 void fb_write(const void *buf, off_t offset, size_t len) {
 	int y=(offset/4)/_screen.width,x=offset/4-_screen.width*y;
-	Log("fb_write offset:%d\tlen:%d",offset,len);
+	//Log("fb_write offset:%d\tlen:%d",offset,len);
 	_draw_rect(buf,x,y,len/4,1);
 
 }
