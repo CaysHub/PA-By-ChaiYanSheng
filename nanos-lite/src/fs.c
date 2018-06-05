@@ -68,14 +68,15 @@ ssize_t fs_write(int fd, const void *buf, size_t len){
 		}
 		//Log("fs_write fd: %d,len: %d",fd,len);
 		return len;
-	}else if(fd==FD_FB){
-	  fb_write(buf,0,len);
-		return len;
 	}
 	if(len>file_table[fd].size-file_table[fd].open_offset){
 		len=file_table[fd].size-file_table[fd].open_offset;
 	}
-	ramdisk_write(buf,file_table[fd].disk_offset+file_table[fd].open_offset,len);
+	if(fd==FD_FB){
+	  fb_write(buf,file_table[fd].disk_offset+file_table[fd].open_offset,len);  
+	}else{
+	  ramdisk_write(buf,file_table[fd].disk_offset+file_table[fd].open_offset,len);
+	}
 	file_table[fd].open_offset+=len;
 	//Log("fs_write fd: %d,len: %d",fd,len);
   return len;
