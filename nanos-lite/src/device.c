@@ -16,10 +16,9 @@ size_t events_read(void *buf, size_t len) {
 	}
 	if((key&(0x8000))!=0){
 	  return sprintf(buf,"kd %s",keyname[key^0x8000])-1;
-	}else if((key&(0x8000))==0){
+	}else{
 	  return sprintf(buf,"ku %s",keyname[key])-1;
 	}
-	return 0;
 }
 
 static char dispinfo[128] __attribute__((used));
