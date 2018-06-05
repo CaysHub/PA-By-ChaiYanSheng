@@ -59,7 +59,7 @@ int sys_brk(void *addr){
   return 0;
 }
 int sys_open(char *pathname,int flags,int mode){
-	//Log("call sys_open filename: %s",pathname);
+	Log("call sys_open filename: %s",pathname);
   return fs_open(pathname,flags,mode);
 }
 ssize_t sys_read(int fd,void *buf,size_t len){
