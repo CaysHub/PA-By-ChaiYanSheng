@@ -49,7 +49,8 @@ ssize_t fs_read(int fd, void *buf, size_t len){
 	  panic("fs_resd fd<3");
 	}
 	if(fd==FD_EVENTS){
-	  return events_read(buf,len);
+	  size_t len2=events_read(buf,len);
+		return len2>len?len:len2;
 	}
 	if(file_table[fd].open_offset+len>file_table[fd].size){
 	  len=file_table[fd].size-file_table[fd].open_offset;
