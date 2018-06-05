@@ -19,8 +19,8 @@ void dispinfo_read(void *buf, off_t offset, size_t len) {
 }
 
 void fb_write(const void *buf, off_t offset, size_t len) {
-	int i=(offset/_screen.height)%_screen.width,j=offset-i*_screen.height;
-	Log("fb_write offset:%d\tx:%d\ty:%d",offset,i,j);
+	//int i=(offset/_screen.height)%_screen.width,j=offset-i*_screen.height;
+	Log("fb_write offset:%d\tlen:%d",offset,len);
 	_draw_rect(buf,50,0,len,1);
 
 }
