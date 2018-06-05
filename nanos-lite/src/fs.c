@@ -53,7 +53,8 @@ ssize_t fs_read(int fd, void *buf, size_t len){
 	}
 	Log("fs_read fd: %d,len: %d",fd,len);
 	if(fd==FD_EVENTS){
-	  events_read(buf,len);
+	  size_t len2=events_read(buf,len);
+		len=len2>len?len:len2;
 	}else if(fd==FD_DISPINFO){
 		dispinfo_read(buf,file_table[fd].disk_offset+file_table[fd].open_offset,len);
 	}else{
