@@ -10,14 +10,13 @@ static const char *keyname[256] __attribute__((used)) = {
 unsigned long _uptime();
 size_t events_read(void *buf, size_t len) {
   int k=_read_key();
-	if(k==0){
-	  unsigned long time=_uptime(); 
-	  return sprintf(buf,"t %u\n",time)-1;
-	}
 	if((k&(0x8000))!=0){
 	  return sprintf(buf,"kd %s\n",keyname[k^(0x8000)])-1;
-	}else{
+	}else if(k!=0&&((k&(0x8000))!=0)){
 	  return sprintf(buf,"ku %s\n",keyname[k])-1;
+	}else{
+	  unsigned long time=_uptime();
+		return sprintf(buf,"t %u\n",time)-1;
 	}
 }
 
