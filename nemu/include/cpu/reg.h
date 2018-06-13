@@ -48,7 +48,12 @@ typedef struct {
 	  uint16_t limit;
 		uint32_t base;
 	}IDTR;
-	struct{
+	union{
+	  struct{
+		  unsigned int rpl:2;
+			unsigned int tl:1;
+			unsigned int index:13;
+		};
 		uint16_t val;
 	}CS;
 } CPU_state;
