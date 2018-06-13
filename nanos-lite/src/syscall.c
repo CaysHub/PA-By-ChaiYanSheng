@@ -44,7 +44,7 @@ void sys_exit(int code){
   _halt(code);
 }
 int sys_write(int fd,void *buf,int len){
-	//Log("call sys_write");
+	Log("call sys_write");
   /*if(fd==1||fd==2){
 	  int i=0;
 		for(i=0;i<len;i++){
