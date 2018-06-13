@@ -44,7 +44,7 @@ void sys_exit(int code){
   _halt(code);
 }
 int sys_write(int fd,void *buf,int len){
-	Log("call sys_write");
+	//Log("call sys_write");
   /*if(fd==1||fd==2){
 	  int i=0;
 		for(i=0;i<len;i++){
@@ -59,7 +59,7 @@ int sys_brk(void *addr){
   return 0;
 }
 int sys_open(char *pathname,int flags,int mode){
-	Log("call sys_open filename: %s",pathname);
+	//Log("call sys_open filename: %s",pathname);
   return fs_open(pathname,flags,mode);
 }
 ssize_t sys_read(int fd,void *buf,size_t len){
