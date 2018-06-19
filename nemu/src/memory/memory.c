@@ -1,4 +1,5 @@
 #include "nemu.h"
+#include "page.c"
 
 #define PMEM_SIZE (128 * 1024 * 1024)
 
@@ -46,6 +47,7 @@ void vaddr_write(vaddr_t addr, int len, uint32_t data) {
 		paddr_write(paddr, len, data);
 	}
 }
+/*
 paddr_t page_translate(vaddr_t addr,bool is_write){
   if(!cpu.cr0.paging){
 		assert(0);
@@ -65,4 +67,4 @@ paddr_t page_translate(vaddr_t addr,bool is_write){
 	paddr_t paddr=pte.page_frame<<12;
 	Log("page_translate vaddr 0x%x --> paddr 0x%x ",addr,paddr);
 	return paddr;
-}
+}*/
