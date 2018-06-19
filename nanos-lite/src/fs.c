@@ -28,7 +28,7 @@ void init_fs() {
 }
 size_t fs_filesz(int fd);
 int fs_open(const char *pathname, int flags, int mode){
-  Log("fs_open filename: %s",pathname);
+  //Log("fs_open filename: %s",pathname);
 	int i=0;;
 	for(i=0;i<NR_FILES;i++){
 	  if(strcmp(file_table[i].name,pathname)==0){
@@ -99,7 +99,7 @@ off_t fs_lseek(int fd, off_t offset, int whence){
 	return file_table[fd].open_offset;
 }
 int fs_close(int fd){
-	Log("fs_close fd: %d",fd);
+	//Log("fs_close fd: %d",fd);
 	file_table[fd].open_offset=0;
   return 0;
 }
