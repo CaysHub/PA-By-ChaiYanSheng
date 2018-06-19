@@ -12,7 +12,7 @@ uint8_t pmem[PMEM_SIZE];
 int is_mmio(paddr_t addr);
 uint32_t mmio_read(paddr_t addr, int len, int map_NO);
 void mmio_write(paddr_t addr, int len, uint32_t data, int map_NO);
-paddr_t page_translate(vaddr_t addr,bool is_write);
+
 uint32_t vaddr_read(vaddr_t addr, int len);
 void paddr_write(paddr_t addr, int len, uint32_t data);
 /* Memory accessing interfaces */
