@@ -25,6 +25,7 @@ uintptr_t loader(_Protect *as, const char *filename) {
 	  _map(as, va, pa);
 		fs_read(fd,pa,(DEFAULT_ENTRY+fsz-va)<PAGE_SIZE?(DEFAULT_ENTRY+fsz-va):PAGE_SIZE);
 	}
+	fs_close(fd);
 	//fs_read(fd,DEFAULT_ENTRY,fs_filesz(fd));
 	//assert(fs_close(fd)==0);
 	return (uintptr_t)DEFAULT_ENTRY;
