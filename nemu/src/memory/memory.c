@@ -27,11 +27,11 @@ void paddr_write(paddr_t addr, int len, uint32_t data) {
 //D:\PAHappy\ics2017\nemu/src/memory/memory.c
 paddr_t page_translate(vaddr_t addr,bool is_write);
 
-#define CROSS_PAGE(addr, len) \
-	((((addr) + (len) - 1) & ~PAGE_MASK) != ((addr) & ~PAGE_MASK))
+
 uint32_t vaddr_read(vaddr_t addr, int len) {
 	//assert(cpu.cr0.paging==1);
-  if(CROSS_PAGE(addr, len)){
+  if(cpu.cr0.paging==1){
+		Log("cr0:PG:%d",cpu.cr0.paging);
 	  return paddr_read(page_translate(addr,false), len);
 	}else{
 		return paddr_read(addr,len);
@@ -39,7 +39,8 @@ uint32_t vaddr_read(vaddr_t addr, int len) {
 }
 
 void vaddr_write(vaddr_t addr, int len, uint32_t data) {
-  if(CROSS_PAGE(addr, len)){
+  if(cpu.cr0.paging==1){
+		Log("cr0:PG:%d",cpu.cr0.paging);
 	  paddr_write(page_translate(addr,true), len, data);
 		return;
 	}else{
