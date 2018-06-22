@@ -27,6 +27,7 @@ void paddr_write(paddr_t addr, int len, uint32_t data) {
 //D:\PAHappy\ics2017\nemu/src/memory/memory.c
 paddr_t page_translate(vaddr_t addr,bool is_write);
 uint32_t vaddr_read(vaddr_t addr, int len) {
+	assert(cpu.cr0.paging==1);
   if(cpu.cr0.paging==0){
 	  return paddr_read(addr, len);
 	}else{
@@ -36,6 +37,7 @@ uint32_t vaddr_read(vaddr_t addr, int len) {
 }
 
 void vaddr_write(vaddr_t addr, int len, uint32_t data) {
+	assert(cpu.cr0.paging==1);
   if(cpu.cr0.paging==0){
 	  paddr_write(addr, len, data);
 		return;
