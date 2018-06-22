@@ -28,7 +28,7 @@ void paddr_write(paddr_t addr, int len, uint32_t data) {
 paddr_t page_translate(vaddr_t addr,bool is_write);
 uint32_t vaddr_read(vaddr_t addr, int len) {
 	//assert(cpu.cr0.paging==1);
-  if(cpu.cr0.paging==1||(cpu.cr0.val&0x80000000)){
+  if(cpu.cr0.val&0x80000000){
 	  return paddr_read(page_translate(addr,false), len);
 	}else{
 		return paddr_read(addr,len);
@@ -37,7 +37,7 @@ uint32_t vaddr_read(vaddr_t addr, int len) {
 
 void vaddr_write(vaddr_t addr, int len, uint32_t data) {
 	//assert(cpu.cr0.paging==1);
-  if(cpu.cr0.paging==1||(cpu.cr0.val&0x80000000)){
+  if(cpu.cr0.val&0x80000000){
 	  paddr_write(page_translate(addr,true), len, data);
 		return;
 	}else{
