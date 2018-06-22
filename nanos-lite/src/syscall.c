@@ -13,6 +13,7 @@ ssize_t fs_read(int fd, void *buf, size_t len);
 ssize_t fs_write(int fd, const void *buf, size_t len);
 off_t fs_lseek(int fd, off_t offset, int whence);
 int fs_close(int fd);
+int mm_brk(uint32_t new_brk);
 _RegSet* do_syscall(_RegSet *r) {
   uintptr_t a[4];
   a[0] = SYSCALL_ARG1(r);
@@ -56,7 +57,7 @@ int sys_write(int fd,void *buf,int len){
 
 int sys_brk(void *addr){
 	//Log("call sys_brk");
-  return 0;
+  return mm_brk((uint32_t)addr);
 }
 int sys_open(char *pathname,int flags,int mode){
 	//Log("call sys_open filename: %s",pathname);
