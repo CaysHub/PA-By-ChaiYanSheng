@@ -17,7 +17,9 @@ void load_prog(const char *filename) {
   _switch(&pcb[i].as);
 	Log("11");
   current = &pcb[i];
+	Log("22");
   ((void (*)(void))entry)();
+	Log("33");
   _Area stack;
   stack.start = pcb[i].stack;
   stack.end = stack.start + sizeof(pcb[i].stack);
