@@ -50,9 +50,9 @@ void _protect(_Protect *p) {
   PDE *updir = (PDE*)(palloc_f());
   p->ptr = updir;
   // map kernel space
-  for (int i = 0; i < NR_PDE; i ++) {
+  /*for (int i = 0; i < NR_PDE; i ++) {
     updir[i] = kpdirs[i];
-  }
+  }*/
 
   p->area.start = (void*)0x8000000;
   p->area.end = (void*)0xc0000000;
@@ -70,11 +70,11 @@ void _map(_Protect *p, void *va, void *pa) {
 	uint32_t page = ((uint32_t)va >> 12) & 0x000003ff;
 	uint32_t dir = ((uint32_t)va >> 22) & 0x000003ff;
 	if (!(dir_base[dir] & 0x1)) {
-	  PTE *uptab = (PTE *)(palloc_f());
-		dir_base[dir]  = (uint32_t)uptab | PTE_P;
+	  PTE *p1= (PTE *)(palloc_f());
+		dir_base[dir]  = (uint32_t)p1| PTE_P;
 	}
-	PTE * page_base = (PTE *)(dir_base[dir] & 0xfffff000);
-	PTE * pte = &page_base[page];
+	PTE * pb= (PTE *)(dir_base[dir] & 0xfffff000);
+	PTE * pte = &pb[page];
 	*pte = (uint32_t)pa | PTE_P;
 }
 
