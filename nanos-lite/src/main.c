@@ -36,6 +36,6 @@ int main() {
 	//Log("2");
 	load_prog("/bin/dummy");
 	//Log("3");
-
+  _trap();
   panic("Should not reach here");
 }
