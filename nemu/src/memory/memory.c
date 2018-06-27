@@ -73,10 +73,10 @@ void vaddr_write(vaddr_t addr, int len, uint32_t data) {
 paddr_t page_translate(vaddr_t addr,bool is_write){
   if (cpu.cr0.paging == 0)return addr;
 
-	uint32_t page_addr=(cpu.cr3.page_directory_base<<12)+(((addr>>22)&0x000003ff));
+	uint32_t page_addr=(cpu.cr3.page_directory_base<<12)+(((addr>>22)&0x000003ff)<<2);
 	PDE pde;pde.val=paddr_read(page_addr,4);
 	assert(pde.present);
-	PTE pte;pte.val=paddr_read((pde.page_frame<<12)+(((addr>>12)&0x000003ff)),4);
+	PTE pte;pte.val=paddr_read((pde.page_frame<<12)+(((addr>>12)&0x000003ff)<<2),4);
 	if(pde.accessed==0){
 		pde.accessed=1;
 	}
