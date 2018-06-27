@@ -26,46 +26,67 @@ void paddr_write(paddr_t addr, int len, uint32_t data) {
 }
 //D:\PAHappy\ics2017\nemu/src/memory/memory.c
 paddr_t page_translate(vaddr_t addr,bool is_write);
-
+#define CROSS_PAGE(addr, len) \
+	((((addr) + (len) - 1) & ~PAGE_MASK) != ((addr) & ~PAGE_MASK))
 
 uint32_t vaddr_read(vaddr_t addr, int len) {
-	//assert(cpu.cr0.paging==1);
+	/*assert(cpu.cr0.paging==1);
   if(cpu.cr0.paging==1){
 		Log("cr0:PG:%d",cpu.cr0.paging);
 	  return paddr_read(page_translate(addr,false), len);
 	}else{
 		return paddr_read(addr,len);
+	}*/
+	paddr_t paddr;
+	if (CROSS_PAGE(addr, len)) {
+		/* data cross the page boundary */
+		union {
+			uint8_t bytes[4];
+			uint32_t dword;
+		} data = {0};
+		for (int i = 0; i < len; i++) {
+			paddr = page_translate(addr + i, false);
+			data.bytes[i] = (uint8_t)paddr_read(paddr, 1);
+		}
+		return data.dword;
+	} else {
+		paddr = page_translate(addr, false);
+		return paddr_read(paddr, len);
 	}
 }
 
 void vaddr_write(vaddr_t addr, int len, uint32_t data) {
-  if(cpu.cr0.paging==1){
-		Log("cr0:PG:%d",cpu.cr0.paging);
-	  paddr_write(page_translate(addr,true), len, data);
-		return;
-	}else{
-		paddr_write(addr, len, data);
-	}
+  paddr_t paddr;
+	if (CROSS_PAGE(addr, len)) {
+		/* data cross the page boundary */
+		assert(0);
+		for (int i = 0; i < len; i++) {
+			paddr = page_translate(addr, true);
+			paddr_write(paddr, 1, data);
+			data >>= 8;
+			addr++;
+		}
+	} else {
+		paddr = page_translate(addr, true);
+		paddr_write(paddr, len, data);																	  }
 }
 paddr_t page_translate(vaddr_t addr,bool is_write){
-  if(cpu.cr0.paging==0){
-	  assert(0);
+  PDE pde, *pgdir;
+  PTE pte, *pgtab;
+	paddr_t paddr = addr;
+	if (cpu.cr0.protect_enable && cpu.cr0.paging) {
+	  pgdir = (PDE *)(intptr_t)(cpu.cr3.page_directory_base << 12);
+		pde.val = paddr_read((intptr_t)&pgdir[(addr >> 22) & 0x3ff], 4);
+		assert(pde.present);pde.accessed = 1;
+
+		pgtab = (PTE *)(intptr_t)(pde.page_frame << 12);
+		pte.val = paddr_read((intptr_t)&pgtab[(addr >> 12) & 0x3ff], 4);
+		assert(pte.present);
+		pte.accessed = 1;
+		pte.dirty = is_write ? 1 : pte.dirty;
+
+		paddr = (pte.page_frame << 12) | (addr & PAGE_MASK);
 	}
-	uint32_t page_addr=(cpu.cr3.page_directory_base<<12)+(((addr>>22)&0x000003ff)<<2);
-	Log("1");
-	PDE pde;pde.val=paddr_read(page_addr,4);
-	assert(pde.present);
-	Log("1-");
-	PTE pte;pte.val=paddr_read((pde.page_frame<<12)+(((addr>>12)&0x000003ff)<<2),4);
-	if(pde.accessed==0){
-	  pde.accessed=1;
-	}
-	pte.accessed=1;
-	if(is_write){
-	  pte.dirty=1;
-	}
-	paddr_t paddr=pte.page_frame<<12;
-	Log("page_translate vaddr 0x%x --> paddr 0x%x ",addr,paddr);
 	return paddr;
 
 }
