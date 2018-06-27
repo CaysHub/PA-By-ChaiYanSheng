@@ -17,6 +17,8 @@ make_EHelper(mov_r2cr) {
 	  cpu.cr0.val=id_src->val;
 	}else if(id_dest->reg==3){
 	  cpu.cr3.val=id_src->val;
+	}else{
+	  Assert(0, "unsupported control register");
 	}
 
   print_asm("movl %%%s,%%cr%d", reg_name(id_src->reg, 4), id_dest->reg);
@@ -24,10 +26,13 @@ make_EHelper(mov_r2cr) {
 
 make_EHelper(mov_cr2r) {
   if(id_src->reg==0){
-	  id_dest->val=cpu.cr0.val;
+	  t0=cpu.cr0.val;
 	}else if(id_src->reg==3){
-	  id_dest->val=cpu.cr3.val;
+	  t0=cpu.cr3.val;
+	}else{
+	  Assert(0, "unsupported control register");
 	}
+	operand_write(id_dest, &t0);
 
   print_asm("movl %%cr%d,%%%s", id_src->reg, reg_name(id_dest->reg, 4));
 
