@@ -85,7 +85,7 @@ paddr_t page_translate(vaddr_t addr,bool is_write){
 		pte.dirty=1;
 	}
 	paddr_t paddr=pte.page_frame<<12;
-	Log("page_translate vaddr 0x%x --> paddr 0x%x ",addr,paddr);
+	//Log("page_translate vaddr 0x%x --> paddr 0x%x ",addr,paddr);
 	return paddr;
 
 }
