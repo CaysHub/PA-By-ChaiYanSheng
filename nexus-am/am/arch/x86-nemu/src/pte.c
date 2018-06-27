@@ -66,16 +66,19 @@ void _switch(_Protect *p) {
 }
 
 void _map(_Protect *p, void *va, void *pa) {
-  PDE *dir_base = (PDE *)(p->ptr);
-	uint32_t page = ((uint32_t)va >> 12) & 0x000003ff;
-	uint32_t dir = ((uint32_t)va >> 22) & 0x000003ff;
-	if (!(dir_base[dir] & 0x1)) {
-	  PTE *p1= (PTE *)(palloc_f());
-		dir_base[dir]  = (uint32_t)p1| PTE_P;
+  PDE *pde, *pgdir = p->ptr;
+	PTE *pgtab;
+	pde = &pgdir[PDX(va)];
+	if (*pde & PTE_P) {
+		pgtab = (PTE *)PTE_ADDR(*pde);
+	} else {
+		pgtab = (PTE *)palloc_f();
+		for (int i = 0; i < NR_PTE; i ++) {
+			pgtab[i] = 0;
+		}
+		*pde = PTE_ADDR(pgtab) | PTE_P;
 	}
-	PTE * pb= (PTE *)(dir_base[dir] & 0xfffff000);
-	PTE * pte = &pb[page];
-	*pte = (uint32_t)pa | PTE_P;
+	pgtab[PTX(va)] = PTE_ADDR(pa) | PTE_P;
 }
 
 void _unmap(_Protect *p, void *va) {
